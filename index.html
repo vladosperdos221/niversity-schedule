@@ -511,6 +511,36 @@
             transform: translateX(-3px);
         }
 
+        /* Кнопки курсов */
+        .course-buttons {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .course-btn {
+            padding: 12px 30px;
+            border: 2px solid #0038a8;
+            border-radius: 40px;
+            background: white;
+            color: #0038a8;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
+        }
+
+        .course-btn:hover {
+            background: #f0f5ff;
+        }
+
+        .course-btn.active {
+            background: #0038a8;
+            color: white;
+        }
+
         /* Главное меню */
         .main-menu {
             display: grid;
@@ -768,7 +798,7 @@
         /* Карточки групп */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 15px;
         }
@@ -851,10 +881,10 @@
             font-size: 0.85rem;
         }
 
-        /* Карточки преподавателей для нагрузки */
+        /* Карточки преподавателей для нагрузки (упрощенные) */
         .teacher-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 18px;
             margin-top: 15px;
         }
@@ -862,7 +892,7 @@
         .teacher-load-card {
             background: white;
             border-radius: 22px;
-            padding: 18px;
+            padding: 20px;
             box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
             border: 1px solid #e8edf5;
             transition: all 0.3s;
@@ -892,7 +922,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
         .teacher-load-icon {
@@ -908,62 +938,38 @@
         }
 
         .teacher-load-name {
-            font-size: 1rem;
+            font-size: 1.1rem;
             font-weight: 600;
             color: #001a41;
         }
 
         .teacher-load-dept {
             color: #5a6f8c;
-            font-size: 0.8rem;
-            margin-top: 3px;
-        }
-
-        .teacher-load-stats {
-            display: flex;
-            justify-content: space-between;
-            margin: 12px 0;
-            padding: 8px;
-            background: #f8faff;
-            border-radius: 14px;
-        }
-
-        .teacher-load-stat-item {
-            text-align: center;
-        }
-
-        .teacher-load-stat-label {
-            font-size: 0.7rem;
-            color: #5a6f8c;
-        }
-
-        .teacher-load-stat-value {
-            font-weight: 700;
-            color: #0038a8;
-            font-size: 1.1rem;
+            font-size: 0.85rem;
+            margin-top: 2px;
         }
 
         .teacher-load-hours {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 8px;
-            padding-top: 8px;
+            margin-top: 15px;
+            padding-top: 12px;
             border-top: 1px solid #e8edf5;
         }
 
         .teacher-load-hours span:first-child {
             color: #5a6f8c;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
         }
 
         .teacher-load-hours span:last-child {
             font-weight: 700;
-            color: #001a41;
-            font-size: 1.2rem;
+            color: #0038a8;
+            font-size: 1.3rem;
         }
 
-        /* Детальная карточка преподавателя */
+        /* Детальная карточка преподавателя (упрощенная) */
         .teacher-detail-card {
             background: white;
             border-radius: 25px;
@@ -1004,32 +1010,6 @@
             font-size: 0.95rem;
         }
 
-        .teacher-detail-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .teacher-detail-stat {
-            background: #f8faff;
-            border-radius: 18px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .teacher-detail-stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #0038a8;
-        }
-
-        .teacher-detail-stat-label {
-            color: #5a6f8c;
-            margin-top: 4px;
-            font-size: 0.85rem;
-        }
-
         .discipline-list {
             display: grid;
             gap: 12px;
@@ -1038,7 +1018,7 @@
         .discipline-item {
             background: #f8faff;
             border-radius: 14px;
-            padding: 12px 18px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1059,7 +1039,7 @@
         .discipline-hours {
             font-weight: 700;
             color: #0038a8;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         /* Таблицы */
@@ -1376,6 +1356,10 @@
             .login-container {
                 padding: 30px 20px;
             }
+            
+            .course-buttons {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -1569,7 +1553,7 @@
                     <i class="fas fa-chart-pie"></i>
                 </div>
                 <h3>Учебная нагрузка</h3>
-                <p>Детализация по преподавателям</p>
+                <p>Общая нагрузка преподавателей</p>
             </div>
             <div class="menu-card" data-view="statistics">
                 <div class="menu-icon">
@@ -1603,18 +1587,17 @@
             </button>
         </div>
 
-        <!-- Фильтры по курсам и формам -->
+        <!-- Кнопки курсов (только для студентов) -->
+        <div class="course-buttons" id="courseButtonsContainer" style="display: none;">
+            <button class="course-btn active" data-course="all">Все курсы</button>
+            <button class="course-btn" data-course="1">1 курс</button>
+            <button class="course-btn" data-course="2">2 курс</button>
+            <button class="course-btn" data-course="3">3 курс</button>
+            <button class="course-btn" data-course="4">4 курс</button>
+        </div>
+
+        <!-- Фильтры по формам обучения (только для студентов) -->
         <div class="course-filters" id="courseFilters" style="display: none;">
-            <div class="filter-section">
-                <div class="filter-title">Курс</div>
-                <div class="filter-buttons" id="courseButtons">
-                    <button class="filter-btn" data-course="all">Все курсы</button>
-                    <button class="filter-btn" data-course="1">1 курс</button>
-                    <button class="filter-btn" data-course="2">2 курс</button>
-                    <button class="filter-btn" data-course="3">3 курс</button>
-                    <button class="filter-btn" data-course="4">4 курс</button>
-                </div>
-            </div>
             <div class="filter-section">
                 <div class="filter-title">Форма обучения</div>
                 <div class="filter-buttons" id="formButtons">
@@ -1628,15 +1611,14 @@
             </div>
         </div>
 
-        <!-- Фильтры для нагрузки -->
+        <!-- Фильтры для нагрузки (только кафедра) -->
         <div class="filters-bar" id="loadFilters" style="display: none;">
             <select class="filter-select" id="departmentFilter">
                 <option value="">Все кафедры</option>
             </select>
-            <input type="text" class="search-input" id="searchInput" placeholder="Поиск по преподавателю...">
         </div>
 
-        <!-- Статистика -->
+        <!-- Статистика (только цифры) -->
         <div class="stats-grid" id="stats"></div>
 
         <!-- Контент -->
@@ -1773,9 +1755,9 @@
         const courseFilters = document.getElementById('courseFilters');
         const loadFilters = document.getElementById('loadFilters');
         const departmentFilter = document.getElementById('departmentFilter');
-        const searchInput = document.getElementById('searchInput');
-        const courseButtons = document.querySelectorAll('[data-course]');
-        const formButtons = document.querySelectorAll('[data-form]');
+        const courseButtonsContainer = document.getElementById('courseButtonsContainer');
+        const courseButtons = document.querySelectorAll('.course-btn');
+        const formFilterButtons = document.querySelectorAll('#formButtons .filter-btn');
         
         // Элементы модальных окон
         const combineModal = document.getElementById('combineModal');
@@ -1814,6 +1796,8 @@
             selectedTeacherName: null,
             selectedGroupId: null,
             selectedGroupName: '',
+            selectedCourse: 'all',
+            selectedForm: 'all',
             schedule: [],
             groups: [],
             teachers: [],
@@ -1824,7 +1808,6 @@
             courseFilter: 'all',
             formFilter: 'all',
             departmentFilter: '',
-            searchTerm: '',
             charts: {}
         };
 
@@ -2590,7 +2573,10 @@
                 if (!item) return;
                 
                 // Получаем исходное имя
-                const rawName = item.teacherName || item.teacher || 'Неизвестный преподаватель';
+                const rawName = item.teacherName || item.teacher || '';
+                
+                // Пропускаем "Неизвестный преподаватель"
+                if (!rawName || rawName === 'Неизвестный преподаватель') return;
                 
                 // Нормализуем имя
                 const teacherName = teacherNameMapping[rawName] || rawName;
@@ -2600,28 +2586,78 @@
                         teacherName: teacherName,
                         department: item.department || 'Кафедра',
                         totalHours: 0,
-                        lectures: 0,
-                        seminars: 0,
-                        disciplines: new Set(),
-                        courses: new Set(),
                         records: []
                     };
                 }
                 
                 state.teacherStats[teacherName].totalHours += item.hours || 0;
-                state.teacherStats[teacherName].lectures += item.lectures || 0;
-                state.teacherStats[teacherName].seminars += item.seminars || 0;
-                
-                if (item.discipline) {
-                    state.teacherStats[teacherName].disciplines.add(item.discipline);
-                }
-                
-                if (item.course) {
-                    state.teacherStats[teacherName].courses.add(item.course);
-                }
-                
                 state.teacherStats[teacherName].records.push(item);
             });
+        }
+
+        // Заполнение фильтров для нагрузки
+        function populateLoadFilters() {
+            const departments = new Set();
+
+            Object.values(state.teacherStats).forEach(stat => {
+                if (stat.department) departments.add(stat.department);
+            });
+
+            if (departmentFilter) {
+                departmentFilter.innerHTML = '<option value="">Все кафедры</option>';
+                Array.from(departments).sort().forEach(dept => {
+                    departmentFilter.innerHTML += `<option value="${dept}">${dept}</option>`;
+                });
+            }
+        }
+
+        // Применение фильтров для групп
+        function applyFilters() {
+            if (!state.groups) return;
+            
+            state.filteredGroups = state.groups.filter(group => {
+                const matchesCourse = state.selectedCourse === 'all' || group.course == state.selectedCourse;
+                const matchesForm = state.selectedForm === 'all' || 
+                    (group.form && (group.form.includes(state.selectedForm) || group.form === state.selectedForm));
+                return matchesCourse && matchesForm;
+            });
+        }
+
+        // Обновление статистики
+        function updateStats() {
+            if (!statsEl) return;
+            
+            const totalHours = state.load.reduce((sum, item) => sum + (item.hours || 0), 0);
+            
+            statsEl.innerHTML = `
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Группы</h4>
+                        <span class="stat-value">${state.groups.length}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Преподаватели</h4>
+                        <span class="stat-value">${Object.keys(state.teacherStats).length}</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h4>Всего часов</h4>
+                        <span class="stat-value">${totalHours}</span>
+                    </div>
+                </div>
+            `;
         }
 
         // Загрузка данных
@@ -2672,66 +2708,6 @@
             }
         }
 
-        // Обновление статистики
-        function updateStats() {
-            if (!statsEl) return;
-            
-            const totalHours = state.load.reduce((sum, item) => sum + (item.hours || 0), 0);
-            const totalLectures = state.load.reduce((sum, item) => sum + (item.lectures || 0), 0);
-            const totalSeminars = state.load.reduce((sum, item) => sum + (item.seminars || 0), 0);
-            
-            statsEl.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Группы</h4>
-                        <span class="stat-value">${state.groups.length}</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Преподаватели</h4>
-                        <span class="stat-value">${Object.keys(state.teacherStats).length}</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Всего часов</h4>
-                        <span class="stat-value">${totalHours}</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-book"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Лекции/Семинары</h4>
-                        <span class="stat-value">${totalLectures}/${totalSeminars}</span>
-                    </div>
-                </div>
-            `;
-        }
-
-        // Применение фильтров
-        function applyFilters() {
-            if (!state.groups) return;
-            
-            state.filteredGroups = state.groups.filter(group => {
-                const matchesCourse = state.courseFilter === 'all' || group.course == state.courseFilter;
-                const matchesForm = state.formFilter === 'all' || 
-                    (group.form && (group.form.includes(state.formFilter) || group.form === state.formFilter));
-                return matchesCourse && matchesForm;
-            });
-        }
-
         // Рендеринг
         async function renderView() {
             if (state.currentView === 'schedule') {
@@ -2762,60 +2738,40 @@
             }
         }
 
-        // Список групп
+        // Список групп с фильтрацией по курсу
         function renderGroupsList() {
             if (!state.filteredGroups || !state.filteredGroups.length) {
                 showEmpty('Нет групп, соответствующих выбранным фильтрам');
                 return;
             }
 
-            const groupsByCourse = {};
+            let html = '<div class="cards-grid">';
+
             state.filteredGroups.forEach(group => {
-                const course = group.course || 0;
-                if (!groupsByCourse[course]) groupsByCourse[course] = [];
-                groupsByCourse[course].push(group);
-            });
+                const formClass = getFormClass(group.form);
 
-            let html = '';
-            const sortedCourses = Object.keys(groupsByCourse).sort((a, b) => a - b);
-
-            sortedCourses.forEach(course => {
                 html += `
-                    <h3 style="margin: 25px 0 15px; color: #001a41;">
-                        ${course} курс
-                        <span style="font-size: 0.85rem; color: #5a6f8c; margin-left: 8px;">
-                            (${groupsByCourse[course].length} групп)
-                        </span>
-                    </h3>
-                    <div class="cards-grid">
-                `;
-
-                groupsByCourse[course].forEach(group => {
-                    const formClass = getFormClass(group.form);
-
-                    html += `
-                        <div class="group-card" data-id="${group.id}" data-name="${group.name}">
-                            <div class="card-header">
-                                <div class="card-icon">
-                                    <i class="fas fa-users"></i>
-                                </div>
-                                <div>
-                                    <div class="card-title">${group.name}</div>
-                                    <div class="card-subtitle">${group.fullName || ''}</div>
-                                </div>
+                    <div class="group-card" data-id="${group.id}" data-name="${group.name}">
+                        <div class="card-header">
+                            <div class="card-icon">
+                                <i class="fas fa-users"></i>
                             </div>
-                            <div class="card-badges">
-                                <span class="form-badge ${formClass}">${group.form || 'ОФО'}</span>
-                            </div>
-                            <div class="card-footer">
-                                <i class="fas fa-arrow-right"></i> Просмотреть расписание
+                            <div>
+                                <div class="card-title">${group.name}</div>
+                                <div class="card-subtitle">${group.fullName || ''}</div>
                             </div>
                         </div>
-                    `;
-                });
-
-                html += `</div>`;
+                        <div class="card-badges">
+                            <span class="form-badge ${formClass}">${group.form || 'ОФО'}</span>
+                        </div>
+                        <div class="card-footer">
+                            <i class="fas fa-arrow-right"></i> Просмотреть расписание
+                        </div>
+                    </div>
+                `;
             });
+
+            html += '</div>';
 
             if (contentEl) contentEl.innerHTML = html;
 
@@ -2831,15 +2787,22 @@
             });
         }
 
-        // Список преподавателей для расписания
+        // Список преподавателей для расписания (по алфавиту)
         function renderTeachersList() {
             if (!state.teachers || !state.teachers.length) {
                 showEmpty('Нет доступных преподавателей');
                 return;
             }
 
+            // Сортируем преподавателей по алфавиту
+            const sortedTeachers = [...state.teachers].sort((a, b) => {
+                const nameA = (a.fullName || '').toLowerCase();
+                const nameB = (b.fullName || '').toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
+
             let html = '<div class="cards-grid">';
-            state.teachers.forEach(teacher => {
+            sortedTeachers.forEach(teacher => {
                 html += `
                     <div class="teacher-card" data-id="${teacher.id}" data-name="${teacher.fullName}">
                         <div class="card-header">
@@ -2916,7 +2879,6 @@
                                         <th>Дисциплина</th>
                                         <th>Преподаватель</th>
                                         <th>Аудитория</th>
-                                        <th>Тип</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -2933,7 +2895,6 @@
                                     <td>${lesson.subject || '—'}</td>
                                     <td>${teacherName}</td>
                                     <td><span class="badge">${lesson.room || '—'}</span></td>
-                                    <td>${lesson.type || 'лекция'}</td>
                                 </tr>
                             `;
                         }
@@ -2992,7 +2953,6 @@
                                         <th>Дисциплина</th>
                                         <th>Группа</th>
                                         <th>Аудитория</th>
-                                        <th>Тип</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -3011,7 +2971,6 @@
                                     <td>${lesson.subject || '—'}</td>
                                     <td>${groupName} <span class="form-badge ${formClass}" style="margin-left: 6px;">${form || 'ОФО'}</span></td>
                                     <td><span class="badge">${lesson.room || '—'}</span></td>
-                                    <td>${lesson.type || 'лекция'}</td>
                                 </tr>
                             `;
                         }
@@ -3027,7 +2986,7 @@
             }
         }
 
-        // Список преподавателей для нагрузки
+        // Список преподавателей для нагрузки (только имя и общая нагрузка, по алфавиту)
         function renderTeacherList() {
             if (!contentEl) return;
             
@@ -3040,18 +2999,16 @@
 
             let filteredTeachers = teacherStats;
             
-            if (state.departmentFilter && departmentFilter) {
+            if (state.departmentFilter) {
                 filteredTeachers = filteredTeachers.filter(t => t.department === state.departmentFilter);
             }
-            
-            if (state.searchTerm) {
-                const term = state.searchTerm.toLowerCase();
-                filteredTeachers = filteredTeachers.filter(t => 
-                    t.teacherName.toLowerCase().includes(term)
-                );
-            }
 
-            filteredTeachers.sort((a, b) => b.totalHours - a.totalHours);
+            // Сортируем по алфавиту
+            filteredTeachers.sort((a, b) => {
+                const nameA = (a.teacherName || '').toLowerCase();
+                const nameB = (b.teacherName || '').toLowerCase();
+                return nameA.localeCompare(nameB);
+            });
 
             let html = '<div class="teacher-cards">';
 
@@ -3070,20 +3027,6 @@
                             <div>
                                 <div class="teacher-load-name">${shortName}</div>
                                 <div class="teacher-load-dept">${teacher.department}</div>
-                            </div>
-                        </div>
-                        <div class="teacher-load-stats">
-                            <div class="teacher-load-stat-item">
-                                <div class="teacher-load-stat-value">${teacher.disciplines.size}</div>
-                                <div class="teacher-load-stat-label">дисциплин</div>
-                            </div>
-                            <div class="teacher-load-stat-item">
-                                <div class="teacher-load-stat-value">${teacher.courses.size}</div>
-                                <div class="teacher-load-stat-label">курсов</div>
-                            </div>
-                            <div class="teacher-load-stat-item">
-                                <div class="teacher-load-stat-value">${teacher.records.length}</div>
-                                <div class="teacher-load-stat-label">записей</div>
                             </div>
                         </div>
                         <div class="teacher-load-hours">
@@ -3106,7 +3049,7 @@
             });
         }
 
-        // Детальная информация о преподавателе
+        // Детальная информация о преподавателе (упрощенная)
         function renderTeacherDetail() {
             if (!contentEl) return;
             
@@ -3117,6 +3060,7 @@
                 return;
             }
 
+            // Группируем записи по дисциплинам
             const disciplinesMap = {};
             teacher.records.forEach(record => {
                 const discipline = record.discipline || 'Без названия';
@@ -3124,19 +3068,13 @@
                     disciplinesMap[discipline] = {
                         name: discipline,
                         hours: 0,
-                        lectures: 0,
-                        seminars: 0,
-                        groups: new Set(),
-                        records: []
+                        groups: new Set()
                     };
                 }
                 disciplinesMap[discipline].hours += record.hours || 0;
-                disciplinesMap[discipline].lectures += record.lectures || 0;
-                disciplinesMap[discipline].seminars += record.seminars || 0;
                 if (record.course) {
                     disciplinesMap[discipline].groups.add(record.course);
                 }
-                disciplinesMap[discipline].records.push(record);
             });
 
             const disciplines = Object.values(disciplinesMap).sort((a, b) => b.hours - a.hours);
@@ -3150,25 +3088,6 @@
                         <div class="teacher-detail-info">
                             <h2>${teacher.teacherName}</h2>
                             <p>${teacher.department}</p>
-                        </div>
-                    </div>
-                    
-                    <div class="teacher-detail-stats">
-                        <div class="teacher-detail-stat">
-                            <div class="teacher-detail-stat-value">${teacher.totalHours}</div>
-                            <div class="teacher-detail-stat-label">Всего часов</div>
-                        </div>
-                        <div class="teacher-detail-stat">
-                            <div class="teacher-detail-stat-value">${teacher.lectures}</div>
-                            <div class="teacher-detail-stat-label">Лекции</div>
-                        </div>
-                        <div class="teacher-detail-stat">
-                            <div class="teacher-detail-stat-value">${teacher.seminars}</div>
-                            <div class="teacher-detail-stat-label">Семинары</div>
-                        </div>
-                        <div class="teacher-detail-stat">
-                            <div class="teacher-detail-stat-value">${teacher.disciplines.size}</div>
-                            <div class="teacher-detail-stat-label">Дисциплин</div>
                         </div>
                     </div>
 
@@ -3196,7 +3115,7 @@
             contentEl.innerHTML = html;
         }
 
-        // Статистика с графиками
+        // Статистика с графиками (полная информация)
         function renderStatistics() {
             if (!contentEl) return;
             showLoader();
@@ -3289,11 +3208,10 @@
                                     <div style="display: flex; align-items: center; gap: 8px;">
                                         <span style="font-weight: 700; color: #0038a8;">${i+1}.</span>
                                         <span style="font-weight: 600;">${teacher.teacherName}</span>
-                                        <span class="badge">${teacher.disciplines.size} дисциплин</span>
                                     </div>
                                     <div style="display: flex; gap: 15px;">
-                                        <span><i class="fas fa-chalkboard" style="color: #0038a8;"></i> ${teacher.lectures}</span>
-                                        <span><i class="fas fa-users" style="color: #0038a8;"></i> ${teacher.seminars}</span>
+                                        <span><i class="fas fa-chalkboard" style="color: #0038a8;"></i> ${teacher.records.reduce((sum, r) => sum + (r.lectures || 0), 0)}</span>
+                                        <span><i class="fas fa-users" style="color: #0038a8;"></i> ${teacher.records.reduce((sum, r) => sum + (r.seminars || 0), 0)}</span>
                                         <span style="font-weight: 700; color: #0038a8;">${teacher.totalHours} ч</span>
                                     </div>
                                 </div>
@@ -3455,12 +3373,13 @@
                 }
             });
 
-            if (roleTabs) roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
-            if (controlPanel) controlPanel.style.display = view === 'schedule' ? 'flex' : 'none';
-            if (courseFilters) courseFilters.style.display = view === 'schedule' && state.currentRole === 'student' ? 'block' : 'none';
-            if (loadFilters) loadFilters.style.display = view === 'load' && state.loadView === 'teachers' ? 'flex' : 'none';
+            roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
+            controlPanel.style.display = view === 'schedule' ? 'flex' : 'none';
             
             if (view === 'schedule') {
+                courseButtonsContainer.style.display = state.currentRole === 'student' ? 'flex' : 'none';
+                courseFilters.style.display = state.currentRole === 'student' ? 'block' : 'none';
+                loadFilters.style.display = 'none';
                 state.scheduleView = 'list';
                 state.selectedGroupId = null;
                 state.selectedGroupName = '';
@@ -3468,11 +3387,17 @@
                 state.selectedTeacherName = '';
                 setBackVisibility(false);
             } else if (view === 'load') {
+                courseButtonsContainer.style.display = 'none';
+                courseFilters.style.display = 'none';
+                loadFilters.style.display = 'flex';
                 state.loadView = 'teachers';
                 state.selectedTeacherId = null;
                 state.selectedTeacherName = null;
                 setBackVisibility(false);
             } else {
+                courseButtonsContainer.style.display = 'none';
+                courseFilters.style.display = 'none';
+                loadFilters.style.display = 'none';
                 setBackVisibility(true);
             }
             
@@ -3497,9 +3422,22 @@
                 }
             });
 
-            if (courseFilters) courseFilters.style.display = role === 'student' ? 'block' : 'none';
+            courseButtonsContainer.style.display = role === 'student' ? 'flex' : 'none';
+            courseFilters.style.display = role === 'student' ? 'block' : 'none';
             
             setBackVisibility(false);
+            applyFilters();
+            renderView();
+        }
+
+        function setCourse(course) {
+            state.selectedCourse = course;
+            applyFilters();
+            renderView();
+        }
+
+        function setForm(form) {
+            state.selectedForm = form;
             applyFilters();
             renderView();
         }
@@ -3507,36 +3445,29 @@
         function showTeacherDetail(teacherName) {
             state.loadView = 'teacherDetail';
             state.selectedTeacherName = teacherName;
-            const teacherStat = state.teacherStats[teacherName];
-            if (teacherStat && teacherStat.teacherId) {
-                state.selectedTeacherId = teacherStat.teacherId;
-            }
             setBackVisibility(true);
             updateBreadcrumbs();
             renderView();
         }
 
-        // Обработчики фильтров
+        // Обработчики кнопок курсов
         if (courseButtons) {
             courseButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
                     courseButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    state.courseFilter = btn.dataset.course;
-                    applyFilters();
-                    renderView();
+                    setCourse(btn.dataset.course);
                 });
             });
         }
 
-        if (formButtons) {
-            formButtons.forEach(btn => {
+        // Обработчики фильтров форм
+        if (formFilterButtons) {
+            formFilterButtons.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    formButtons.forEach(b => b.classList.remove('active'));
+                    formFilterButtons.forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    state.formFilter = btn.dataset.form;
-                    applyFilters();
-                    renderView();
+                    setForm(btn.dataset.form);
                 });
             });
         }
@@ -3544,13 +3475,6 @@
         if (departmentFilter) {
             departmentFilter.addEventListener('change', (e) => {
                 state.departmentFilter = e.target.value;
-                renderView();
-            });
-        }
-
-        if (searchInput) {
-            searchInput.addEventListener('input', (e) => {
-                state.searchTerm = e.target.value;
                 renderView();
             });
         }
