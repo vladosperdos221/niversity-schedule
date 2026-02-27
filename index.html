@@ -511,36 +511,6 @@
             transform: translateX(-3px);
         }
 
-        /* Кнопки курсов */
-        .course-buttons {
-            display: flex;
-            gap: 10px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .course-btn {
-            padding: 12px 30px;
-            border: 2px solid #0038a8;
-            border-radius: 40px;
-            background: white;
-            color: #0038a8;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            min-width: 100px;
-        }
-
-        .course-btn:hover {
-            background: #f0f5ff;
-        }
-
-        .course-btn.active {
-            background: #0038a8;
-            color: white;
-        }
-
         /* Главное меню */
         .main-menu {
             display: grid;
@@ -598,38 +568,6 @@
             font-size: 0.85rem;
         }
 
-        /* Панель управления */
-        .control-panel {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .control-btn {
-            background: white;
-            border: 2px solid #0038a8;
-            color: #0038a8;
-            padding: 10px 22px;
-            border-radius: 40px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .control-btn:hover {
-            background: #0038a8;
-            color: white;
-        }
-
-        .control-btn i {
-            font-size: 1.1rem;
-        }
-
         /* Ролевые кнопки */
         .role-tabs {
             display: flex;
@@ -663,136 +601,63 @@
             box-shadow: 0 8px 16px -6px rgba(0, 56, 168, 0.15);
         }
 
-        /* Фильтры по курсам и формам */
-        .course-filters {
-            background: white;
-            border-radius: 18px;
-            padding: 18px;
-            margin: 18px 0;
-            border: 1px solid #e8edf5;
-        }
-
-        .filter-section {
-            margin-bottom: 15px;
-        }
-
-        .filter-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .filter-title {
-            font-weight: 600;
-            color: #001a41;
-            margin-bottom: 12px;
-            font-size: 1rem;
-        }
-
-        .filter-buttons {
+        /* Кнопки курсов */
+        .course-buttons {
             display: flex;
-            gap: 8px;
+            gap: 10px;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
 
-        .filter-btn {
-            padding: 8px 20px;
-            border: 2px solid #e8edf5;
-            border-radius: 25px;
+        .course-btn {
+            flex: 1;
+            padding: 15px 0;
+            border: 2px solid #0038a8;
+            border-radius: 50px;
             background: white;
-            color: #5a6f8c;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .filter-btn:hover {
-            border-color: #0038a8;
             color: #0038a8;
-        }
-
-        .filter-btn.active {
-            background: #0038a8;
-            border-color: #0038a8;
-            color: white;
-        }
-
-        /* Цветовые метки для форм обучения */
-        .form-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 18px;
-            font-size: 0.8rem;
             font-weight: 600;
-            margin-right: 6px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 100px;
         }
 
-        .form-badge.ofo {
+        .course-btn:hover {
+            background: #f0f5ff;
+        }
+
+        .course-btn.active {
             background: #0038a8;
             color: white;
         }
 
-        .form-badge.zfo {
-            background: #e41e26;
-            color: white;
-        }
-
-        .form-badge.ozfo {
-            background: #f39c12;
-            color: white;
-        }
-
-        .form-badge.ozo {
-            background: #27ae60;
-            color: white;
-        }
-
-        .form-badge.zfous {
-            background: #9b59b6;
-            color: white;
-        }
-
-        /* Статистика */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
+        /* Фильтры для нагрузки */
+        .filters-bar {
             background: white;
-            border-radius: 22px;
-            padding: 18px;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e8edf5;
+            border-radius: 18px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
             display: flex;
-            align-items: center;
             gap: 12px;
-        }
-
-        .stat-icon {
-            width: 45px;
-            height: 45px;
-            background: #f0f5ff;
-            border-radius: 16px;
-            display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            justify-content: center;
-            color: #0038a8;
-            font-size: 1.3rem;
+            border: 1px solid #e8edf5;
         }
 
-        .stat-info h4 {
-            color: #5a6f8c;
-            font-size: 0.8rem;
-            font-weight: 500;
-            margin-bottom: 4px;
+        .filter-select {
+            padding: 8px 12px;
+            border: 2px solid #e8edf5;
+            border-radius: 14px;
+            font-size: 0.9rem;
+            min-width: 160px;
+            background: white;
+            cursor: pointer;
         }
 
-        .stat-info .stat-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #001a41;
+        .filter-select:focus {
+            border-color: #0038a8;
+            outline: none;
         }
 
         /* Карточки групп */
@@ -881,7 +746,42 @@
             font-size: 0.85rem;
         }
 
-        /* Карточки преподавателей для нагрузки (упрощенные) */
+        /* Цветовые метки для форм обучения */
+        .form-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 18px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 6px;
+        }
+
+        .form-badge.ofo {
+            background: #0038a8;
+            color: white;
+        }
+
+        .form-badge.zfo {
+            background: #e41e26;
+            color: white;
+        }
+
+        .form-badge.ozfo {
+            background: #f39c12;
+            color: white;
+        }
+
+        .form-badge.ozo {
+            background: #27ae60;
+            color: white;
+        }
+
+        .form-badge.zfous {
+            background: #9b59b6;
+            color: white;
+        }
+
+        /* Карточки преподавателей для нагрузки */
         .teacher-cards {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -969,7 +869,7 @@
             font-size: 1.3rem;
         }
 
-        /* Детальная карточка преподавателя (упрощенная) */
+        /* Детальная карточка преподавателя */
         .teacher-detail-card {
             background: white;
             border-radius: 25px;
@@ -1126,46 +1026,48 @@
             position: relative;
         }
 
-        /* Фильтры для нагрузки */
-        .filters-bar {
+        /* Статистика - только в аналитике */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
             background: white;
-            border-radius: 18px;
-            padding: 12px 18px;
-            margin-bottom: 18px;
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
+            border-radius: 22px;
+            padding: 18px;
+            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
             border: 1px solid #e8edf5;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .filter-select {
-            padding: 8px 12px;
-            border: 2px solid #e8edf5;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            min-width: 160px;
-            background: white;
-            cursor: pointer;
+        .stat-icon {
+            width: 45px;
+            height: 45px;
+            background: #f0f5ff;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0038a8;
+            font-size: 1.3rem;
         }
 
-        .filter-select:focus {
-            border-color: #0038a8;
-            outline: none;
+        .stat-info h4 {
+            color: #5a6f8c;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-bottom: 4px;
         }
 
-        .search-input {
-            padding: 8px 12px;
-            border: 2px solid #e8edf5;
-            border-radius: 14px;
-            font-size: 0.9rem;
-            flex: 1;
-            min-width: 220px;
-        }
-
-        .search-input:focus {
-            border-color: #0038a8;
-            outline: none;
+        .stat-info .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #001a41;
         }
 
         /* Загрузчик */
@@ -1322,10 +1224,6 @@
                 flex-direction: column;
             }
             
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
             .filter-buttons {
                 flex-direction: column;
             }
@@ -1358,7 +1256,7 @@
             }
             
             .course-buttons {
-                justify-content: center;
+                flex-direction: column;
             }
         }
     </style>
@@ -1564,19 +1462,6 @@
             </div>
         </div>
 
-        <!-- Панель управления -->
-        <div class="control-panel" id="controlPanel">
-            <button class="control-btn" id="combinePairsBtn">
-                <i class="fas fa-link"></i> Совместить пары
-            </button>
-            <button class="control-btn" id="teacherWindowsBtn">
-                <i class="fas fa-clock"></i> Окна преподавателей
-            </button>
-            <button class="control-btn" id="addWindowBtn">
-                <i class="fas fa-plus"></i> Добавить окно
-            </button>
-        </div>
-
         <!-- Ролевые кнопки -->
         <div class="role-tabs" id="roleTabs" style="display: none;">
             <button class="role-btn active" data-role="student">
@@ -1589,39 +1474,20 @@
 
         <!-- Кнопки курсов (только для студентов) -->
         <div class="course-buttons" id="courseButtonsContainer" style="display: none;">
-            <button class="course-btn active" data-course="all">Все курсы</button>
-            <button class="course-btn" data-course="1">1 курс</button>
+            <button class="course-btn active" data-course="1">1 курс</button>
             <button class="course-btn" data-course="2">2 курс</button>
             <button class="course-btn" data-course="3">3 курс</button>
             <button class="course-btn" data-course="4">4 курс</button>
         </div>
 
-        <!-- Фильтры по формам обучения (только для студентов) -->
-        <div class="course-filters" id="courseFilters" style="display: none;">
-            <div class="filter-section">
-                <div class="filter-title">Форма обучения</div>
-                <div class="filter-buttons" id="formButtons">
-                    <button class="filter-btn" data-form="all">Все формы</button>
-                    <button class="filter-btn" data-form="ОФО">Очная (ОФО)</button>
-                    <button class="filter-btn" data-form="ЗФО">Заочная (ЗФО)</button>
-                    <button class="filter-btn" data-form="ОЗФО">Очно-заочная (ОЗФО)</button>
-                    <button class="filter-btn" data-form="ОЗО">Очно-заочная (ОЗО)</button>
-                    <button class="filter-btn" data-form="ЗФО ускоренная">Ускоренная (ЗФО)</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Фильтры для нагрузки (только кафедра) -->
+        <!-- Фильтры для нагрузки -->
         <div class="filters-bar" id="loadFilters" style="display: none;">
             <select class="filter-select" id="departmentFilter">
                 <option value="">Все кафедры</option>
             </select>
         </div>
 
-        <!-- Статистика (только цифры) -->
-        <div class="stats-grid" id="stats"></div>
-
-        <!-- Контент -->
+        <!-- Контент (без статистики) -->
         <div class="content-area" id="content">
             <div class="loader">
                 <div class="spinner"></div>
@@ -1749,15 +1615,11 @@
         const backBtn = document.getElementById('backBtn');
         const homeBtn = document.getElementById('homeBtn');
         const menuCards = document.querySelectorAll('.menu-card');
-        const statsEl = document.getElementById('stats');
         const roleTabs = document.getElementById('roleTabs');
-        const controlPanel = document.getElementById('controlPanel');
-        const courseFilters = document.getElementById('courseFilters');
+        const courseButtonsContainer = document.getElementById('courseButtonsContainer');
+        const courseBtns = document.querySelectorAll('.course-btn');
         const loadFilters = document.getElementById('loadFilters');
         const departmentFilter = document.getElementById('departmentFilter');
-        const courseButtonsContainer = document.getElementById('courseButtonsContainer');
-        const courseButtons = document.querySelectorAll('.course-btn');
-        const formFilterButtons = document.querySelectorAll('#formButtons .filter-btn');
         
         // Элементы модальных окон
         const combineModal = document.getElementById('combineModal');
@@ -1796,19 +1658,15 @@
             selectedTeacherName: null,
             selectedGroupId: null,
             selectedGroupName: '',
-            selectedCourse: 'all',
-            selectedForm: 'all',
+            selectedCourse: '1',
             schedule: [],
             groups: [],
             teachers: [],
             load: [],
-            filteredLoad: [],
             windows: [],
             teacherStats: {},
-            courseFilter: 'all',
-            formFilter: 'all',
             departmentFilter: '',
-            charts: {}
+            filteredGroups: []
         };
 
         // ========== ПРОВЕРКА СОХРАНЕННОЙ СЕССИИ ==========
@@ -2492,80 +2350,9 @@
             }
         }
 
-        // Расчет статистики по преподавателям
+        // Расчет статистики по преподавателям (только для аналитики)
         function calculateTeacherStats() {
             state.teacherStats = {};
-            
-            // Словарь для объединения имен
-            const teacherNameMapping = {
-                "Ишик И.Н.": "Ишик Ирина Николаевна",
-                "Ишик": "Ишик Ирина Николаевна",
-                "Граммова Е.А.": "Граммова Елена Алексеевна",
-                "Граммова": "Граммова Елена Алексеевна",
-                "Ирицян Г.Э.": "Ирицян Гурген Эдмондович",
-                "Ирицян": "Ирицян Гурген Эдмондович",
-                "Ковалева И.П.": "Ковалева Ирина Петровна",
-                "Ковалева": "Ковалева Ирина Петровна",
-                "Баженова С.А.": "Баженова Светлана Анатольевна",
-                "Баженова": "Баженова Светлана Анатольевна",
-                "Воблая И.Н.": "Воблая Ирина Николаевна",
-                "Воблая": "Воблая Ирина Николаевна",
-                "Матросова Т.В.": "Матросова Татьяна Владимировна",
-                "Матросова": "Матросова Татьяна Владимировна",
-                "Зайковский Б.Б.": "Зайковский Борис Борисович",
-                "Зайковский": "Зайковский Борис Борисович",
-                "Яблонская Л.В.": "Яблонская Людмила Валерьевна",
-                "Яблонская": "Яблонская Людмила Валерьевна",
-                "Сейфиева Е.Н.": "Сейфиева Елена Николаевна",
-                "Сейфиева": "Сейфиева Елена Николаевна",
-                "Растегаева Н.А.": "Растегаева Нина Александровна",
-                "Растегаева": "Растегаева Нина Александровна",
-                "Рзун И.Г.": "Рзун Ирина Геннадьевна",
-                "Рзун": "Рзун Ирина Геннадьевна",
-                "Бялецкая Е.М.": "Бялецкая Елена Михайловна",
-                "Бялецкая": "Бялецкая Елена Михайловна",
-                "Кабанов С.Ю.": "Кабанов Сергей Юрьевич",
-                "Кабанов": "Кабанов Сергей Юрьевич",
-                "Данилова Л.Г.": "Данилова Людмила Григорьевна",
-                "Данилова": "Данилова Людмила Григорьевна",
-                "Королева Н.В.": "Королева Наталья Владимировна",
-                "Королева": "Королева Наталья Владимировна",
-                "Егоров М.А.": "Егоров Максим Александрович",
-                "Егоров": "Егоров Максим Александрович",
-                "Свириденко А.Б.": "Свириденко Анастасия Борисовна",
-                "Свириденко": "Свириденко Анастасия Борисовна",
-                "Мирзаев А.А.": "Мирзаев Азиз Агакеримович",
-                "Мирзаев": "Мирзаев Азиз Агакеримович",
-                "Росторгуева Н.Ю.": "Росторгуева Наталья Юрьевна",
-                "Росторгуева": "Росторгуева Наталья Юрьевна",
-                "Стрижак М.С.": "Стрижак Марина Сергеевна",
-                "Стрижак": "Стрижак Марина Сергеевна",
-                "Андриянова А.А.": "Андриянова Алена Александровна",
-                "Андриянова": "Андриянова Алена Александровна",
-                "Андриянова Л.С.": "Андриянова Людмила Сергеевна",
-                "Долгов А.М.": "Долгов Андрей Михайлович",
-                "Долгов": "Долгов Андрей Михайлович",
-                "Литвинова О.С.": "Литвинова Оксана Степановна",
-                "Литвинова": "Литвинова Оксана Степановна",
-                "Корчагин С.В.": "Корчагин Сергей Владимирович",
-                "Корчагин": "Корчагин Сергей Владимирович",
-                "Егорова Н.Н.": "Егорова Наталья Николаевна",
-                "Егорова": "Егорова Наталья Николаевна",
-                "Шешина Л.А.": "Шешина Лариса Александровна",
-                "Шешина": "Шешина Лариса Александровна",
-                "Трифонова Д.А.": "Трифонова Дарья Александровна",
-                "Трифонова": "Трифонова Дарья Александровна",
-                "Зинченко А.Л.": "Зинченко Андрей Леонидович",
-                "Зинченко": "Зинченко Андрей Леонидович",
-                "Скороход А.И.": "Скороход Алексей Иванович",
-                "Скороход": "Скороход Алексей Иванович",
-                "Новикова Я.А.": "Новикова Яна Александровна",
-                "Новикова": "Новикова Яна Александровна",
-                "Хилько Н.А.": "Хилько Николай Алексеевич",
-                "Хилько": "Хилько Николай Алексеевич",
-                "Иванчикова": "Иванчикова Елена Александровна",
-                "Иванчикова Е.А.": "Иванчикова Елена Александровна"
-            };
             
             if (!state.load || state.load.length === 0) return;
             
@@ -2575,22 +2362,25 @@
                 // Получаем исходное имя
                 const rawName = item.teacherName || item.teacher || '';
                 
-                // Пропускаем "Неизвестный преподаватель"
+                // Пропускаем пустые имена
                 if (!rawName || rawName === 'Неизвестный преподаватель') return;
                 
-                // Нормализуем имя
-                const teacherName = teacherNameMapping[rawName] || rawName;
+                const teacherName = rawName;
                 
                 if (!state.teacherStats[teacherName]) {
                     state.teacherStats[teacherName] = {
                         teacherName: teacherName,
                         department: item.department || 'Кафедра',
                         totalHours: 0,
+                        lectures: 0,
+                        seminars: 0,
                         records: []
                     };
                 }
                 
                 state.teacherStats[teacherName].totalHours += item.hours || 0;
+                state.teacherStats[teacherName].lectures += item.lectures || 0;
+                state.teacherStats[teacherName].seminars += item.seminars || 0;
                 state.teacherStats[teacherName].records.push(item);
             });
         }
@@ -2612,52 +2402,12 @@
         }
 
         // Применение фильтров для групп
-        function applyFilters() {
+        function filterGroups() {
             if (!state.groups) return;
             
-            state.filteredGroups = state.groups.filter(group => {
-                const matchesCourse = state.selectedCourse === 'all' || group.course == state.selectedCourse;
-                const matchesForm = state.selectedForm === 'all' || 
-                    (group.form && (group.form.includes(state.selectedForm) || group.form === state.selectedForm));
-                return matchesCourse && matchesForm;
-            });
-        }
-
-        // Обновление статистики
-        function updateStats() {
-            if (!statsEl) return;
-            
-            const totalHours = state.load.reduce((sum, item) => sum + (item.hours || 0), 0);
-            
-            statsEl.innerHTML = `
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Группы</h4>
-                        <span class="stat-value">${state.groups.length}</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Преподаватели</h4>
-                        <span class="stat-value">${Object.keys(state.teacherStats).length}</span>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h4>Всего часов</h4>
-                        <span class="stat-value">${totalHours}</span>
-                    </div>
-                </div>
-            `;
+            state.filteredGroups = state.groups.filter(group => 
+                group.course == state.selectedCourse
+            );
         }
 
         // Загрузка данных
@@ -2699,8 +2449,7 @@
                     state.windows = Object.entries(windowsSnap.val()).map(([id, data]) => ({ id, ...data }));
                 }
 
-                updateStats();
-                applyFilters();
+                filterGroups();
                 renderView();
             } catch (error) {
                 console.error('Ошибка загрузки:', error);
@@ -2738,10 +2487,10 @@
             }
         }
 
-        // Список групп с фильтрацией по курсу
+        // Список групп (только для выбранного курса)
         function renderGroupsList() {
             if (!state.filteredGroups || !state.filteredGroups.length) {
-                showEmpty('Нет групп, соответствующих выбранным фильтрам');
+                showEmpty(`Нет групп на ${state.selectedCourse} курсе`);
                 return;
             }
 
@@ -3049,7 +2798,7 @@
             });
         }
 
-        // Детальная информация о преподавателе (упрощенная)
+        // Детальная информация о преподавателе
         function renderTeacherDetail() {
             if (!contentEl) return;
             
@@ -3115,12 +2864,16 @@
             contentEl.innerHTML = html;
         }
 
-        // Статистика с графиками (полная информация)
+        // Статистика с графиками (только здесь есть цифры)
         function renderStatistics() {
             if (!contentEl) return;
             showLoader();
 
             setTimeout(() => {
+                const totalHours = state.load.reduce((sum, i) => sum + (i.hours || 0), 0);
+                const totalLectures = state.load.reduce((sum, i) => sum + (i.lectures || 0), 0);
+                const totalSeminars = state.load.reduce((sum, i) => sum + (i.seminars || 0), 0);
+                
                 const topTeachers = Object.values(state.teacherStats)
                     .sort((a, b) => b.totalHours - a.totalHours)
                     .slice(0, 10);
@@ -3135,11 +2888,6 @@
                     }
                 });
 
-                const typeStats = {
-                    lectures: state.load.reduce((sum, i) => sum + (i.lectures || 0), 0),
-                    seminars: state.load.reduce((sum, i) => sum + (i.seminars || 0), 0)
-                };
-
                 let html = `
                     <div class="table-container">
                         <h2 style="margin-bottom: 15px; color: #001a41;">
@@ -3150,10 +2898,28 @@
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h4>Группы</h4>
+                                    <span class="stat-value">${state.groups.length}</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chalkboard-teacher"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h4>Преподаватели</h4>
+                                    <span class="stat-value">${Object.keys(state.teacherStats).length}</span>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
                                     <i class="fas fa-file-alt"></i>
                                 </div>
                                 <div class="stat-info">
-                                    <h4>Всего записей</h4>
+                                    <h4>Записей</h4>
                                     <span class="stat-value">${state.load.length}</span>
                                 </div>
                             </div>
@@ -3163,16 +2929,19 @@
                                 </div>
                                 <div class="stat-info">
                                     <h4>Всего часов</h4>
-                                    <span class="stat-value">${state.load.reduce((sum, i) => sum + (i.hours || 0), 0)}</span>
+                                    <span class="stat-value">${totalHours}</span>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-icon">
                                     <i class="fas fa-chalkboard"></i>
                                 </div>
                                 <div class="stat-info">
                                     <h4>Лекции</h4>
-                                    <span class="stat-value">${typeStats.lectures}</span>
+                                    <span class="stat-value">${totalLectures}</span>
                                 </div>
                             </div>
                             <div class="stat-card">
@@ -3181,7 +2950,7 @@
                                 </div>
                                 <div class="stat-info">
                                     <h4>Семинары</h4>
-                                    <span class="stat-value">${typeStats.seminars}</span>
+                                    <span class="stat-value">${totalSeminars}</span>
                                 </div>
                             </div>
                         </div>
@@ -3210,8 +2979,8 @@
                                         <span style="font-weight: 600;">${teacher.teacherName}</span>
                                     </div>
                                     <div style="display: flex; gap: 15px;">
-                                        <span><i class="fas fa-chalkboard" style="color: #0038a8;"></i> ${teacher.records.reduce((sum, r) => sum + (r.lectures || 0), 0)}</span>
-                                        <span><i class="fas fa-users" style="color: #0038a8;"></i> ${teacher.records.reduce((sum, r) => sum + (r.seminars || 0), 0)}</span>
+                                        <span><i class="fas fa-chalkboard" style="color: #0038a8;"></i> ${teacher.lectures}</span>
+                                        <span><i class="fas fa-users" style="color: #0038a8;"></i> ${teacher.seminars}</span>
                                         <span style="font-weight: 700; color: #0038a8;">${teacher.totalHours} ч</span>
                                     </div>
                                 </div>
@@ -3350,16 +3119,18 @@
                 state.selectedTeacherId = null;
                 state.selectedTeacherName = '';
                 setBackVisibility(false);
+                filterGroups();
+                renderView();
             } else if (state.currentView === 'load') {
                 state.loadView = 'teachers';
                 state.selectedTeacherId = null;
                 state.selectedTeacherName = null;
                 setBackVisibility(false);
+                renderView();
             } else {
                 setView('schedule');
             }
             updateBreadcrumbs();
-            renderView();
         }
 
         function setView(view) {
@@ -3374,11 +3145,9 @@
             });
 
             roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
-            controlPanel.style.display = view === 'schedule' ? 'flex' : 'none';
             
             if (view === 'schedule') {
                 courseButtonsContainer.style.display = state.currentRole === 'student' ? 'flex' : 'none';
-                courseFilters.style.display = state.currentRole === 'student' ? 'block' : 'none';
                 loadFilters.style.display = 'none';
                 state.scheduleView = 'list';
                 state.selectedGroupId = null;
@@ -3386,24 +3155,24 @@
                 state.selectedTeacherId = null;
                 state.selectedTeacherName = '';
                 setBackVisibility(false);
+                filterGroups();
+                renderView();
             } else if (view === 'load') {
                 courseButtonsContainer.style.display = 'none';
-                courseFilters.style.display = 'none';
                 loadFilters.style.display = 'flex';
                 state.loadView = 'teachers';
                 state.selectedTeacherId = null;
                 state.selectedTeacherName = null;
                 setBackVisibility(false);
+                renderView();
             } else {
                 courseButtonsContainer.style.display = 'none';
-                courseFilters.style.display = 'none';
                 loadFilters.style.display = 'none';
                 setBackVisibility(true);
+                renderView();
             }
             
             updateBreadcrumbs();
-            applyFilters();
-            renderView();
         }
 
         function setRole(role) {
@@ -3423,22 +3192,25 @@
             });
 
             courseButtonsContainer.style.display = role === 'student' ? 'flex' : 'none';
-            courseFilters.style.display = role === 'student' ? 'block' : 'none';
             
             setBackVisibility(false);
-            applyFilters();
+            filterGroups();
             renderView();
         }
 
         function setCourse(course) {
             state.selectedCourse = course;
-            applyFilters();
-            renderView();
-        }
-
-        function setForm(form) {
-            state.selectedForm = form;
-            applyFilters();
+            
+            // Обновляем активную кнопку
+            courseBtns.forEach(btn => {
+                if (btn.dataset.course === course) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            filterGroups();
             renderView();
         }
 
@@ -3451,26 +3223,11 @@
         }
 
         // Обработчики кнопок курсов
-        if (courseButtons) {
-            courseButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    courseButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    setCourse(btn.dataset.course);
-                });
+        courseBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                setCourse(btn.dataset.course);
             });
-        }
-
-        // Обработчики фильтров форм
-        if (formFilterButtons) {
-            formFilterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    formFilterButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    setForm(btn.dataset.form);
-                });
-            });
-        }
+        });
 
         if (departmentFilter) {
             departmentFilter.addEventListener('change', (e) => {
