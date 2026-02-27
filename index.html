@@ -511,7 +511,7 @@
             transform: translateX(-3px);
         }
 
-        /* Панель управления (окна и потоки) */
+        /* Панель управления */
         .control-panel {
             display: flex;
             gap: 12px;
@@ -541,104 +541,6 @@
 
         .control-btn i {
             font-size: 1.2rem;
-        }
-
-        /* Модальное окно */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 35px;
-            padding: 30px;
-            max-width: 500px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.25);
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #001a41;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            color: #5a6f8c;
-            font-weight: 500;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .form-input, .form-select {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e8edf5;
-            border-radius: 20px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: #0038a8;
-            outline: none;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .modal-btn.save {
-            background: #0038a8;
-            color: white;
-        }
-
-        .modal-btn.save:hover {
-            background: #002a80;
-        }
-
-        .modal-btn.cancel {
-            background: #f0f4f8;
-            color: #5a6f8c;
-        }
-
-        .modal-btn.cancel:hover {
-            background: #e4e9f2;
         }
 
         /* Главное меню */
@@ -1156,7 +1058,7 @@
             position: relative;
         }
 
-        /* Статистика - только в аналитике */
+        /* Статистика */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1243,6 +1145,107 @@
             color: #5a6f8c;
             font-size: 1.1rem;
             border: 2px dashed #cbd6e6;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 35px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #001a41;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-label {
+            display: block;
+            color: #5a6f8c;
+            font-weight: 500;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 2px solid #e8edf5;
+            border-radius: 18px;
+            font-size: 0.95rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: #0038a8;
+            outline: none;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.save {
+            background: #0038a8;
+            color: white;
+        }
+
+        .modal-btn.save:hover {
+            background: #002a80;
+        }
+
+        .modal-btn.cancel {
+            background: #f0f4f8;
+            color: #5a6f8c;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e4e9f2;
         }
 
         /* Адаптивность */
@@ -1478,7 +1481,7 @@
             </button>
         </div>
 
-        <!-- Панель управления (окна и потоки) -->
+        <!-- Панель управления (окна, потоки, совмещение) -->
         <div class="control-panel" id="controlPanel">
             <button class="control-btn" id="combinePairsBtn">
                 <i class="fas fa-link"></i> Совместить пары
@@ -1488,6 +1491,9 @@
             </button>
             <button class="control-btn" id="addWindowBtn">
                 <i class="fas fa-plus"></i> Добавить окно
+            </button>
+            <button class="control-btn" id="streamsBtn">
+                <i class="fas fa-layer-group"></i> Потоки
             </button>
         </div>
 
@@ -1541,7 +1547,7 @@
             </select>
         </div>
 
-        <!-- Контент (без статистики) -->
+        <!-- Контент -->
         <div class="content-area" id="content">
             <div class="loader">
                 <div class="spinner"></div>
@@ -1549,46 +1555,21 @@
         </div>
     </div>
 
-    <!-- Модальное окно для совмещения пар -->
-    <div class="modal" id="combineModal">
-        <div class="modal-content">
-            <div class="modal-title">Совмещение пар</div>
-            <div class="form-group">
-                <label class="form-label">Выберите первую пару</label>
-                <select class="form-select" id="firstPairSelect">
-                    <option value="">Выберите пару</option>
+    <!-- Модальное окно для окон преподавателей с просмотром -->
+    <div class="modal" id="teacherWindowsModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-title">
+                <i class="fas fa-clock"></i>
+                Окна преподавателей
+            </div>
+            
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <select class="filter-select" id="windowTeacherFilter" style="flex: 2;">
+                    <option value="">Все преподаватели</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Выберите вторую пару</label>
-                <select class="form-select" id="secondPairSelect">
-                    <option value="">Выберите пару</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Новая аудитория (опционально)</label>
-                <input type="text" class="form-input" id="newRoomInput" placeholder="Например: 301">
-            </div>
-            <div class="modal-actions">
-                <button class="modal-btn save" id="combineSaveBtn">Совместить</button>
-                <button class="modal-btn cancel" id="combineCancelBtn">Отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно для добавления окна -->
-    <div class="modal" id="windowModal">
-        <div class="modal-content">
-            <div class="modal-title">Добавить окно преподавателю</div>
-            <div class="form-group">
-                <label class="form-label">Преподаватель</label>
-                <select class="form-select" id="windowTeacherSelect">
-                    <option value="">Выберите преподавателя</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="form-label">День недели</label>
-                <select class="form-select" id="windowDaySelect">
+                
+                <select class="filter-select" id="windowDayFilter" style="flex: 1;">
+                    <option value="">Все дни</option>
                     <option value="Понедельник">Понедельник</option>
                     <option value="Вторник">Вторник</option>
                     <option value="Среда">Среда</option>
@@ -1597,9 +1578,60 @@
                     <option value="Суббота">Суббота</option>
                 </select>
             </div>
+            
+            <div id="windowsList" style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;"></div>
+            
+            <button class="control-btn" id="addWindowFromListBtn" style="width: 100%; margin-bottom: 10px;">
+                <i class="fas fa-plus"></i> Добавить новое окно
+            </button>
+            
+            <div class="modal-actions">
+                <button class="modal-btn cancel" id="teacherWindowsCloseBtn">
+                    <i class="fas fa-times"></i> Закрыть
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для добавления окна -->
+    <div class="modal" id="addWindowModal">
+        <div class="modal-content">
+            <div class="modal-title">
+                <i class="fas fa-plus-circle"></i>
+                Добавить окно преподавателю
+            </div>
+            
             <div class="form-group">
-                <label class="form-label">Номер пары</label>
-                <select class="form-select" id="windowPairSelect">
+                <label class="form-label">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    Преподаватель
+                </label>
+                <select class="form-select" id="newWindowTeacherSelect">
+                    <option value="">Выберите преподавателя</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="far fa-calendar-alt"></i>
+                    День недели
+                </label>
+                <select class="form-select" id="newWindowDaySelect">
+                    <option value="Понедельник">Понедельник</option>
+                    <option value="Вторник">Вторник</option>
+                    <option value="Среда">Среда</option>
+                    <option value="Четверг">Четверг</option>
+                    <option value="Пятница">Пятница</option>
+                    <option value="Суббота">Суббота</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-clock"></i>
+                    Номер пары
+                </label>
+                <select class="form-select" id="newWindowPairSelect">
                     <option value="1">1 пара (8:30-10:00)</option>
                     <option value="2">2 пара (10:05-11:35)</option>
                     <option value="3">3 пара (12:15-13:45)</option>
@@ -1608,13 +1640,172 @@
                     <option value="6">6 пара (17:00-18:30)</option>
                 </select>
             </div>
+            
             <div class="form-group">
-                <label class="form-label">Причина (опционально)</label>
-                <input type="text" class="form-input" id="windowReasonInput" placeholder="Например: методическая работа">
+                <label class="form-label">
+                    <i class="fas fa-pencil-alt"></i>
+                    Причина (опционально)
+                </label>
+                <input type="text" class="form-input" id="newWindowReasonInput" placeholder="Например: методическая работа">
             </div>
+            
             <div class="modal-actions">
-                <button class="modal-btn save" id="windowSaveBtn">Сохранить</button>
-                <button class="modal-btn cancel" id="windowCancelBtn">Отмена</button>
+                <button class="modal-btn save" id="saveWindowBtn">
+                    <i class="fas fa-save"></i>
+                    Сохранить
+                </button>
+                <button class="modal-btn cancel" id="cancelAddWindowBtn">
+                    <i class="fas fa-times"></i>
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для совмещения пар с поиском -->
+    <div class="modal" id="combinePairsModal">
+        <div class="modal-content" style="max-width: 650px;">
+            <div class="modal-title">
+                <i class="fas fa-link"></i>
+                Совмещение пар
+            </div>
+            
+            <!-- Поиск -->
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-search"></i>
+                    Поиск пары (по группе, преподавателю, дисциплине, аудитории)
+                </label>
+                <input type="text" class="form-input" id="pairSearchInput" placeholder="Введите для поиска...">
+            </div>
+            
+            <!-- Результаты поиска -->
+            <div id="searchResults" style="max-height: 150px; overflow-y: auto; margin-bottom: 15px; display: none; background: #f8faff; border-radius: 14px; padding: 10px;">
+                <div class="form-label">Найденные пары:</div>
+                <div id="searchResultsList" style="display: flex; flex-direction: column; gap: 5px;"></div>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Первая пара</label>
+                <select class="form-select" id="firstPairSelect" size="4" style="height: auto;">
+                    <option value="">-- Выберите первую пару --</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Вторая пара</label>
+                <select class="form-select" id="secondPairSelect" size="4" style="height: auto;">
+                    <option value="">-- Выберите вторую пару --</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    <i class="fas fa-door-open"></i>
+                    Новая аудитория (опционально)
+                </label>
+                <input type="text" class="form-input" id="combineRoomInput" placeholder="Например: 301">
+            </div>
+            
+            <!-- Информация о выбранных парах -->
+            <div id="selectedPairsInfo" style="background: #f0f5ff; padding: 12px; border-radius: 14px; margin-bottom: 15px; display: none;">
+                <div id="firstPairInfo" style="margin-bottom: 5px;"></div>
+                <div id="secondPairInfo"></div>
+            </div>
+            
+            <div class="modal-actions">
+                <button class="modal-btn save" id="saveCombineBtn">
+                    <i class="fas fa-link"></i>
+                    Совместить
+                </button>
+                <button class="modal-btn cancel" id="cancelCombineBtn">
+                    <i class="fas fa-times"></i>
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для потоков -->
+    <div class="modal" id="streamsModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-title">
+                <i class="fas fa-layer-group"></i>
+                Управление потоками
+            </div>
+            
+            <!-- Форма создания потока -->
+            <div style="background: #f8faff; padding: 20px; border-radius: 18px; margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: #001a41;">Создать новый поток</h3>
+                
+                <div class="form-group">
+                    <label class="form-label">Название потока</label>
+                    <input type="text" class="form-input" id="streamNameInput" placeholder="Например: Поток 1 курса">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Дисциплина</label>
+                    <input type="text" class="form-input" id="streamSubjectInput" placeholder="Например: Математический анализ">
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Преподаватель</label>
+                    <select class="form-select" id="streamTeacherSelect">
+                        <option value="">Выберите преподавателя</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Группы в потоке</label>
+                    <div style="max-height: 150px; overflow-y: auto; border: 2px solid #e8edf5; border-radius: 14px; padding: 10px;">
+                        <div id="groupsList"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">День недели</label>
+                    <select class="form-select" id="streamDaySelect">
+                        <option value="Понедельник">Понедельник</option>
+                        <option value="Вторник">Вторник</option>
+                        <option value="Среда">Среда</option>
+                        <option value="Четверг">Четверг</option>
+                        <option value="Пятница">Пятница</option>
+                        <option value="Суббота">Суббота</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Номер пары</label>
+                    <select class="form-select" id="streamPairSelect">
+                        <option value="1">1 пара (8:30-10:00)</option>
+                        <option value="2">2 пара (10:05-11:35)</option>
+                        <option value="3">3 пара (12:15-13:45)</option>
+                        <option value="4">4 пара (13:50-15:20)</option>
+                        <option value="5">5 пара (15:25-16:55)</option>
+                        <option value="6">6 пара (17:00-18:30)</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Аудитория</label>
+                    <input type="text" class="form-input" id="streamRoomInput" placeholder="Например: 301">
+                </div>
+                
+                <button class="control-btn" id="createStreamBtn" style="width: 100%;">
+                    <i class="fas fa-plus"></i>
+                    Создать поток
+                </button>
+            </div>
+            
+            <!-- Список существующих потоков -->
+            <h3 style="margin-bottom: 15px; color: #001a41;">Существующие потоки</h3>
+            <div id="streamsList" style="max-height: 300px; overflow-y: auto;"></div>
+            
+            <div class="modal-actions" style="margin-top: 15px;">
+                <button class="modal-btn cancel" id="streamsCloseBtn">
+                    <i class="fas fa-times"></i>
+                    Закрыть
+                </button>
             </div>
         </div>
     </div>
@@ -1670,19 +1861,11 @@
         const homeBtn = document.getElementById('homeBtn');
         const menuCards = document.querySelectorAll('.menu-card');
         const roleTabs = document.getElementById('roleTabs');
-        const controlPanel = document.getElementById('controlPanel');
         const courseButtonsContainer = document.getElementById('courseButtonsContainer');
         const courseBtns = document.querySelectorAll('.course-btn');
         const loadFilters = document.getElementById('loadFilters');
         const departmentFilter = document.getElementById('departmentFilter');
         
-        // Элементы модальных окон
-        const combineModal = document.getElementById('combineModal');
-        const windowModal = document.getElementById('windowModal');
-        const combinePairsBtn = document.getElementById('combinePairsBtn');
-        const teacherWindowsBtn = document.getElementById('teacherWindowsBtn');
-        const addWindowBtn = document.getElementById('addWindowBtn');
-
         // Текущая дата
         if (currentDateSpan) {
             currentDateSpan.textContent = new Date().toLocaleDateString('ru-RU', {
@@ -1719,6 +1902,7 @@
             teachers: [],
             load: [],
             windows: [],
+            streams: [],
             teacherStats: {},
             departmentFilter: '',
             filteredGroups: []
@@ -1735,7 +1919,6 @@
                     if (userNameSpan) {
                         userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
                     }
-                    // Загружаем данные
                     if (typeof loadMainSite === 'function') {
                         setTimeout(() => loadMainSite(), 100);
                     }
@@ -1750,12 +1933,10 @@
 
         // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
         
-        // Функция для генерации кода
         function generateCode() {
             return Math.floor(100000 + Math.random() * 900000).toString();
         }
 
-        // Функция для отправки кода (использует template_9skd6nj)
         async function sendCode(email, code, purpose = 'login') {
             try {
                 await emailjs.send(
@@ -1782,7 +1963,6 @@
             }
         }
 
-        // Функция для отправки приветственного письма (использует template_w2fxqw8)
         async function sendWelcomeEmail(email, name) {
             try {
                 await emailjs.send(
@@ -1802,7 +1982,6 @@
             }
         }
 
-        // Функция для запуска таймера
         function startTimer() {
             timeLeft = 300;
             const timerElement = document.getElementById('timer');
@@ -1827,7 +2006,6 @@
             }, 1000);
         }
 
-        // Настройка полей ввода кода
         function setupCodeInputs() {
             const inputs = document.querySelectorAll('.code-input');
             
@@ -1876,7 +2054,6 @@
             });
         }
 
-        // Забыли пароль
         if (forgotPasswordLink) {
             forgotPasswordLink.addEventListener('click', () => {
                 loginForm.classList.remove('active');
@@ -1884,7 +2061,6 @@
             });
         }
 
-        // Возврат ко входу
         if (backToLoginFromForgot) {
             backToLoginFromForgot.addEventListener('click', () => {
                 forgotForm.classList.remove('active');
@@ -1907,7 +2083,6 @@
             });
         }
 
-        // Регистрация
         if (registerBtn) {
             registerBtn.addEventListener('click', async () => {
                 const fullName = document.getElementById('regFullName')?.value.trim();
@@ -1920,7 +2095,6 @@
                 if (errorEl) errorEl.style.display = 'none';
                 if (successEl) successEl.style.display = 'none';
 
-                // Валидация
                 if (!fullName || !email || !password || !confirmPassword) {
                     if (errorEl) {
                         errorEl.textContent = 'Заполните все поля';
@@ -1953,7 +2127,6 @@
                     return;
                 }
 
-                // Проверяем, не занят ли email
                 const usersSnapshot = await db.ref('users').once('value');
                 const users = usersSnapshot.val() || {};
                 const emailExists = Object.values(users).some(u => u.email === email);
@@ -1966,7 +2139,6 @@
                     return;
                 }
 
-                // Отправляем код подтверждения
                 verificationCode = generateCode();
                 pendingEmail = email;
                 pendingUserData = { fullName, email, password };
@@ -1976,7 +2148,6 @@
                 const sent = await sendCode(email, verificationCode, 'register');
 
                 if (sent) {
-                    // Переключаемся на форму подтверждения
                     registerForm.classList.remove('active');
                     verifyForm.classList.add('active');
                     const displayEl = document.getElementById('verifyEmailDisplay');
@@ -1984,7 +2155,6 @@
                         displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
                     }
                     
-                    // Очищаем поля
                     document.querySelectorAll('.code-input').forEach(input => {
                         input.value = '';
                         input.disabled = false;
@@ -2007,7 +2177,6 @@
             });
         }
 
-        // Вход
         if (loginBtn) {
             loginBtn.addEventListener('click', async () => {
                 const email = document.getElementById('loginEmail')?.value.trim();
@@ -2024,7 +2193,6 @@
                     return;
                 }
 
-                // Проверяем пользователя в базе
                 const usersSnapshot = await db.ref('users').once('value');
                 const users = usersSnapshot.val() || {};
                 
@@ -2040,7 +2208,6 @@
 
                 const [userId, userData] = userEntry;
 
-                // Отправляем код для двухфакторной аутентификации
                 verificationCode = generateCode();
                 pendingEmail = email;
                 pendingUserData = { id: userId, ...userData };
@@ -2050,7 +2217,6 @@
                 const sent = await sendCode(email, verificationCode, 'login');
 
                 if (sent) {
-                    // Переключаемся на форму подтверждения
                     loginForm.classList.remove('active');
                     verifyForm.classList.add('active');
                     const displayEl = document.getElementById('verifyEmailDisplay');
@@ -2074,7 +2240,6 @@
             });
         }
 
-        // Запрос на восстановление пароля
         if (forgotBtn) {
             forgotBtn.addEventListener('click', async () => {
                 const email = document.getElementById('forgotEmail')?.value.trim();
@@ -2092,7 +2257,6 @@
                     return;
                 }
 
-                // Проверяем, существует ли пользователь
                 const usersSnapshot = await db.ref('users').once('value');
                 const users = usersSnapshot.val() || {};
                 
@@ -2108,7 +2272,6 @@
 
                 const [userId, userData] = userEntry;
 
-                // Отправляем код для восстановления
                 verificationCode = generateCode();
                 pendingEmail = email;
                 resetUserId = userId;
@@ -2118,7 +2281,6 @@
                 const sent = await sendCode(email, verificationCode, 'reset');
 
                 if (sent) {
-                    // Переключаемся на форму подтверждения
                     forgotForm.classList.remove('active');
                     verifyForm.classList.add('active');
                     const displayEl = document.getElementById('verifyEmailDisplay');
@@ -2148,7 +2310,6 @@
             });
         }
 
-        // Подтверждение кода
         if (verifyBtn) {
             verifyBtn.addEventListener('click', async () => {
                 const inputs = document.querySelectorAll('.code-input');
@@ -2182,9 +2343,7 @@
                     return;
                 }
 
-                // Код верный
                 if (isVerifyingForRegistration) {
-                    // Регистрация - сохраняем пользователя
                     const newUser = {
                         fullName: pendingUserData.fullName,
                         email: pendingUserData.email,
@@ -2194,25 +2353,20 @@
 
                     const userRef = await db.ref('users').push(newUser);
                     
-                    // Отправляем приветственное письмо
                     await sendWelcomeEmail(pendingUserData.email, pendingUserData.fullName);
 
                     currentUser = { id: userRef.key, ...newUser };
                 } else if (isVerifyingForPasswordReset) {
-                    // Восстановление пароля - переходим к форме сброса
                     verifyForm.classList.remove('active');
                     resetForm.classList.add('active');
                     clearInterval(timerInterval);
                     return;
                 } else {
-                    // Вход - используем существующего пользователя
                     currentUser = pendingUserData;
                 }
 
-                // СОХРАНЯЕМ ПОЛЬЗОВАТЕЛЯ В localStorage
                 localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
 
-                // Вход выполнен
                 clearInterval(timerInterval);
                 loginContainer.style.display = 'none';
                 mainSite.classList.add('visible');
@@ -2220,7 +2374,6 @@
                     userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
                 }
 
-                // Очищаем форму
                 verifyForm.classList.remove('active');
                 loginForm.classList.add('active');
                 const loginEmail = document.getElementById('loginEmail');
@@ -2228,14 +2381,12 @@
                 if (loginEmail) loginEmail.value = '';
                 if (loginPassword) loginPassword.value = '';
 
-                // Загружаем основное содержимое
                 if (typeof loadMainSite === 'function') {
                     loadMainSite();
                 }
             });
         }
 
-        // Сброс пароля
         if (resetBtn) {
             resetBtn.addEventListener('click', async () => {
                 const newPassword = document.getElementById('newPassword')?.value;
@@ -2271,7 +2422,6 @@
                 }
 
                 try {
-                    // Обновляем пароль в базе
                     await db.ref(`users/${resetUserId}/password`).set(newPassword);
                     
                     if (successEl) {
@@ -2279,7 +2429,6 @@
                         successEl.style.display = 'block';
                     }
                     
-                    // Возвращаемся ко входу через 2 секунды
                     setTimeout(() => {
                         resetForm.classList.remove('active');
                         loginForm.classList.add('active');
@@ -2293,7 +2442,6 @@
             });
         }
 
-        // Повторная отправка кода
         if (resendCode) {
             resendCode.addEventListener('click', async () => {
                 verificationCode = generateCode();
@@ -2312,17 +2460,14 @@
             });
         }
 
-        // Выход
         if (logoutBtn) {
             logoutBtn.addEventListener('click', () => {
-                // Удаляем пользователя из localStorage при выходе
                 localStorage.removeItem('finuniversity_user');
                 
                 currentUser = null;
                 loginContainer.style.display = 'block';
                 mainSite.classList.remove('visible');
                 
-                // Сбрасываем формы
                 loginForm.classList.add('active');
                 registerForm.classList.remove('active');
                 forgotForm.classList.remove('active');
@@ -2349,10 +2494,8 @@
             });
         }
 
-        // Настройка полей кода
         setupCodeInputs();
 
-        // Проверка Enter
         const loginEmailInput = document.getElementById('loginEmail');
         const loginPasswordInput = document.getElementById('loginPassword');
         
@@ -2370,7 +2513,6 @@
 
         // ========== ОСНОВНАЯ ЧАСТЬ САЙТА ==========
 
-        // Функция для определения класса формы обучения
         function getFormClass(form) {
             if (!form) return 'ofo';
             
@@ -2384,7 +2526,6 @@
             return 'ofo';
         }
 
-        // Функции отображения
         function showLoader() {
             if (contentEl) {
                 contentEl.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
@@ -2405,7 +2546,6 @@
             }
         }
 
-        // Расчет статистики по преподавателям (только для аналитики)
         function calculateTeacherStats() {
             state.teacherStats = {};
             
@@ -2414,10 +2554,8 @@
             state.load.forEach(item => {
                 if (!item) return;
                 
-                // Получаем исходное имя
                 const rawName = item.teacherName || item.teacher || '';
                 
-                // Пропускаем пустые имена
                 if (!rawName || rawName === 'Неизвестный преподаватель') return;
                 
                 const teacherName = rawName;
@@ -2440,7 +2578,6 @@
             });
         }
 
-        // Заполнение фильтров для нагрузки
         function populateLoadFilters() {
             const departments = new Set();
 
@@ -2456,7 +2593,6 @@
             }
         }
 
-        // Применение фильтров для групп
         function filterGroups() {
             if (!state.groups) return;
             
@@ -2475,12 +2611,13 @@
                 
                 showLoader();
                 
-                const [groupsSnap, teachersSnap, scheduleSnap, loadSnap, windowsSnap] = await Promise.all([
+                const [groupsSnap, teachersSnap, scheduleSnap, loadSnap, windowsSnap, streamsSnap] = await Promise.all([
                     db.ref('groups').once('value'),
                     db.ref('teachers').once('value'),
                     db.ref('schedule').once('value'),
                     db.ref('load').once('value'),
-                    db.ref('windows').once('value')
+                    db.ref('windows').once('value'),
+                    db.ref('streams').once('value')
                 ]);
 
                 if (groupsSnap.exists()) {
@@ -2498,10 +2635,15 @@
                 if (loadSnap.exists()) {
                     state.load = Object.entries(loadSnap.val()).map(([id, data]) => ({ id, ...data }));
                     calculateTeacherStats();
+                    populateLoadFilters();
                 }
 
                 if (windowsSnap.exists()) {
                     state.windows = Object.entries(windowsSnap.val()).map(([id, data]) => ({ id, ...data }));
+                }
+
+                if (streamsSnap.exists()) {
+                    state.streams = Object.entries(streamsSnap.val()).map(([id, data]) => ({ id, ...data }));
                 }
 
                 filterGroups();
@@ -2542,7 +2684,7 @@
             }
         }
 
-        // Список групп (только для выбранного курса)
+        // Список групп
         function renderGroupsList() {
             if (!state.filteredGroups || !state.filteredGroups.length) {
                 showEmpty(`Нет групп на ${state.selectedCourse} курсе`);
@@ -2591,14 +2733,13 @@
             });
         }
 
-        // Список преподавателей для расписания (по алфавиту)
+        // Список преподавателей для расписания
         function renderTeachersList() {
             if (!state.teachers || !state.teachers.length) {
                 showEmpty('Нет доступных преподавателей');
                 return;
             }
 
-            // Сортируем преподавателей по алфавиту
             const sortedTeachers = [...state.teachers].sort((a, b) => {
                 const nameA = (a.fullName || '').toLowerCase();
                 const nameB = (b.fullName || '').toLowerCase();
@@ -2790,7 +2931,7 @@
             }
         }
 
-        // Список преподавателей для нагрузки (только имя и общая нагрузка, по алфавиту)
+        // Список преподавателей для нагрузки
         function renderTeacherList() {
             if (!contentEl) return;
             
@@ -2807,7 +2948,6 @@
                 filteredTeachers = filteredTeachers.filter(t => t.department === state.departmentFilter);
             }
 
-            // Сортируем по алфавиту
             filteredTeachers.sort((a, b) => {
                 const nameA = (a.teacherName || '').toLowerCase();
                 const nameB = (b.teacherName || '').toLowerCase();
@@ -2817,7 +2957,6 @@
             let html = '<div class="teacher-cards">';
 
             filteredTeachers.forEach(teacher => {
-                // Используем короткое имя для отображения
                 const shortName = teacher.teacherName.includes(' ') ? 
                     teacher.teacherName.split(' ').slice(0, 2).join(' ') : 
                     teacher.teacherName;
@@ -2864,7 +3003,6 @@
                 return;
             }
 
-            // Группируем записи по дисциплинам
             const disciplinesMap = {};
             teacher.records.forEach(record => {
                 const discipline = record.discipline || 'Без названия';
@@ -2919,7 +3057,7 @@
             contentEl.innerHTML = html;
         }
 
-        // Статистика с графиками (только здесь есть цифры)
+        // Статистика с графиками
         function renderStatistics() {
             if (!contentEl) return;
             showLoader();
@@ -3046,7 +3184,6 @@
 
                 contentEl.innerHTML = html;
 
-                // Создаем графики
                 setTimeout(() => {
                     createTeacherChart(topTeachers);
                     createDepartmentChart(departmentStats);
@@ -3055,7 +3192,6 @@
             }, 500);
         }
 
-        // График преподавателей
         function createTeacherChart(data) {
             const canvas = document.getElementById('teacherChart');
             if (!canvas) return;
@@ -3093,7 +3229,6 @@
             });
         }
 
-        // График кафедр
         function createDepartmentChart(data) {
             const canvas = document.getElementById('departmentChart');
             if (!canvas) return;
@@ -3133,7 +3268,6 @@
             });
         }
 
-        // Функции для навигации
         function updateBreadcrumbs() {
             if (!breadcrumbsEl) return;
             
@@ -3199,9 +3333,6 @@
                 }
             });
 
-            // Панель управления показываем только в расписании
-            controlPanel.style.display = view === 'schedule' ? 'flex' : 'none';
-            
             roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
             
             if (view === 'schedule') {
@@ -3259,7 +3390,6 @@
         function setCourse(course) {
             state.selectedCourse = course;
             
-            // Обновляем активную кнопку
             courseBtns.forEach(btn => {
                 if (btn.dataset.course === course) {
                     btn.classList.add('active');
@@ -3280,7 +3410,6 @@
             renderView();
         }
 
-        // Обработчики кнопок курсов
         courseBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 setCourse(btn.dataset.course);
@@ -3294,87 +3423,759 @@
             });
         }
 
-        // Обработчики для окон
-        if (combinePairsBtn) {
-            combinePairsBtn.addEventListener('click', () => {
-                // Заполняем селекты парами
-                const firstSelect = document.getElementById('firstPairSelect');
-                const secondSelect = document.getElementById('secondPairSelect');
-                
-                firstSelect.innerHTML = '<option value="">Выберите пару</option>';
-                secondSelect.innerHTML = '<option value="">Выберите пару</option>';
-                
-                state.schedule.forEach(pair => {
-                    const option = `<option value="${pair.id}">${pair.dayOfWeek} ${pair.pairNumber}п: ${pair.subject}</option>`;
-                    firstSelect.innerHTML += option;
-                    secondSelect.innerHTML += option;
+        // ========== ФУНКЦИОНАЛ ДЛЯ ОКОН ==========
+
+        // Загрузка окон из базы
+        async function loadWindows() {
+            try {
+                const windowsSnap = await db.ref('windows').once('value');
+                if (windowsSnap.exists()) {
+                    state.windows = Object.entries(windowsSnap.val()).map(([id, data]) => ({ id, ...data }));
+                } else {
+                    state.windows = [];
+                }
+                return state.windows;
+            } catch (error) {
+                console.error('Ошибка загрузки окон:', error);
+                return [];
+            }
+        }
+
+        // Сохранение окна
+        async function saveWindow(windowData) {
+            try {
+                const newWindowRef = await db.ref('windows').push({
+                    ...windowData,
+                    createdAt: Date.now(),
+                    createdBy: currentUser?.email || 'unknown'
                 });
                 
-                combineModal.classList.add('active');
-            });
-        }
-
-        if (teacherWindowsBtn) {
-            teacherWindowsBtn.addEventListener('click', () => {
-                alert('Функция "Окна преподавателей" в разработке');
-            });
-        }
-
-        if (addWindowBtn) {
-            addWindowBtn.addEventListener('click', () => {
-                const teacherSelect = document.getElementById('windowTeacherSelect');
-                teacherSelect.innerHTML = '<option value="">Выберите преподавателя</option>';
+                state.windows.push({ id: newWindowRef.key, ...windowData });
                 
-                Object.values(state.teacherStats).forEach(teacher => {
-                    teacherSelect.innerHTML += `<option value="${teacher.teacherName}">${teacher.teacherName}</option>`;
-                });
-                
-                windowModal.classList.add('active');
-            });
+                return newWindowRef.key;
+            } catch (error) {
+                console.error('Ошибка сохранения окна:', error);
+                throw error;
+            }
         }
 
-        document.getElementById('combineCancelBtn').addEventListener('click', () => {
-            combineModal.classList.remove('active');
-        });
+        // Удаление окна
+        async function deleteWindow(windowId) {
+            try {
+                await db.ref(`windows/${windowId}`).remove();
+                state.windows = state.windows.filter(w => w.id !== windowId);
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления окна:', error);
+                throw error;
+            }
+        }
 
-        document.getElementById('windowCancelBtn').addEventListener('click', () => {
-            windowModal.classList.remove('active');
-        });
-
-        document.getElementById('combineSaveBtn').addEventListener('click', async () => {
-            const firstPair = document.getElementById('firstPairSelect').value;
-            const secondPair = document.getElementById('secondPairSelect').value;
+        // Отображение списка окон
+        async function renderWindowsList() {
+            const windowsList = document.getElementById('windowsList');
+            if (!windowsList) return;
             
-            if (!firstPair || !secondPair) {
-                alert('Выберите обе пары');
+            await loadWindows();
+            
+            const teacherFilter = document.getElementById('windowTeacherFilter').value;
+            const dayFilter = document.getElementById('windowDayFilter').value;
+            
+            let filteredWindows = state.windows;
+            
+            if (teacherFilter) {
+                filteredWindows = filteredWindows.filter(w => w.teacher === teacherFilter);
+            }
+            
+            if (dayFilter) {
+                filteredWindows = filteredWindows.filter(w => w.day === dayFilter);
+            }
+            
+            if (filteredWindows.length === 0) {
+                windowsList.innerHTML = '<div class="empty-message">Нет окон преподавателей</div>';
                 return;
             }
             
-            alert('Функция совмещения пар в разработке');
-            combineModal.classList.remove('active');
-        });
-
-        document.getElementById('windowSaveBtn').addEventListener('click', async () => {
-            const teacher = document.getElementById('windowTeacherSelect').value;
-            const day = document.getElementById('windowDaySelect').value;
-            const pair = document.getElementById('windowPairSelect').value;
+            const groupedByTeacher = {};
+            filteredWindows.forEach(window => {
+                if (!groupedByTeacher[window.teacher]) {
+                    groupedByTeacher[window.teacher] = [];
+                }
+                groupedByTeacher[window.teacher].push(window);
+            });
             
-            if (!teacher || !day || !pair) {
-                alert('Заполните все поля');
+            let html = '';
+            
+            for (const [teacherName, teacherWindows] of Object.entries(groupedByTeacher)) {
+                teacherWindows.sort((a, b) => {
+                    const dayOrder = {'Понедельник':1,'Вторник':2,'Среда':3,'Четверг':4,'Пятница':5,'Суббота':6};
+                    const dayCompare = (dayOrder[a.day] || 7) - (dayOrder[b.day] || 7);
+                    if (dayCompare !== 0) return dayCompare;
+                    return (a.pair || 0) - (b.pair || 0);
+                });
+                
+                html += `
+                    <div style="background: white; border-radius: 18px; padding: 15px; margin-bottom: 15px; border: 1px solid #e8edf5;">
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <div style="width: 40px; height: 40px; background: #f0f5ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #0038a8;">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div style="font-weight: 600; font-size: 1.1rem;">${teacherName}</div>
+                        </div>
+                `;
+                
+                teacherWindows.forEach(window => {
+                    html += `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8faff; border-radius: 12px; margin-bottom: 5px;">
+                            <div>
+                                <span style="font-weight: 600; color: #0038a8;">${window.day}</span>
+                                <span style="margin-left: 10px;">${window.pair} пара</span>
+                                ${window.reason ? `<span style="margin-left: 10px; color: #5a6f8c;"><i class="fas fa-comment"></i> ${window.reason}</span>` : ''}
+                            </div>
+                            <button class="delete-window-btn" data-id="${window.id}" style="background: none; border: none; color: #e41e26; cursor: pointer;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            }
+            
+            windowsList.innerHTML = html;
+            
+            document.querySelectorAll('.delete-window-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    if (confirm('Удалить это окно?')) {
+                        await deleteWindow(btn.dataset.id);
+                        await renderWindowsList();
+                        updateWindowFilters();
+                    }
+                });
+            });
+        }
+
+        // Обновление фильтров окон
+        function updateWindowFilters() {
+            const teacherFilter = document.getElementById('windowTeacherFilter');
+            if (!teacherFilter) return;
+            
+            const uniqueTeachers = [...new Set(state.windows.map(w => w.teacher))];
+            
+            teacherFilter.innerHTML = '<option value="">Все преподаватели</option>';
+            uniqueTeachers.sort().forEach(teacher => {
+                teacherFilter.innerHTML += `<option value="${teacher}">${teacher}</option>`;
+            });
+        }
+
+        // ========== ФУНКЦИОНАЛ ДЛЯ СОВМЕЩЕНИЯ ПАР ==========
+
+        // Поиск пар
+        function searchPairs(query) {
+            if (!query || query.length < 2) return [];
+            
+            query = query.toLowerCase();
+            
+            return state.schedule.filter(pair => {
+                const group = state.groups.find(g => g.id === pair.groupId);
+                const teacher = state.teachers.find(t => t.id === pair.teacherId);
+                
+                const groupName = group?.name?.toLowerCase() || '';
+                const teacherName = teacher?.fullName?.toLowerCase() || teacher?.shortName?.toLowerCase() || '';
+                const subject = pair.subject?.toLowerCase() || '';
+                const room = pair.room?.toLowerCase() || '';
+                const day = pair.dayOfWeek?.toLowerCase() || '';
+                
+                return groupName.includes(query) || 
+                       teacherName.includes(query) || 
+                       subject.includes(query) || 
+                       room.includes(query) || 
+                       day.includes(query);
+            }).slice(0, 5);
+        }
+
+        // Обновление селектов пар
+        function updatePairSelects() {
+            const firstSelect = document.getElementById('firstPairSelect');
+            const secondSelect = document.getElementById('secondPairSelect');
+            
+            if (!firstSelect || !secondSelect) return;
+            
+            firstSelect.innerHTML = '<option value="">-- Выберите первую пару --</option>';
+            secondSelect.innerHTML = '<option value="">-- Выберите вторую пару --</option>';
+            
+            const sortedPairs = [...state.schedule].sort((a, b) => {
+                const dayOrder = {'Понедельник':1,'Вторник':2,'Среда':3,'Четверг':4,'Пятница':5,'Суббота':6};
+                const dayCompare = (dayOrder[a.dayOfWeek] || 7) - (dayOrder[b.dayOfWeek] || 7);
+                if (dayCompare !== 0) return dayCompare;
+                return (a.pairNumber || 0) - (b.pairNumber || 0);
+            });
+            
+            sortedPairs.forEach(pair => {
+                const group = state.groups.find(g => g.id === pair.groupId);
+                const teacher = state.teachers.find(t => t.id === pair.teacherId);
+                
+                const groupName = group?.name || '?';
+                const teacherName = teacher?.shortName || teacher?.fullName || pair.teacherId;
+                
+                const optionText = `${pair.dayOfWeek} ${pair.pairNumber}п: ${pair.subject} | ${groupName} | ${teacherName} | ${pair.room || '—'}`;
+                const optionValue = pair.id;
+                
+                const option1 = document.createElement('option');
+                option1.value = optionValue;
+                option1.textContent = optionText;
+                firstSelect.appendChild(option1);
+                
+                const option2 = document.createElement('option');
+                option2.value = optionValue;
+                option2.textContent = optionText;
+                secondSelect.appendChild(option2);
+            });
+        }
+
+        // Обновление информации о выбранных парах
+        function updateSelectedPairsInfo() {
+            const firstSelect = document.getElementById('firstPairSelect');
+            const secondSelect = document.getElementById('secondPairSelect');
+            const firstInfo = document.getElementById('firstPairInfo');
+            const secondInfo = document.getElementById('secondPairInfo');
+            const infoContainer = document.getElementById('selectedPairsInfo');
+            
+            if (!firstSelect || !secondSelect || !firstInfo || !secondInfo || !infoContainer) return;
+            
+            const firstId = firstSelect.value;
+            const secondId = secondSelect.value;
+            
+            if (!firstId && !secondId) {
+                infoContainer.style.display = 'none';
                 return;
             }
             
-            alert('Функция добавления окон в разработке');
-            windowModal.classList.remove('active');
-        });
+            infoContainer.style.display = 'block';
+            
+            if (firstId && firstId !== '') {
+                const pair = state.schedule.find(p => p.id === firstId);
+                if (pair) {
+                    const group = state.groups.find(g => g.id === pair.groupId);
+                    const teacher = state.teachers.find(t => t.id === pair.teacherId);
+                    firstInfo.innerHTML = `
+                        <i class="fas fa-check-circle" style="color: #27ae60;"></i>
+                        <strong>1 пара:</strong> ${pair.dayOfWeek} ${pair.pairNumber}п - ${pair.subject}<br>
+                        <span style="margin-left: 20px;">👥 ${group?.name || '?'} | 👨‍🏫 ${teacher?.shortName || '?'} | 🏫 ${pair.room || '—'}</span>
+                    `;
+                }
+            } else {
+                firstInfo.innerHTML = '<span style="color: #e41e26;">Не выбрана</span>';
+            }
+            
+            if (secondId && secondId !== '') {
+                const pair = state.schedule.find(p => p.id === secondId);
+                if (pair) {
+                    const group = state.groups.find(g => g.id === pair.groupId);
+                    const teacher = state.teachers.find(t => t.id === pair.teacherId);
+                    secondInfo.innerHTML = `
+                        <i class="fas fa-check-circle" style="color: #27ae60;"></i>
+                        <strong>2 пара:</strong> ${pair.dayOfWeek} ${pair.pairNumber}п - ${pair.subject}<br>
+                        <span style="margin-left: 20px;">👥 ${group?.name || '?'} | 👨‍🏫 ${teacher?.shortName || '?'} | 🏫 ${pair.room || '—'}</span>
+                    `;
+                }
+            } else {
+                secondInfo.innerHTML = '<span style="color: #e41e26;">Не выбрана</span>';
+            }
+        }
+
+        // Совмещение пар
+        async function combinePairs(pair1Id, pair2Id, newRoom) {
+            try {
+                const pair1Snap = await db.ref(`schedule/${pair1Id}`).once('value');
+                const pair2Snap = await db.ref(`schedule/${pair2Id}`).once('value');
+                
+                if (!pair1Snap.exists() || !pair2Snap.exists()) {
+                    throw new Error('Одна из пар не найдена');
+                }
+                
+                const pair1 = pair1Snap.val();
+                const pair2 = pair2Snap.val();
+                
+                await db.ref(`schedule/${pair1Id}`).update({
+                    combinedWith: pair2Id,
+                    room: newRoom || `${pair1.room || '?'} + ${pair2.room || '?'}`,
+                    isCombined: true,
+                    combinedAt: Date.now()
+                });
+                
+                await db.ref(`schedule/${pair2Id}`).update({
+                    combinedWith: pair1Id,
+                    isCombined: true,
+                    isHidden: true
+                });
+                
+                const updatedSchedule = await db.ref('schedule').once('value');
+                if (updatedSchedule.exists()) {
+                    state.schedule = Object.entries(updatedSchedule.val()).map(([id, data]) => ({ id, ...data }));
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Ошибка совмещения пар:', error);
+                throw error;
+            }
+        }
+
+        // ========== ФУНКЦИОНАЛ ДЛЯ ПОТОКОВ ==========
+
+        // Загрузка потоков
+        async function loadStreams() {
+            try {
+                const streamsSnap = await db.ref('streams').once('value');
+                if (streamsSnap.exists()) {
+                    state.streams = Object.entries(streamsSnap.val()).map(([id, data]) => ({ id, ...data }));
+                } else {
+                    state.streams = [];
+                }
+                return state.streams;
+            } catch (error) {
+                console.error('Ошибка загрузки потоков:', error);
+                return [];
+            }
+        }
+
+        // Сохранение потока
+        async function saveStream(streamData) {
+            try {
+                const newStreamRef = await db.ref('streams').push({
+                    ...streamData,
+                    createdAt: Date.now(),
+                    createdBy: currentUser?.email || 'unknown'
+                });
+                state.streams.push({ id: newStreamRef.key, ...streamData });
+                return newStreamRef.key;
+            } catch (error) {
+                console.error('Ошибка сохранения потока:', error);
+                throw error;
+            }
+        }
+
+        // Удаление потока
+        async function deleteStream(streamId) {
+            try {
+                await db.ref(`streams/${streamId}`).remove();
+                state.streams = state.streams.filter(s => s.id !== streamId);
+                return true;
+            } catch (error) {
+                console.error('Ошибка удаления потока:', error);
+                throw error;
+            }
+        }
+
+        // Отображение групп в чекбоксах
+        function renderGroupsCheckboxes() {
+            const groupsList = document.getElementById('groupsList');
+            if (!groupsList) return;
+            
+            if (!state.groups || state.groups.length === 0) {
+                groupsList.innerHTML = '<div style="color: #5a6f8c; text-align: center;">Нет доступных групп</div>';
+                return;
+            }
+            
+            const groupsByCourse = {};
+            state.groups.forEach(group => {
+                const course = group.course || '1';
+                if (!groupsByCourse[course]) {
+                    groupsByCourse[course] = [];
+                }
+                groupsByCourse[course].push(group);
+            });
+            
+            let html = '';
+            
+            Object.keys(groupsByCourse).sort().forEach(course => {
+                html += `<div style="font-weight: 600; color: #0038a8; margin: 10px 0 5px;">${course} курс</div>`;
+                
+                groupsByCourse[course].forEach(group => {
+                    const formClass = getFormClass(group.form);
+                    html += `
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; border-bottom: 1px solid #e8edf5;">
+                            <input type="checkbox" class="group-checkbox" value="${group.id}" data-name="${group.name}">
+                            <span>${group.name}</span>
+                            <span class="form-badge ${formClass}" style="margin-left: auto;">${group.form || 'ОФО'}</span>
+                        </label>
+                    `;
+                });
+            });
+            
+            groupsList.innerHTML = html;
+        }
+
+        // Отображение списка потоков
+        async function renderStreamsList() {
+            const streamsList = document.getElementById('streamsList');
+            if (!streamsList) return;
+            
+            await loadStreams();
+            
+            if (state.streams.length === 0) {
+                streamsList.innerHTML = '<div class="empty-message">Нет созданных потоков</div>';
+                return;
+            }
+            
+            let html = '';
+            
+            state.streams.sort((a, b) => (a.name || '').localeCompare(b.name || '')).forEach(stream => {
+                const groupNames = (stream.groups || []).map(groupId => {
+                    const group = state.groups.find(g => g.id === groupId);
+                    return group?.name || groupId;
+                }).join(', ');
+                
+                html += `
+                    <div style="background: white; border-radius: 18px; padding: 15px; margin-bottom: 10px; border: 1px solid #e8edf5;">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 1.1rem; color: #001a41;">
+                                    ${stream.name || 'Поток'}
+                                </div>
+                                <div style="color: #0038a8; margin: 5px 0;">
+                                    ${stream.subject} | ${stream.teacher}
+                                </div>
+                                <div style="color: #5a6f8c; font-size: 0.9rem;">
+                                    <i class="far fa-calendar-alt"></i> ${stream.day}, ${stream.pair} пара
+                                </div>
+                                <div style="color: #5a6f8c; font-size: 0.9rem;">
+                                    <i class="fas fa-door-open"></i> ${stream.room || '—'}
+                                </div>
+                                <div style="color: #5a6f8c; font-size: 0.9rem; margin-top: 5px;">
+                                    <i class="fas fa-users"></i> Группы: ${groupNames}
+                                </div>
+                            </div>
+                            <button class="delete-stream-btn" data-id="${stream.id}" style="background: none; border: none; color: #e41e26; cursor: pointer;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            streamsList.innerHTML = html;
+            
+            document.querySelectorAll('.delete-stream-btn').forEach(btn => {
+                btn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    if (confirm('Удалить этот поток?')) {
+                        await deleteStream(btn.dataset.id);
+                        await renderStreamsList();
+                    }
+                });
+            });
+        }
+
+        // Обновление селекта преподавателей
+        function updateStreamTeacherSelect() {
+            const teacherSelect = document.getElementById('streamTeacherSelect');
+            if (!teacherSelect) return;
+            
+            teacherSelect.innerHTML = '<option value="">Выберите преподавателя</option>';
+            
+            const teachersList = Object.values(state.teacherStats).map(t => t.teacherName);
+            teachersList.sort().forEach(teacher => {
+                teacherSelect.innerHTML += `<option value="${teacher}">${teacher}</option>`;
+            });
+        }
+
+        // ========== ИНИЦИАЛИЗАЦИЯ ВСЕХ ОБРАБОТЧИКОВ ==========
+
+        function initAllHandlers() {
+            // Кнопка "Окна преподавателей"
+            const teacherWindowsBtn = document.getElementById('teacherWindowsBtn');
+            if (teacherWindowsBtn) {
+                teacherWindowsBtn.addEventListener('click', async () => {
+                    const modal = document.getElementById('teacherWindowsModal');
+                    if (modal) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                        modal.classList.add('active');
+                    }
+                });
+            }
+
+            // Кнопка "Добавить окно"
+            const addWindowBtn = document.getElementById('addWindowBtn');
+            if (addWindowBtn) {
+                addWindowBtn.addEventListener('click', () => {
+                    const teacherSelect = document.getElementById('newWindowTeacherSelect');
+                    if (teacherSelect) {
+                        teacherSelect.innerHTML = '<option value="">Выберите преподавателя</option>';
+                        const teachersList = Object.values(state.teacherStats).map(t => t.teacherName);
+                        teachersList.sort().forEach(teacher => {
+                            teacherSelect.innerHTML += `<option value="${teacher}">${teacher}</option>`;
+                        });
+                    }
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
+
+            // Кнопка добавления из списка окон
+            const addFromListBtn = document.getElementById('addWindowFromListBtn');
+            if (addFromListBtn) {
+                addFromListBtn.addEventListener('click', () => {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
+
+            // Сохранение окна
+            const saveWindowBtn = document.getElementById('saveWindowBtn');
+            if (saveWindowBtn) {
+                saveWindowBtn.addEventListener('click', async () => {
+                    const teacher = document.getElementById('newWindowTeacherSelect').value;
+                    const day = document.getElementById('newWindowDaySelect').value;
+                    const pair = document.getElementById('newWindowPairSelect').value;
+                    const reason = document.getElementById('newWindowReasonInput').value;
+                    
+                    if (!teacher || !day || !pair) {
+                        alert('Заполните все обязательные поля');
+                        return;
+                    }
+                    
+                    await saveWindow({ teacher, day, pair, reason });
+                    alert('Окно успешно добавлено');
+                    
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                    
+                    if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                    }
+                });
+            }
+
+            // Отмена добавления окна
+            const cancelAddBtn = document.getElementById('cancelAddWindowBtn');
+            if (cancelAddBtn) {
+                cancelAddBtn.addEventListener('click', () => {
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                });
+            }
+
+            // Закрытие окон
+            const closeWindowsBtn = document.getElementById('teacherWindowsCloseBtn');
+            if (closeWindowsBtn) {
+                closeWindowsBtn.addEventListener('click', () => {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                });
+            }
+
+            // Фильтры окон
+            const windowTeacherFilter = document.getElementById('windowTeacherFilter');
+            if (windowTeacherFilter) {
+                windowTeacherFilter.addEventListener('change', renderWindowsList);
+            }
+
+            const windowDayFilter = document.getElementById('windowDayFilter');
+            if (windowDayFilter) {
+                windowDayFilter.addEventListener('change', renderWindowsList);
+            }
+
+            // Кнопка совмещения пар
+            const combinePairsBtn = document.getElementById('combinePairsBtn');
+            if (combinePairsBtn) {
+                combinePairsBtn.addEventListener('click', () => {
+                    updatePairSelects();
+                    document.getElementById('combinePairsModal').classList.add('active');
+                    document.getElementById('pairSearchInput').value = '';
+                    document.getElementById('searchResults').style.display = 'none';
+                });
+            }
+
+            // Поиск пар
+            const searchInput = document.getElementById('pairSearchInput');
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    const query = e.target.value;
+                    const results = searchPairs(query);
+                    const resultsDiv = document.getElementById('searchResults');
+                    const resultsList = document.getElementById('searchResultsList');
+                    
+                    if (query.length >= 2 && results.length > 0) {
+                        resultsDiv.style.display = 'block';
+                        resultsList.innerHTML = results.map(pair => {
+                            const group = state.groups.find(g => g.id === pair.groupId);
+                            const teacher = state.teachers.find(t => t.id === pair.teacherId);
+                            return `
+                                <div style="padding: 8px; background: white; border-radius: 8px; border: 1px solid #e8edf5; cursor: pointer; margin-bottom: 3px;"
+                                     onclick="selectPairFromSearch('${pair.id}')">
+                                    <strong>${pair.dayOfWeek} ${pair.pairNumber}п</strong>: ${pair.subject}<br>
+                                    <small>${group?.name || '?'} | ${teacher?.shortName || '?'} | ${pair.room || '—'}</small>
+                                </div>
+                            `;
+                        }).join('');
+                    } else {
+                        resultsDiv.style.display = 'none';
+                    }
+                });
+            }
+
+            // Обновление информации при выборе пар
+            const firstSelect = document.getElementById('firstPairSelect');
+            const secondSelect = document.getElementById('secondPairSelect');
+            
+            if (firstSelect) {
+                firstSelect.addEventListener('change', updateSelectedPairsInfo);
+            }
+            
+            if (secondSelect) {
+                secondSelect.addEventListener('change', updateSelectedPairsInfo);
+            }
+
+            // Сохранение совмещения
+            const saveCombineBtn = document.getElementById('saveCombineBtn');
+            if (saveCombineBtn) {
+                saveCombineBtn.addEventListener('click', async () => {
+                    const firstPair = document.getElementById('firstPairSelect').value;
+                    const secondPair = document.getElementById('secondPairSelect').value;
+                    const newRoom = document.getElementById('combineRoomInput').value;
+                    
+                    if (!firstPair || !secondPair) {
+                        alert('Выберите обе пары');
+                        return;
+                    }
+                    
+                    if (firstPair === secondPair) {
+                        alert('Нельзя совместить пару саму с собой');
+                        return;
+                    }
+                    
+                    try {
+                        await combinePairs(firstPair, secondPair, newRoom);
+                        alert('Пары успешно совмещены');
+                        document.getElementById('combinePairsModal').classList.remove('active');
+                        document.getElementById('combineRoomInput').value = '';
+                    } catch (error) {
+                        alert('Ошибка при совмещении пар: ' + error.message);
+                    }
+                });
+            }
+
+            // Отмена совмещения
+            const cancelCombineBtn = document.getElementById('cancelCombineBtn');
+            if (cancelCombineBtn) {
+                cancelCombineBtn.addEventListener('click', () => {
+                    document.getElementById('combinePairsModal').classList.remove('active');
+                    document.getElementById('combineRoomInput').value = '';
+                });
+            }
+
+            // Кнопка потоков
+            const streamsBtn = document.getElementById('streamsBtn');
+            if (streamsBtn) {
+                streamsBtn.addEventListener('click', async () => {
+                    const modal = document.getElementById('streamsModal');
+                    if (modal) {
+                        renderGroupsCheckboxes();
+                        updateStreamTeacherSelect();
+                        await renderStreamsList();
+                        modal.classList.add('active');
+                    }
+                });
+            }
+
+            // Создание потока
+            const createStreamBtn = document.getElementById('createStreamBtn');
+            if (createStreamBtn) {
+                createStreamBtn.addEventListener('click', async () => {
+                    const name = document.getElementById('streamNameInput').value;
+                    const subject = document.getElementById('streamSubjectInput').value;
+                    const teacher = document.getElementById('streamTeacherSelect').value;
+                    const day = document.getElementById('streamDaySelect').value;
+                    const pair = document.getElementById('streamPairSelect').value;
+                    const room = document.getElementById('streamRoomInput').value;
+                    
+                    const selectedGroups = [];
+                    document.querySelectorAll('.group-checkbox:checked').forEach(cb => {
+                        selectedGroups.push(cb.value);
+                    });
+                    
+                    if (!name || !subject || !teacher || selectedGroups.length === 0) {
+                        alert('Заполните название, дисциплину, преподавателя и выберите хотя бы одну группу');
+                        return;
+                    }
+                    
+                    try {
+                        await saveStream({
+                            name,
+                            subject,
+                            teacher,
+                            day,
+                            pair,
+                            room,
+                            groups: selectedGroups
+                        });
+                        
+                        alert('Поток успешно создан');
+                        
+                        document.getElementById('streamNameInput').value = '';
+                        document.getElementById('streamSubjectInput').value = '';
+                        document.getElementById('streamRoomInput').value = '';
+                        document.querySelectorAll('.group-checkbox:checked').forEach(cb => {
+                            cb.checked = false;
+                        });
+                        
+                        await renderStreamsList();
+                    } catch (error) {
+                        alert('Ошибка при создании потока: ' + error.message);
+                    }
+                });
+            }
+
+            // Закрытие потоков
+            const streamsCloseBtn = document.getElementById('streamsCloseBtn');
+            if (streamsCloseBtn) {
+                streamsCloseBtn.addEventListener('click', () => {
+                    document.getElementById('streamsModal').classList.remove('active');
+                });
+            }
+        }
+
+        // Глобальная функция для выбора пары из поиска
+        window.selectPairFromSearch = function(pairId) {
+            const firstSelect = document.getElementById('firstPairSelect');
+            const secondSelect = document.getElementById('secondPairSelect');
+            const searchInput = document.getElementById('pairSearchInput');
+            
+            if (firstSelect.value === '' || firstSelect.value === '-- Выберите первую пару --') {
+                firstSelect.value = pairId;
+            } else if (secondSelect.value === '' || secondSelect.value === '-- Выберите вторую пару --') {
+                secondSelect.value = pairId;
+            } else {
+                alert('Обе пары уже выбраны');
+                return;
+            }
+            
+            searchInput.value = '';
+            document.getElementById('searchResults').style.display = 'none';
+            updateSelectedPairsInfo();
+        };
 
         // Закрытие модальных окон по клику вне
         window.addEventListener('click', (e) => {
+            const windowsModal = document.getElementById('teacherWindowsModal');
+            const addModal = document.getElementById('addWindowModal');
+            const combineModal = document.getElementById('combinePairsModal');
+            const streamsModal = document.getElementById('streamsModal');
+            
+            if (e.target === windowsModal) {
+                windowsModal.classList.remove('active');
+            }
+            if (e.target === addModal) {
+                addModal.classList.remove('active');
+            }
             if (e.target === combineModal) {
                 combineModal.classList.remove('active');
             }
-            if (e.target === windowModal) {
-                windowModal.classList.remove('active');
+            if (e.target === streamsModal) {
+                streamsModal.classList.remove('active');
             }
         });
 
@@ -3392,15 +4193,16 @@
             });
         });
 
-        homeBtn.addEventListener('click', goHome);
-        backBtn.addEventListener('click', goHome);
+        if (homeBtn) homeBtn.addEventListener('click', goHome);
+        if (backBtn) backBtn.addEventListener('click', goHome);
 
         // ========== ЗАПУСК ПРИЛОЖЕНИЯ ==========
-        // Проверяем сохраненную сессию при загрузке страницы
         if (!checkSavedSession()) {
-            // Если сессии нет, показываем форму входа
             loginContainer.style.display = 'block';
             mainSite.classList.remove('visible');
+        } else {
+            // Инициализируем обработчики после загрузки
+            setTimeout(initAllHandlers, 1000);
         }
     </script>
 </body>
