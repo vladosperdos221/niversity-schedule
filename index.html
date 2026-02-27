@@ -1481,11 +1481,8 @@
             </button>
         </div>
 
-        <!-- Панель управления (окна, потоки, совмещение) -->
+        <!-- Панель управления (окна, потоки) -->
         <div class="control-panel" id="controlPanel">
-            <button class="control-btn" id="combinePairsBtn">
-                <i class="fas fa-link"></i> Совместить пары
-            </button>
             <button class="control-btn" id="teacherWindowsBtn">
                 <i class="fas fa-clock"></i> Окна преподавателей
             </button>
@@ -1655,70 +1652,6 @@
                     Сохранить
                 </button>
                 <button class="modal-btn cancel" id="cancelAddWindowBtn">
-                    <i class="fas fa-times"></i>
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </div>
-
-        <!-- Модальное окно для совмещения пар с поиском -->
-    <div class="modal" id="combinePairsModal">
-        <div class="modal-content" style="max-width: 650px;">
-            <div class="modal-title">
-                <i class="fas fa-link"></i>
-                Совмещение пар
-            </div>
-            
-            <!-- Поиск -->
-            <div class="form-group">
-                <label class="form-label">
-                    <i class="fas fa-search"></i>
-                    Поиск пары (по группе, преподавателю, дисциплине, аудитории)
-                </label>
-                <input type="text" class="form-input" id="pairSearchInput" placeholder="Введите для поиска...">
-            </div>
-            
-            <!-- Результаты поиска -->
-            <div id="searchResults" style="max-height: 150px; overflow-y: auto; margin-bottom: 15px; display: none; background: #f8faff; border-radius: 14px; padding: 10px;">
-                <div class="form-label">Найденные пары:</div>
-                <div id="searchResultsList" style="display: flex; flex-direction: column; gap: 5px;"></div>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Первая пара</label>
-                <select class="form-select" id="firstPairSelect" size="4" style="height: auto;">
-                    <option value="">-- Выберите первую пару --</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Вторая пара</label>
-                <select class="form-select" id="secondPairSelect" size="4" style="height: auto;">
-                    <option value="">-- Выберите вторую пару --</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">
-                    <i class="fas fa-door-open"></i>
-                    Новая аудитория (опционально)
-                </label>
-                <input type="text" class="form-input" id="combineRoomInput" placeholder="Например: 301">
-            </div>
-            
-            <!-- Информация о выбранных парах -->
-            <div id="selectedPairsInfo" style="background: #f0f5ff; padding: 12px; border-radius: 14px; margin-bottom: 15px; display: none;">
-                <div id="firstPairInfo" style="margin-bottom: 5px;"></div>
-                <div id="secondPairInfo"></div>
-            </div>
-            
-            <div class="modal-actions">
-                <button class="modal-btn save" id="saveCombineBtn">
-                    <i class="fas fa-link"></i>
-                    Совместить
-                </button>
-                <button class="modal-btn cancel" id="cancelCombineBtn">
                     <i class="fas fa-times"></i>
                     Отмена
                 </button>
@@ -3569,160 +3502,6 @@
             });
         }
 
-        // ========== ФУНКЦИОНАЛ ДЛЯ СОВМЕЩЕНИЯ ПАР ==========
-
-        // Поиск пар
-        function searchPairs(query) {
-            if (!query || query.length < 2) return [];
-            
-            query = query.toLowerCase();
-            
-            return state.schedule.filter(pair => {
-                const group = state.groups.find(g => g.id === pair.groupId);
-                const teacher = state.teachers.find(t => t.id === pair.teacherId);
-                
-                const groupName = group?.name?.toLowerCase() || '';
-                const teacherName = teacher?.fullName?.toLowerCase() || teacher?.shortName?.toLowerCase() || '';
-                const subject = pair.subject?.toLowerCase() || '';
-                const room = pair.room?.toLowerCase() || '';
-                const day = pair.dayOfWeek?.toLowerCase() || '';
-                
-                return groupName.includes(query) || 
-                       teacherName.includes(query) || 
-                       subject.includes(query) || 
-                       room.includes(query) || 
-                       day.includes(query);
-            }).slice(0, 5);
-        }
-
-        // Обновление селектов пар
-        function updatePairSelects() {
-            const firstSelect = document.getElementById('firstPairSelect');
-            const secondSelect = document.getElementById('secondPairSelect');
-            
-            if (!firstSelect || !secondSelect) return;
-            
-            firstSelect.innerHTML = '<option value="">-- Выберите первую пару --</option>';
-            secondSelect.innerHTML = '<option value="">-- Выберите вторую пару --</option>';
-            
-            const sortedPairs = [...state.schedule].sort((a, b) => {
-                const dayOrder = {'Понедельник':1,'Вторник':2,'Среда':3,'Четверг':4,'Пятница':5,'Суббота':6};
-                const dayCompare = (dayOrder[a.dayOfWeek] || 7) - (dayOrder[b.dayOfWeek] || 7);
-                if (dayCompare !== 0) return dayCompare;
-                return (a.pairNumber || 0) - (b.pairNumber || 0);
-            });
-            
-            sortedPairs.forEach(pair => {
-                const group = state.groups.find(g => g.id === pair.groupId);
-                const teacher = state.teachers.find(t => t.id === pair.teacherId);
-                
-                const groupName = group?.name || '?';
-                const teacherName = teacher?.shortName || teacher?.fullName || pair.teacherId;
-                
-                const optionText = `${pair.dayOfWeek} ${pair.pairNumber}п: ${pair.subject} | ${groupName} | ${teacherName} | ${pair.room || '—'}`;
-                const optionValue = pair.id;
-                
-                const option1 = document.createElement('option');
-                option1.value = optionValue;
-                option1.textContent = optionText;
-                firstSelect.appendChild(option1);
-                
-                const option2 = document.createElement('option');
-                option2.value = optionValue;
-                option2.textContent = optionText;
-                secondSelect.appendChild(option2);
-            });
-        }
-
-        // Обновление информации о выбранных парах
-        function updateSelectedPairsInfo() {
-            const firstSelect = document.getElementById('firstPairSelect');
-            const secondSelect = document.getElementById('secondPairSelect');
-            const firstInfo = document.getElementById('firstPairInfo');
-            const secondInfo = document.getElementById('secondPairInfo');
-            const infoContainer = document.getElementById('selectedPairsInfo');
-            
-            if (!firstSelect || !secondSelect || !firstInfo || !secondInfo || !infoContainer) return;
-            
-            const firstId = firstSelect.value;
-            const secondId = secondSelect.value;
-            
-            if (!firstId && !secondId) {
-                infoContainer.style.display = 'none';
-                return;
-            }
-            
-            infoContainer.style.display = 'block';
-            
-            if (firstId && firstId !== '') {
-                const pair = state.schedule.find(p => p.id === firstId);
-                if (pair) {
-                    const group = state.groups.find(g => g.id === pair.groupId);
-                    const teacher = state.teachers.find(t => t.id === pair.teacherId);
-                    firstInfo.innerHTML = `
-                        <i class="fas fa-check-circle" style="color: #27ae60;"></i>
-                        <strong>1 пара:</strong> ${pair.dayOfWeek} ${pair.pairNumber}п - ${pair.subject}<br>
-                        <span style="margin-left: 20px;">👥 ${group?.name || '?'} | 👨‍🏫 ${teacher?.shortName || '?'} | 🏫 ${pair.room || '—'}</span>
-                    `;
-                }
-            } else {
-                firstInfo.innerHTML = '<span style="color: #e41e26;">Не выбрана</span>';
-            }
-            
-            if (secondId && secondId !== '') {
-                const pair = state.schedule.find(p => p.id === secondId);
-                if (pair) {
-                    const group = state.groups.find(g => g.id === pair.groupId);
-                    const teacher = state.teachers.find(t => t.id === pair.teacherId);
-                    secondInfo.innerHTML = `
-                        <i class="fas fa-check-circle" style="color: #27ae60;"></i>
-                        <strong>2 пара:</strong> ${pair.dayOfWeek} ${pair.pairNumber}п - ${pair.subject}<br>
-                        <span style="margin-left: 20px;">👥 ${group?.name || '?'} | 👨‍🏫 ${teacher?.shortName || '?'} | 🏫 ${pair.room || '—'}</span>
-                    `;
-                }
-            } else {
-                secondInfo.innerHTML = '<span style="color: #e41e26;">Не выбрана</span>';
-            }
-        }
-
-        // Совмещение пар
-        async function combinePairs(pair1Id, pair2Id, newRoom) {
-            try {
-                const pair1Snap = await db.ref(`schedule/${pair1Id}`).once('value');
-                const pair2Snap = await db.ref(`schedule/${pair2Id}`).once('value');
-                
-                if (!pair1Snap.exists() || !pair2Snap.exists()) {
-                    throw new Error('Одна из пар не найдена');
-                }
-                
-                const pair1 = pair1Snap.val();
-                const pair2 = pair2Snap.val();
-                
-                await db.ref(`schedule/${pair1Id}`).update({
-                    combinedWith: pair2Id,
-                    room: newRoom || `${pair1.room || '?'} + ${pair2.room || '?'}`,
-                    isCombined: true,
-                    combinedAt: Date.now()
-                });
-                
-                await db.ref(`schedule/${pair2Id}`).update({
-                    combinedWith: pair1Id,
-                    isCombined: true,
-                    isHidden: true
-                });
-                
-                const updatedSchedule = await db.ref('schedule').once('value');
-                if (updatedSchedule.exists()) {
-                    state.schedule = Object.entries(updatedSchedule.val()).map(([id, data]) => ({ id, ...data }));
-                }
-                
-                return true;
-            } catch (error) {
-                console.error('Ошибка совмещения пар:', error);
-                throw error;
-            }
-        }
-
         // ========== ФУНКЦИОНАЛ ДЛЯ ПОТОКОВ ==========
 
         // Загрузка потоков
@@ -3978,95 +3757,6 @@
                 windowDayFilter.addEventListener('change', renderWindowsList);
             }
 
-            // Кнопка совмещения пар
-            const combinePairsBtn = document.getElementById('combinePairsBtn');
-            if (combinePairsBtn) {
-                combinePairsBtn.addEventListener('click', () => {
-                    updatePairSelects();
-                    document.getElementById('combinePairsModal').classList.add('active');
-                    document.getElementById('pairSearchInput').value = '';
-                    document.getElementById('searchResults').style.display = 'none';
-                });
-            }
-
-            // Поиск пар
-            const searchInput = document.getElementById('pairSearchInput');
-            if (searchInput) {
-                searchInput.addEventListener('input', (e) => {
-                    const query = e.target.value;
-                    const results = searchPairs(query);
-                    const resultsDiv = document.getElementById('searchResults');
-                    const resultsList = document.getElementById('searchResultsList');
-                    
-                    if (query.length >= 2 && results.length > 0) {
-                        resultsDiv.style.display = 'block';
-                        resultsList.innerHTML = results.map(pair => {
-                            const group = state.groups.find(g => g.id === pair.groupId);
-                            const teacher = state.teachers.find(t => t.id === pair.teacherId);
-                            return `
-                                <div style="padding: 8px; background: white; border-radius: 8px; border: 1px solid #e8edf5; cursor: pointer; margin-bottom: 3px;"
-                                     onclick="selectPairFromSearch('${pair.id}')">
-                                    <strong>${pair.dayOfWeek} ${pair.pairNumber}п</strong>: ${pair.subject}<br>
-                                    <small>${group?.name || '?'} | ${teacher?.shortName || '?'} | ${pair.room || '—'}</small>
-                                </div>
-                            `;
-                        }).join('');
-                    } else {
-                        resultsDiv.style.display = 'none';
-                    }
-                });
-            }
-
-            // Обновление информации при выборе пар
-            const firstSelect = document.getElementById('firstPairSelect');
-            const secondSelect = document.getElementById('secondPairSelect');
-            
-            if (firstSelect) {
-                firstSelect.addEventListener('change', updateSelectedPairsInfo);
-            }
-            
-            if (secondSelect) {
-                secondSelect.addEventListener('change', updateSelectedPairsInfo);
-            }
-
-            // Сохранение совмещения
-            const saveCombineBtn = document.getElementById('saveCombineBtn');
-            if (saveCombineBtn) {
-                saveCombineBtn.addEventListener('click', async () => {
-                    const firstPair = document.getElementById('firstPairSelect').value;
-                    const secondPair = document.getElementById('secondPairSelect').value;
-                    const newRoom = document.getElementById('combineRoomInput').value;
-                    
-                    if (!firstPair || !secondPair) {
-                        alert('Выберите обе пары');
-                        return;
-                    }
-                    
-                    if (firstPair === secondPair) {
-                        alert('Нельзя совместить пару саму с собой');
-                        return;
-                    }
-                    
-                    try {
-                        await combinePairs(firstPair, secondPair, newRoom);
-                        alert('Пары успешно совмещены');
-                        document.getElementById('combinePairsModal').classList.remove('active');
-                        document.getElementById('combineRoomInput').value = '';
-                    } catch (error) {
-                        alert('Ошибка при совмещении пар: ' + error.message);
-                    }
-                });
-            }
-
-            // Отмена совмещения
-            const cancelCombineBtn = document.getElementById('cancelCombineBtn');
-            if (cancelCombineBtn) {
-                cancelCombineBtn.addEventListener('click', () => {
-                    document.getElementById('combinePairsModal').classList.remove('active');
-                    document.getElementById('combineRoomInput').value = '';
-                });
-            }
-
             // Кнопка потоков
             const streamsBtn = document.getElementById('streamsBtn');
             if (streamsBtn) {
@@ -4138,31 +3828,10 @@
             }
         }
 
-        // Глобальная функция для выбора пары из поиска
-        window.selectPairFromSearch = function(pairId) {
-            const firstSelect = document.getElementById('firstPairSelect');
-            const secondSelect = document.getElementById('secondPairSelect');
-            const searchInput = document.getElementById('pairSearchInput');
-            
-            if (firstSelect.value === '' || firstSelect.value === '-- Выберите первую пару --') {
-                firstSelect.value = pairId;
-            } else if (secondSelect.value === '' || secondSelect.value === '-- Выберите вторую пару --') {
-                secondSelect.value = pairId;
-            } else {
-                alert('Обе пары уже выбраны');
-                return;
-            }
-            
-            searchInput.value = '';
-            document.getElementById('searchResults').style.display = 'none';
-            updateSelectedPairsInfo();
-        };
-
         // Закрытие модальных окон по клику вне
         window.addEventListener('click', (e) => {
             const windowsModal = document.getElementById('teacherWindowsModal');
             const addModal = document.getElementById('addWindowModal');
-            const combineModal = document.getElementById('combinePairsModal');
             const streamsModal = document.getElementById('streamsModal');
             
             if (e.target === windowsModal) {
@@ -4170,9 +3839,6 @@
             }
             if (e.target === addModal) {
                 addModal.classList.remove('active');
-            }
-            if (e.target === combineModal) {
-                combineModal.classList.remove('active');
             }
             if (e.target === streamsModal) {
                 streamsModal.classList.remove('active');
@@ -4207,4 +3873,3 @@
     </script>
 </body>
 </html>
-
