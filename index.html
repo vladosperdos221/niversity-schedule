@@ -511,6 +511,136 @@
             transform: translateX(-3px);
         }
 
+        /* Панель управления (окна и потоки) */
+        .control-panel {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: white;
+            border: 2px solid #0038a8;
+            color: #0038a8;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .control-btn:hover {
+            background: #0038a8;
+            color: white;
+        }
+
+        .control-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 35px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #001a41;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            color: #5a6f8c;
+            font-weight: 500;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-input, .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e8edf5;
+            border-radius: 20px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-input:focus, .form-select:focus {
+            border-color: #0038a8;
+            outline: none;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.save {
+            background: #0038a8;
+            color: white;
+        }
+
+        .modal-btn.save:hover {
+            background: #002a80;
+        }
+
+        .modal-btn.cancel {
+            background: #f0f4f8;
+            color: #5a6f8c;
+        }
+
+        .modal-btn.cancel:hover {
+            background: #e4e9f2;
+        }
+
         /* Главное меню */
         .main-menu {
             display: grid;
@@ -1115,104 +1245,6 @@
             border: 2px dashed #cbd6e6;
         }
 
-        /* Модальное окно */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 35px;
-            padding: 30px;
-            max-width: 450px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.25);
-        }
-
-        .modal-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #001a41;
-            margin-bottom: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 18px;
-        }
-
-        .form-label {
-            display: block;
-            color: #5a6f8c;
-            font-weight: 500;
-            margin-bottom: 6px;
-            font-size: 0.9rem;
-        }
-
-        .form-input, .form-select {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid #e8edf5;
-            border-radius: 18px;
-            font-size: 0.95rem;
-            transition: all 0.3s;
-            background: white;
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: #0038a8;
-            outline: none;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 12px;
-            margin-top: 25px;
-        }
-
-        .modal-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .modal-btn.save {
-            background: #0038a8;
-            color: white;
-        }
-
-        .modal-btn.save:hover {
-            background: #002a80;
-        }
-
-        .modal-btn.cancel {
-            background: #f0f4f8;
-            color: #5a6f8c;
-        }
-
-        .modal-btn.cancel:hover {
-            background: #e4e9f2;
-        }
-
         /* Адаптивность */
         @media (max-width: 768px) {
             .header {
@@ -1257,6 +1289,15 @@
             
             .course-buttons {
                 flex-direction: column;
+            }
+            
+            .control-panel {
+                flex-direction: column;
+            }
+            
+            .control-btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -1434,6 +1475,19 @@
             </div>
             <button class="back-btn" id="backBtn" style="visibility: hidden;">
                 <i class="fas fa-arrow-left"></i> Назад
+            </button>
+        </div>
+
+        <!-- Панель управления (окна и потоки) -->
+        <div class="control-panel" id="controlPanel">
+            <button class="control-btn" id="combinePairsBtn">
+                <i class="fas fa-link"></i> Совместить пары
+            </button>
+            <button class="control-btn" id="teacherWindowsBtn">
+                <i class="fas fa-clock"></i> Окна преподавателей
+            </button>
+            <button class="control-btn" id="addWindowBtn">
+                <i class="fas fa-plus"></i> Добавить окно
             </button>
         </div>
 
@@ -1616,6 +1670,7 @@
         const homeBtn = document.getElementById('homeBtn');
         const menuCards = document.querySelectorAll('.menu-card');
         const roleTabs = document.getElementById('roleTabs');
+        const controlPanel = document.getElementById('controlPanel');
         const courseButtonsContainer = document.getElementById('courseButtonsContainer');
         const courseBtns = document.querySelectorAll('.course-btn');
         const loadFilters = document.getElementById('loadFilters');
@@ -3144,6 +3199,9 @@
                 }
             });
 
+            // Панель управления показываем только в расписании
+            controlPanel.style.display = view === 'schedule' ? 'flex' : 'none';
+            
             roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
             
             if (view === 'schedule') {
@@ -3239,21 +3297,20 @@
         // Обработчики для окон
         if (combinePairsBtn) {
             combinePairsBtn.addEventListener('click', () => {
+                // Заполняем селекты парами
                 const firstSelect = document.getElementById('firstPairSelect');
                 const secondSelect = document.getElementById('secondPairSelect');
                 
-                if (firstSelect && secondSelect) {
-                    firstSelect.innerHTML = '<option value="">Выберите пару</option>';
-                    secondSelect.innerHTML = '<option value="">Выберите пару</option>';
-                    
-                    state.schedule.forEach((pair) => {
-                        const option = `<option value="${pair.id}">${pair.dayOfWeek} ${pair.pairNumber}п: ${pair.subject}</option>`;
-                        firstSelect.innerHTML += option;
-                        secondSelect.innerHTML += option;
-                    });
-                }
+                firstSelect.innerHTML = '<option value="">Выберите пару</option>';
+                secondSelect.innerHTML = '<option value="">Выберите пару</option>';
                 
-                if (combineModal) combineModal.classList.add('active');
+                state.schedule.forEach(pair => {
+                    const option = `<option value="${pair.id}">${pair.dayOfWeek} ${pair.pairNumber}п: ${pair.subject}</option>`;
+                    firstSelect.innerHTML += option;
+                    secondSelect.innerHTML += option;
+                });
+                
+                combineModal.classList.add('active');
             });
         }
 
@@ -3266,64 +3323,50 @@
         if (addWindowBtn) {
             addWindowBtn.addEventListener('click', () => {
                 const teacherSelect = document.getElementById('windowTeacherSelect');
-                if (teacherSelect) {
-                    teacherSelect.innerHTML = '<option value="">Выберите преподавателя</option>';
-                    
-                    Object.values(state.teacherStats).forEach(teacher => {
-                        teacherSelect.innerHTML += `<option value="${teacher.teacherName}">${teacher.teacherName}</option>`;
-                    });
-                }
+                teacherSelect.innerHTML = '<option value="">Выберите преподавателя</option>';
                 
-                if (windowModal) windowModal.classList.add('active');
+                Object.values(state.teacherStats).forEach(teacher => {
+                    teacherSelect.innerHTML += `<option value="${teacher.teacherName}">${teacher.teacherName}</option>`;
+                });
+                
+                windowModal.classList.add('active');
             });
         }
 
-        const combineCancelBtn = document.getElementById('combineCancelBtn');
-        if (combineCancelBtn) {
-            combineCancelBtn.addEventListener('click', () => {
-                if (combineModal) combineModal.classList.remove('active');
-            });
-        }
+        document.getElementById('combineCancelBtn').addEventListener('click', () => {
+            combineModal.classList.remove('active');
+        });
 
-        const windowCancelBtn = document.getElementById('windowCancelBtn');
-        if (windowCancelBtn) {
-            windowCancelBtn.addEventListener('click', () => {
-                if (windowModal) windowModal.classList.remove('active');
-            });
-        }
+        document.getElementById('windowCancelBtn').addEventListener('click', () => {
+            windowModal.classList.remove('active');
+        });
 
-        const combineSaveBtn = document.getElementById('combineSaveBtn');
-        if (combineSaveBtn) {
-            combineSaveBtn.addEventListener('click', async () => {
-                const firstPair = document.getElementById('firstPairSelect')?.value;
-                const secondPair = document.getElementById('secondPairSelect')?.value;
-                
-                if (!firstPair || !secondPair) {
-                    alert('Выберите обе пары');
-                    return;
-                }
-                
-                alert('Функция совмещения пар в разработке');
-                if (combineModal) combineModal.classList.remove('active');
-            });
-        }
+        document.getElementById('combineSaveBtn').addEventListener('click', async () => {
+            const firstPair = document.getElementById('firstPairSelect').value;
+            const secondPair = document.getElementById('secondPairSelect').value;
+            
+            if (!firstPair || !secondPair) {
+                alert('Выберите обе пары');
+                return;
+            }
+            
+            alert('Функция совмещения пар в разработке');
+            combineModal.classList.remove('active');
+        });
 
-        const windowSaveBtn = document.getElementById('windowSaveBtn');
-        if (windowSaveBtn) {
-            windowSaveBtn.addEventListener('click', async () => {
-                const teacher = document.getElementById('windowTeacherSelect')?.value;
-                const day = document.getElementById('windowDaySelect')?.value;
-                const pair = document.getElementById('windowPairSelect')?.value;
-                
-                if (!teacher || !day || !pair) {
-                    alert('Заполните все поля');
-                    return;
-                }
-                
-                alert('Функция добавления окон в разработке');
-                if (windowModal) windowModal.classList.remove('active');
-            });
-        }
+        document.getElementById('windowSaveBtn').addEventListener('click', async () => {
+            const teacher = document.getElementById('windowTeacherSelect').value;
+            const day = document.getElementById('windowDaySelect').value;
+            const pair = document.getElementById('windowPairSelect').value;
+            
+            if (!teacher || !day || !pair) {
+                alert('Заполните все поля');
+                return;
+            }
+            
+            alert('Функция добавления окон в разработке');
+            windowModal.classList.remove('active');
+        });
 
         // Закрытие модальных окон по клику вне
         window.addEventListener('click', (e) => {
@@ -3349,8 +3392,8 @@
             });
         });
 
-        if (homeBtn) homeBtn.addEventListener('click', goHome);
-        if (backBtn) backBtn.addEventListener('click', goHome);
+        homeBtn.addEventListener('click', goHome);
+        backBtn.addEventListener('click', goHome);
 
         // ========== ЗАПУСК ПРИЛОЖЕНИЯ ==========
         // Проверяем сохраненную сессию при загрузке страницы
