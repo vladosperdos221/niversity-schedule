@@ -23,11 +23,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Golos Text', 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
 
         body {
-            background: #f0f4f8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -44,23 +44,24 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 10% 20%, rgba(0, 56, 168, 0.03) 0%, transparent 30%),
-                              radial-gradient(circle at 90% 80%, rgba(0, 56, 168, 0.03) 0%, transparent 30%);
+            background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
 
         /* Стили для авторизации */
         .login-container {
-            background: white;
-            border-radius: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
             padding: 40px;
-            box-shadow: 0 30px 60px -20px rgba(0, 35, 80, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             max-width: 500px;
             width: 100%;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(0, 56, 168, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -73,7 +74,7 @@
         .login-logo {
             width: 70px;
             height: 70px;
-            background: #0038a8;
+            background: linear-gradient(45deg, #ff6b9d, #ffa5c3);
             border-radius: 22px;
             display: flex;
             align-items: center;
@@ -82,7 +83,7 @@
             font-size: 36px;
             font-weight: 700;
             margin: 0 auto 12px;
-            box-shadow: 0 8px 20px -6px rgba(0, 56, 168, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
         }
 
         .login-logo::before {
@@ -93,13 +94,13 @@
         }
 
         .login-header h2 {
-            color: #001a41;
+            color: white;
             font-size: 1.6rem;
             margin-bottom: 5px;
         }
 
         .login-header p {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.9rem;
         }
 
@@ -107,7 +108,7 @@
             display: flex;
             gap: 8px;
             margin-bottom: 25px;
-            border-bottom: 2px solid #e8edf5;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
             padding-bottom: 12px;
         }
 
@@ -119,17 +120,18 @@
             cursor: pointer;
             transition: all 0.3s;
             font-weight: 600;
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
         }
 
         .auth-tab:hover {
-            background: #f0f5ff;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .auth-tab.active {
-            background: #0038a8;
+            background: #ff6b9d;
             color: white;
+            box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
         }
 
         .forgot-password-link {
@@ -139,14 +141,14 @@
         }
         
         .forgot-password-link span {
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 0.85rem;
             cursor: pointer;
             text-decoration: underline;
         }
         
         .forgot-password-link span:hover {
-            color: #002a80;
+            color: #ff6b9d;
         }
 
         .login-form {
@@ -168,28 +170,33 @@
             left: 15px;
             top: 50%;
             transform: translateY(-50%);
-            color: #0038a8;
+            color: #ff6b9d;
             font-size: 1rem;
         }
 
         .login-input {
             width: 100%;
             padding: 14px 15px 14px 45px;
-            border: 2px solid #e8edf5;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             font-size: 0.95rem;
             transition: all 0.3s;
-            background: #f8faff;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .login-input:focus {
-            border-color: #0038a8;
+            border-color: #ff6b9d;
             outline: none;
-            background: white;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .login-btn {
-            background: #0038a8;
+            background: #ff6b9d;
             color: white;
             border: none;
             padding: 14px;
@@ -199,38 +206,38 @@
             cursor: pointer;
             transition: all 0.3s;
             margin-top: 8px;
-            box-shadow: 0 8px 20px -6px rgba(0, 56, 168, 0.4);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
         }
 
         .login-btn:hover {
-            background: #002a80;
+            background: #ff85b0;
             transform: translateY(-2px);
         }
 
         .login-btn:disabled {
-            background: #a0b8d0;
+            background: rgba(255, 107, 157, 0.5);
             cursor: not-allowed;
             transform: none;
         }
 
         .login-error {
-            color: #e41e26;
+            color: #ff6b9d;
             font-size: 0.9rem;
             text-align: center;
             margin-top: 10px;
             padding: 8px;
-            background: #fff1f0;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             display: none;
         }
 
         .login-success {
-            color: #27ae60;
+            color: #4caf50;
             font-size: 0.9rem;
             text-align: center;
             margin-top: 10px;
             padding: 8px;
-            background: #e8f8f0;
+            background: rgba(76, 175, 80, 0.1);
             border-radius: 12px;
             display: none;
         }
@@ -238,7 +245,7 @@
         .login-footer {
             text-align: center;
             margin-top: 20px;
-            color: #8a9bb5;
+            color: rgba(255, 255, 255, 0.6);
             font-size: 0.8rem;
         }
 
@@ -253,30 +260,31 @@
         .code-input {
             width: 40px;
             height: 50px;
-            border: 2px solid #e8edf5;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 10px;
             font-size: 1.4rem;
             text-align: center;
             font-weight: 600;
-            color: #001a41;
+            color: white;
             transition: all 0.3s;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .code-input:focus {
-            border-color: #0038a8;
+            border-color: #ff6b9d;
             outline: none;
-            box-shadow: 0 0 0 3px rgba(0, 56, 168, 0.1);
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.2);
         }
 
         .timer-text {
             text-align: center;
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.85rem;
             margin: 10px 0;
         }
 
         .resend-link {
-            color: #0038a8;
+            color: #ffa5c3;
             text-decoration: underline;
             cursor: pointer;
             font-weight: 500;
@@ -284,22 +292,22 @@
         }
 
         .resend-link:hover {
-            color: #002a80;
+            color: #ff6b9d;
         }
 
         .email-display {
-            background: #f8faff;
+            background: rgba(255, 255, 255, 0.1);
             padding: 12px;
             border-radius: 12px;
             text-align: center;
             margin: 15px 0;
-            color: #001a41;
+            color: white;
             font-weight: 500;
             font-size: 0.9rem;
         }
 
         .email-display i {
-            color: #0038a8;
+            color: #ff6b9d;
             margin-right: 8px;
         }
 
@@ -309,13 +317,13 @@
         }
         
         .back-to-login span {
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 0.9rem;
             cursor: pointer;
             text-decoration: underline;
         }
 
-        /* Основной сайт (изначально скрыт) */
+        /* Основной сайт */
         .university-wrapper {
             width: 100%;
             max-width: 1400px;
@@ -330,29 +338,19 @@
 
         /* Шапка */
         .header {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 35px 35px 25px 25px;
             padding: 18px 30px;
             margin-bottom: 20px;
-            box-shadow: 0 12px 30px -8px rgba(0, 35, 80, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 15px;
-            border: 1px solid rgba(0, 56, 168, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, #0038a8, #e41e26, #0038a8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .logo-area {
@@ -364,7 +362,7 @@
         .university-emblem {
             width: 50px;
             height: 50px;
-            background: #0038a8;
+            background: linear-gradient(45deg, #ff6b9d, #ffa5c3);
             border-radius: 15px;
             display: flex;
             align-items: center;
@@ -372,7 +370,7 @@
             color: white;
             font-size: 24px;
             font-weight: 700;
-            box-shadow: 0 4px 12px rgba(0, 56, 168, 0.25);
+            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
         }
 
         .university-emblem::before {
@@ -385,12 +383,12 @@
         .university-title h1 {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
             letter-spacing: -0.3px;
         }
 
         .university-title p {
-            color: #0038a8;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
             font-size: 0.7rem;
             letter-spacing: 0.8px;
@@ -398,39 +396,35 @@
         }
 
         .date-badge {
-            background: #f0f5ff;
+            background: rgba(255, 255, 255, 0.15);
             padding: 8px 16px;
             border-radius: 40px;
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #0038a8;
+            color: white;
             font-weight: 500;
             font-size: 0.85rem;
-            border: 1px solid rgba(0, 56, 168, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
         .user-info {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #f0f5ff;
+            background: rgba(255, 255, 255, 0.15);
             padding: 8px 16px;
             border-radius: 40px;
-            color: #0038a8;
+            color: white;
             font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .user-info i {
             font-size: 0.9rem;
         }
 
         /* Кнопка выхода */
         .logout-btn {
-            background: white;
-            border: 2px solid #e41e26;
-            color: #e41e26;
+            background: transparent;
+            border: 2px solid #ff6b9d;
+            color: #ff6b9d;
             padding: 8px 16px;
             border-radius: 40px;
             font-weight: 600;
@@ -443,30 +437,31 @@
         }
 
         .logout-btn:hover {
-            background: #e41e26;
+            background: #ff6b9d;
             color: white;
         }
 
         /* Навигация */
         .nav-panel {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 12px 22px;
             margin-bottom: 20px;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
-            border: 1px solid rgba(0, 56, 168, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .breadcrumbs {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: #f8faff;
+            background: rgba(255, 255, 255, 0.1);
             padding: 6px 15px;
             border-radius: 35px;
         }
@@ -474,7 +469,7 @@
         .breadcrumbs button {
             background: none;
             border: none;
-            color: #0038a8;
+            color: #ffa5c3;
             font-weight: 600;
             font-size: 0.9rem;
             cursor: pointer;
@@ -487,11 +482,11 @@
         }
 
         .breadcrumbs button:hover {
-            background: rgba(0, 56, 168, 0.08);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .back-btn {
-            background: #0038a8;
+            background: #ff6b9d;
             border: none;
             color: white;
             padding: 8px 22px;
@@ -500,14 +495,14 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 12px rgba(0, 56, 168, 0.25);
+            box-shadow: 0 4px 12px rgba(255, 107, 157, 0.3);
             display: flex;
             align-items: center;
             gap: 6px;
         }
 
         .back-btn:hover {
-            background: #002a80;
+            background: #ff85b0;
             transform: translateX(-3px);
         }
 
@@ -520,9 +515,10 @@
         }
 
         .control-btn {
-            background: white;
-            border: 2px solid #0038a8;
-            color: #0038a8;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 107, 157, 0.5);
+            color: white;
             padding: 12px 25px;
             border-radius: 50px;
             font-weight: 600;
@@ -535,8 +531,10 @@
         }
 
         .control-btn:hover {
-            background: #0038a8;
-            color: white;
+            background: #ff6b9d;
+            border-color: #ff6b9d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.4);
         }
 
         .control-btn i {
@@ -552,51 +550,51 @@
         }
 
         .menu-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 20px;
-            box-shadow: 0 12px 25px -8px rgba(0, 35, 80, 0.08);
-            border: 2px solid transparent;
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
             cursor: pointer;
             text-align: center;
-            border: 1px solid rgba(0, 56, 168, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .menu-card:hover {
-            border-color: #0038a8;
-            background: #f5f9ff;
+            border-color: #ff6b9d;
             transform: translateY(-4px);
-            box-shadow: 0 16px 30px -10px rgba(0, 56, 168, 0.25);
+            box-shadow: 0 16px 30px rgba(255, 107, 157, 0.2);
         }
 
         .menu-card.active {
-            border-color: #0038a8;
-            background: #f5f9ff;
+            border-color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.2);
         }
 
         .menu-icon {
             width: 60px;
             height: 60px;
-            background: #0038a8;
+            background: rgba(255, 107, 157, 0.3);
             border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.8rem;
-            color: white;
+            color: #ffa5c3;
             margin: 0 auto 12px;
         }
 
         .menu-card h3 {
             font-size: 1.2rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
             margin-bottom: 4px;
         }
 
         .menu-card p {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
         }
 
@@ -609,28 +607,29 @@
 
         .role-btn {
             flex: 1;
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 50px;
             padding: 15px 0;
             border: 2px solid transparent;
             transition: all 0.3s;
             cursor: pointer;
             text-align: center;
-            border: 1px solid rgba(0, 56, 168, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             font-size: 1.1rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
         }
 
         .role-btn i {
-            color: #0038a8;
+            color: #ffa5c3;
             margin-right: 8px;
         }
 
         .role-btn.active {
-            border-color: #0038a8;
-            background: #f5f9ff;
-            box-shadow: 0 8px 16px -6px rgba(0, 56, 168, 0.15);
+            border-color: #ff6b9d;
+            background: rgba(255, 107, 157, 0.2);
+            box-shadow: 0 8px 16px rgba(255, 107, 157, 0.2);
         }
 
         /* Кнопки курсов */
@@ -644,10 +643,10 @@
         .course-btn {
             flex: 1;
             padding: 15px 0;
-            border: 2px solid #0038a8;
+            border: 2px solid #ff6b9d;
             border-radius: 50px;
-            background: white;
-            color: #0038a8;
+            background: transparent;
+            color: #ffa5c3;
             font-weight: 600;
             font-size: 1.2rem;
             cursor: pointer;
@@ -656,17 +655,18 @@
         }
 
         .course-btn:hover {
-            background: #f0f5ff;
+            background: rgba(255, 107, 157, 0.2);
         }
 
         .course-btn.active {
-            background: #0038a8;
+            background: #ff6b9d;
             color: white;
         }
 
         /* Фильтры для нагрузки */
         .filters-bar {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 18px;
             padding: 12px 18px;
             margin-bottom: 18px;
@@ -674,21 +674,27 @@
             gap: 12px;
             flex-wrap: wrap;
             align-items: center;
-            border: 1px solid #e8edf5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .filter-select {
             padding: 8px 12px;
-            border: 2px solid #e8edf5;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 14px;
             font-size: 0.9rem;
             min-width: 160px;
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
             cursor: pointer;
         }
 
+        .filter-select option {
+            background: #764ba2;
+            color: white;
+        }
+
         .filter-select:focus {
-            border-color: #0038a8;
+            border-color: #ff6b9d;
             outline: none;
         }
 
@@ -701,37 +707,21 @@
         }
 
         .group-card, .teacher-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 22px;
-            box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e8edf5;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .group-card::before, .teacher-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: #0038a8;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-
-        .group-card:hover::before, .teacher-card:hover::before {
-            opacity: 1;
+            color: white;
         }
 
         .group-card:hover, .teacher-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 30px -10px rgba(0, 56, 168, 0.15);
-            border-color: #0038a8;
+            box-shadow: 0 16px 30px rgba(255, 107, 157, 0.2);
+            border-color: #ff6b9d;
         }
 
         .card-header {
@@ -744,23 +734,23 @@
         .card-icon {
             width: 45px;
             height: 45px;
-            background: #f0f5ff;
+            background: rgba(255, 107, 157, 0.3);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 1.3rem;
         }
 
         .card-title {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
         }
 
         .card-subtitle {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
             margin-top: 4px;
         }
@@ -774,7 +764,7 @@
 
         .card-footer {
             margin-top: 12px;
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 0.85rem;
         }
 
@@ -789,7 +779,7 @@
         }
 
         .form-badge.ofo {
-            background: #0038a8;
+            background: #ff6b9d;
             color: white;
         }
 
@@ -816,38 +806,27 @@
         /* Карточки преподавателей для нагрузки */
         .teacher-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 18px;
             margin-top: 15px;
         }
 
         .teacher-load-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 22px;
             padding: 20px;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e8edf5;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             transition: all 0.3s;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .teacher-load-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: #0038a8;
-            opacity: 0.6;
+            color: white;
         }
 
         .teacher-load-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 16px 30px -10px rgba(0, 56, 168, 0.15);
-            border-color: #0038a8;
+            box-shadow: 0 16px 30px rgba(255, 107, 157, 0.2);
+            border-color: #ff6b9d;
         }
 
         .teacher-load-header {
@@ -860,54 +839,82 @@
         .teacher-load-icon {
             width: 45px;
             height: 45px;
-            background: #f0f5ff;
+            background: rgba(255, 107, 157, 0.3);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 1.3rem;
         }
 
         .teacher-load-name {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
         }
 
         .teacher-load-dept {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
             margin-top: 2px;
+        }
+
+        .teacher-load-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            padding: 8px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 2px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: #ffa5c3;
+            font-size: 1.1rem;
         }
 
         .teacher-load-hours {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-top: 15px;
-            padding-top: 12px;
-            border-top: 1px solid #e8edf5;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .teacher-load-hours span:first-child {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
         }
 
         .teacher-load-hours span:last-child {
             font-weight: 700;
-            color: #0038a8;
+            color: #ff6b9d;
             font-size: 1.3rem;
         }
 
         /* Детальная карточка преподавателя */
         .teacher-detail-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 25px;
-            box-shadow: 0 12px 30px -10px rgba(0, 35, 80, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
             margin-top: 15px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .teacher-detail-header {
@@ -916,13 +923,13 @@
             gap: 18px;
             margin-bottom: 25px;
             padding-bottom: 18px;
-            border-bottom: 2px solid #f0f5ff;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.2);
         }
 
         .teacher-detail-avatar {
             width: 70px;
             height: 70px;
-            background: #0038a8;
+            background: linear-gradient(45deg, #ff6b9d, #ffa5c3);
             border-radius: 22px;
             display: flex;
             align-items: center;
@@ -933,13 +940,39 @@
 
         .teacher-detail-info h2 {
             font-size: 1.6rem;
-            color: #001a41;
+            color: white;
             margin-bottom: 4px;
         }
 
         .teacher-detail-info p {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.8);
             font-size: 0.95rem;
+        }
+
+        .monthly-summary {
+            background: rgba(255, 107, 157, 0.2);
+            border-radius: 18px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+            border: 1px solid rgba(255, 107, 157, 0.3);
+        }
+
+        .monthly-item {
+            text-align: center;
+        }
+
+        .monthly-label {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 4px;
+        }
+
+        .monthly-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffa5c3;
         }
 
         .discipline-list {
@@ -948,40 +981,43 @@
         }
 
         .discipline-item {
-            background: #f8faff;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #e8edf5;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .discipline-info h4 {
-            color: #001a41;
+            color: white;
             margin-bottom: 4px;
             font-size: 1rem;
         }
 
         .discipline-info p {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.85rem;
         }
 
         .discipline-hours {
             font-weight: 700;
-            color: #0038a8;
+            color: #ff6b9d;
             font-size: 1.2rem;
         }
 
         /* Таблицы */
         .table-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 25px;
             padding: 22px;
-            box-shadow: 0 12px 30px -10px rgba(0, 35, 80, 0.08);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
             margin-top: 15px;
             overflow-x: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .data-table {
@@ -990,7 +1026,7 @@
         }
 
         .data-table th {
-            background: #0038a8;
+            background: rgba(255, 107, 157, 0.3);
             color: white;
             font-weight: 600;
             font-size: 0.85rem;
@@ -1000,18 +1036,18 @@
 
         .data-table td {
             padding: 10px 12px;
-            border-bottom: 1px solid #e8edf5;
-            color: #1f344d;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
             font-size: 0.9rem;
         }
 
         .data-table tbody tr:hover {
-            background: #f5f9ff;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .badge {
-            background: #f0f5ff;
-            color: #0038a8;
+            background: rgba(255, 107, 157, 0.3);
+            color: #ffa5c3;
             padding: 3px 10px;
             border-radius: 18px;
             font-size: 0.8rem;
@@ -1019,8 +1055,8 @@
         }
 
         .day-badge {
-            background: #f0f5ff;
-            color: #0038a8;
+            background: rgba(255, 107, 157, 0.3);
+            color: #ffa5c3;
             padding: 8px 18px;
             border-radius: 25px;
             margin: 15px 0 8px;
@@ -1038,18 +1074,20 @@
         }
 
         .chart-container {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 22px;
             padding: 18px;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e8edf5;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             height: 320px;
             position: relative;
+            color: white;
         }
 
         .chart-container h3 {
             margin-bottom: 12px;
-            color: #001a41;
+            color: white;
             font-size: 1rem;
         }
 
@@ -1067,30 +1105,32 @@
         }
 
         .stat-card {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 22px;
             padding: 18px;
-            box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.03);
-            border: 1px solid #e8edf5;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             display: flex;
             align-items: center;
             gap: 12px;
+            color: white;
         }
 
         .stat-icon {
             width: 45px;
             height: 45px;
-            background: #f0f5ff;
+            background: rgba(255, 107, 157, 0.3);
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #0038a8;
+            color: #ffa5c3;
             font-size: 1.3rem;
         }
 
         .stat-info h4 {
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.8rem;
             font-weight: 500;
             margin-bottom: 4px;
@@ -1099,7 +1139,7 @@
         .stat-info .stat-value {
             font-size: 1.5rem;
             font-weight: 700;
-            color: #001a41;
+            color: white;
         }
 
         /* Загрузчик */
@@ -1113,9 +1153,9 @@
         .spinner {
             width: 50px;
             height: 50px;
-            border: 4px solid #e8edf5;
-            border-top: 4px solid #0038a8;
-            border-right: 4px solid #e41e26;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #ff6b9d;
+            border-right: 4px solid #ffa5c3;
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
@@ -1126,11 +1166,11 @@
         }
 
         .error-message {
-            background: #fff1f0;
-            border-left: 6px solid #e41e26;
+            background: rgba(255, 107, 157, 0.2);
+            border-left: 6px solid #ff6b9d;
             padding: 20px 30px;
             border-radius: 25px;
-            color: #8b1e1e;
+            color: white;
             font-weight: 500;
             display: flex;
             align-items: center;
@@ -1138,13 +1178,13 @@
         }
 
         .empty-message {
-            background: #f8faff;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 40px;
             padding: 40px;
             text-align: center;
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
-            border: 2px dashed #cbd6e6;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
         }
 
         /* Модальные окна */
@@ -1156,6 +1196,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -1166,20 +1207,23 @@
         }
 
         .modal-content {
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
             border-radius: 35px;
             padding: 30px;
             max-width: 600px;
             width: 90%;
             max-height: 80vh;
             overflow-y: auto;
-            box-shadow: 0 25px 50px -15px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
         }
 
         .modal-title {
             font-size: 1.4rem;
             font-weight: 600;
-            color: #001a41;
+            color: white;
             margin-bottom: 20px;
             display: flex;
             align-items: center;
@@ -1192,7 +1236,7 @@
 
         .form-label {
             display: block;
-            color: #5a6f8c;
+            color: rgba(255, 255, 255, 0.8);
             font-weight: 500;
             margin-bottom: 6px;
             font-size: 0.9rem;
@@ -1201,16 +1245,27 @@
         .form-input, .form-select {
             width: 100%;
             padding: 10px 14px;
-            border: 2px solid #e8edf5;
+            border: 2px solid rgba(255, 255, 255, 0.2);
             border-radius: 18px;
             font-size: 0.95rem;
             transition: all 0.3s;
-            background: white;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-select option {
+            background: #764ba2;
+            color: white;
         }
 
         .form-input:focus, .form-select:focus {
-            border-color: #0038a8;
+            border-color: #ff6b9d;
             outline: none;
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .modal-actions {
@@ -1231,21 +1286,22 @@
         }
 
         .modal-btn.save {
-            background: #0038a8;
+            background: #ff6b9d;
             color: white;
         }
 
         .modal-btn.save:hover {
-            background: #002a80;
+            background: #ff85b0;
         }
 
         .modal-btn.cancel {
-            background: #f0f4f8;
-            color: #5a6f8c;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .modal-btn.cancel:hover {
-            background: #e4e9f2;
+            background: rgba(255, 255, 255, 0.2);
         }
 
         /* Адаптивность */
@@ -1481,7 +1537,7 @@
             </button>
         </div>
 
-        <!-- Панель управления (окна, потоки) -->
+        <!-- Панель управления -->
         <div class="control-panel" id="controlPanel">
             <button class="control-btn" id="teacherWindowsBtn">
                 <i class="fas fa-clock"></i> Окна преподавателей
@@ -1668,8 +1724,8 @@
             </div>
             
             <!-- Форма создания потока -->
-            <div style="background: #f8faff; padding: 20px; border-radius: 18px; margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: #001a41;">Создать новый поток</h3>
+            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 18px; padding: 20px; margin-bottom: 20px;">
+                <h3 style="margin-bottom: 15px; color: white;">Создать новый поток</h3>
                 
                 <div class="form-group">
                     <label class="form-label">Название потока</label>
@@ -1690,7 +1746,7 @@
                 
                 <div class="form-group">
                     <label class="form-label">Группы в потоке</label>
-                    <div style="max-height: 150px; overflow-y: auto; border: 2px solid #e8edf5; border-radius: 14px; padding: 10px;">
+                    <div style="max-height: 150px; overflow-y: auto; border: 2px solid rgba(255, 255, 255, 0.2); border-radius: 14px; padding: 10px;">
                         <div id="groupsList"></div>
                     </div>
                 </div>
@@ -1731,7 +1787,7 @@
             </div>
             
             <!-- Список существующих потоков -->
-            <h3 style="margin-bottom: 15px; color: #001a41;">Существующие потоки</h3>
+            <h3 style="margin-bottom: 15px; color: white;">Существующие потоки</h3>
             <div id="streamsList" style="max-height: 300px; overflow-y: auto;"></div>
             
             <div class="modal-actions" style="margin-top: 15px;">
@@ -1837,6 +1893,7 @@
             windows: [],
             streams: [],
             teacherStats: {},
+            teacherMonthlyStats: {},
             departmentFilter: '',
             filteredGroups: []
         };
@@ -2479,10 +2536,26 @@
             }
         }
 
+        // Функция для получения текущего месяца и года
+        function getCurrentMonthYear() {
+            const now = new Date();
+            return {
+                month: now.getMonth() + 1,
+                year: now.getFullYear(),
+                monthName: now.toLocaleString('ru-RU', { month: 'long' })
+            };
+        }
+
+        // Расчет статистики по преподавателям с учетом дат и месячной нагрузки
         function calculateTeacherStats() {
             state.teacherStats = {};
+            state.teacherMonthlyStats = {};
             
             if (!state.load || state.load.length === 0) return;
+            
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth() + 1;
+            const currentYear = currentDate.getFullYear();
             
             state.load.forEach(item => {
                 if (!item) return;
@@ -2493,6 +2566,7 @@
                 
                 const teacherName = rawName;
                 
+                // Общая статистика (за все время)
                 if (!state.teacherStats[teacherName]) {
                     state.teacherStats[teacherName] = {
                         teacherName: teacherName,
@@ -2508,9 +2582,36 @@
                 state.teacherStats[teacherName].lectures += item.lectures || 0;
                 state.teacherStats[teacherName].seminars += item.seminars || 0;
                 state.teacherStats[teacherName].records.push(item);
+                
+                // Месячная статистика (текущий месяц)
+                if (!state.teacherMonthlyStats[teacherName]) {
+                    state.teacherMonthlyStats[teacherName] = {
+                        teacherName: teacherName,
+                        department: item.department || 'Кафедра',
+                        monthlyHours: 0,
+                        monthlyLectures: 0,
+                        monthlySeminars: 0,
+                        monthlyRecords: []
+                    };
+                }
+                
+                // Проверяем, относится ли запись к текущему месяцу
+                if (item.date) {
+                    const itemDate = new Date(item.date);
+                    const itemMonth = itemDate.getMonth() + 1;
+                    const itemYear = itemDate.getFullYear();
+                    
+                    if (itemMonth === currentMonth && itemYear === currentYear) {
+                        state.teacherMonthlyStats[teacherName].monthlyHours += item.hours || 0;
+                        state.teacherMonthlyStats[teacherName].monthlyLectures += item.lectures || 0;
+                        state.teacherMonthlyStats[teacherName].monthlySeminars += item.seminars || 0;
+                        state.teacherMonthlyStats[teacherName].monthlyRecords.push(item);
+                    }
+                }
             });
         }
 
+        // Заполнение фильтров для нагрузки
         function populateLoadFilters() {
             const departments = new Set();
 
@@ -2526,6 +2627,7 @@
             }
         }
 
+        // Применение фильтров для групп
         function filterGroups() {
             if (!state.groups) return;
             
@@ -2737,8 +2839,8 @@
                 });
 
                 let html = `
-                    <h2 style="color: #001a41; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-users" style="color: #0038a8; font-size: 1.8rem;"></i>
+                    <h2 style="color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-users" style="color: #ff6b9d; font-size: 1.8rem;"></i>
                         <span>Расписание группы: <strong>${state.selectedGroupName}</strong></span>
                     </h2>
                 `;
@@ -2811,8 +2913,8 @@
                 });
 
                 let html = `
-                    <h2 style="color: #001a41; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
-                        <i class="fas fa-chalkboard-teacher" style="color: #0038a8; font-size: 1.8rem;"></i>
+                    <h2 style="color: white; margin-bottom: 20px; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-chalkboard-teacher" style="color: #ff6b9d; font-size: 1.8rem;"></i>
                         <span>Расписание преподавателя: <strong>${state.selectedTeacherName}</strong></span>
                     </h2>
                 `;
@@ -2864,11 +2966,12 @@
             }
         }
 
-        // Список преподавателей для нагрузки
+        // Список преподавателей для нагрузки с отображением месячной и общей нагрузки
         function renderTeacherList() {
             if (!contentEl) return;
             
             const teacherStats = Object.values(state.teacherStats);
+            const currentMonthInfo = getCurrentMonthYear();
             
             if (teacherStats.length === 0) {
                 showEmpty('Нет данных о нагрузке');
@@ -2887,12 +2990,23 @@
                 return nameA.localeCompare(nameB);
             });
 
-            let html = '<div class="teacher-cards">';
+            let html = `
+                <div style="margin-bottom: 20px; color: white; text-align: center;">
+                    <h3>Текущий месяц: ${currentMonthInfo.monthName} ${currentMonthInfo.year}</h3>
+                </div>
+                <div class="teacher-cards">
+            `;
 
             filteredTeachers.forEach(teacher => {
                 const shortName = teacher.teacherName.includes(' ') ? 
                     teacher.teacherName.split(' ').slice(0, 2).join(' ') : 
                     teacher.teacherName;
+                
+                const monthly = state.teacherMonthlyStats[teacher.teacherName] || {
+                    monthlyHours: 0,
+                    monthlyLectures: 0,
+                    monthlySeminars: 0
+                };
                 
                 html += `
                     <div class="teacher-load-card" data-teacher="${teacher.teacherName}">
@@ -2905,8 +3019,24 @@
                                 <div class="teacher-load-dept">${teacher.department}</div>
                             </div>
                         </div>
+                        
+                        <div class="teacher-load-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">За месяц</div>
+                                <div class="stat-value">${monthly.monthlyHours} ч</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Лекции</div>
+                                <div class="stat-value">${monthly.monthlyLectures}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Семинары</div>
+                                <div class="stat-value">${monthly.monthlySeminars}</div>
+                            </div>
+                        </div>
+                        
                         <div class="teacher-load-hours">
-                            <span>Общая нагрузка:</span>
+                            <span>Всего часов:</span>
                             <span>${teacher.totalHours} ч</span>
                         </div>
                     </div>
@@ -2925,34 +3055,54 @@
             });
         }
 
-        // Детальная информация о преподавателе
+        // Детальная информация о преподавателе с месячной статистикой
         function renderTeacherDetail() {
             if (!contentEl) return;
             
             const teacher = state.teacherStats[state.selectedTeacherName];
+            const monthly = state.teacherMonthlyStats[state.selectedTeacherName] || {
+                monthlyHours: 0,
+                monthlyLectures: 0,
+                monthlySeminars: 0,
+                monthlyRecords: []
+            };
             
             if (!teacher) {
                 showEmpty('Информация не найдена');
                 return;
             }
 
+            const currentMonthInfo = getCurrentMonthYear();
+
+            // Группируем записи по дисциплинам
             const disciplinesMap = {};
             teacher.records.forEach(record => {
                 const discipline = record.discipline || 'Без названия';
                 if (!disciplinesMap[discipline]) {
                     disciplinesMap[discipline] = {
                         name: discipline,
-                        hours: 0,
+                        totalHours: 0,
+                        monthlyHours: 0,
                         groups: new Set()
                     };
                 }
-                disciplinesMap[discipline].hours += record.hours || 0;
+                disciplinesMap[discipline].totalHours += record.hours || 0;
+                
+                // Проверяем, относится ли запись к текущему месяцу
+                if (record.date) {
+                    const recordDate = new Date(record.date);
+                    if (recordDate.getMonth() + 1 === currentMonthInfo.month && 
+                        recordDate.getFullYear() === currentMonthInfo.year) {
+                        disciplinesMap[discipline].monthlyHours += record.hours || 0;
+                    }
+                }
+                
                 if (record.course) {
                     disciplinesMap[discipline].groups.add(record.course);
                 }
             });
 
-            const disciplines = Object.values(disciplinesMap).sort((a, b) => b.hours - a.hours);
+            const disciplines = Object.values(disciplinesMap).sort((a, b) => b.totalHours - a.totalHours);
 
             let html = `
                 <div class="teacher-detail-card">
@@ -2966,7 +3116,26 @@
                         </div>
                     </div>
 
-                    <h3 style="margin: 20px 0 12px; color: #001a41;">Дисциплины</h3>
+                    <div class="monthly-summary">
+                        <div class="monthly-item">
+                            <div class="monthly-label">За ${currentMonthInfo.monthName}</div>
+                            <div class="monthly-value">${monthly.monthlyHours} ч</div>
+                        </div>
+                        <div class="monthly-item">
+                            <div class="monthly-label">Лекции</div>
+                            <div class="monthly-value">${monthly.monthlyLectures}</div>
+                        </div>
+                        <div class="monthly-item">
+                            <div class="monthly-label">Семинары</div>
+                            <div class="monthly-value">${monthly.monthlySeminars}</div>
+                        </div>
+                        <div class="monthly-item">
+                            <div class="monthly-label">Всего</div>
+                            <div class="monthly-value">${teacher.totalHours} ч</div>
+                        </div>
+                    </div>
+
+                    <h3 style="margin: 20px 0 12px; color: white;">Дисциплины</h3>
                     <div class="discipline-list">
             `;
 
@@ -2976,8 +3145,9 @@
                         <div class="discipline-info">
                             <h4>${discipline.name}</h4>
                             <p>Группы: ${Array.from(discipline.groups).join(', ') || '—'}</p>
+                            <p style="font-size: 0.8rem; color: #ffa5c3;">За месяц: ${discipline.monthlyHours} ч</p>
                         </div>
-                        <div class="discipline-hours">${discipline.hours} ч</div>
+                        <div class="discipline-hours">${discipline.totalHours} ч</div>
                     </div>
                 `;
             });
@@ -3000,6 +3170,24 @@
                 const totalLectures = state.load.reduce((sum, i) => sum + (i.lectures || 0), 0);
                 const totalSeminars = state.load.reduce((sum, i) => sum + (i.seminars || 0), 0);
                 
+                // Месячная статистика
+                const currentMonthInfo = getCurrentMonthYear();
+                let monthlyTotalHours = 0;
+                let monthlyTotalLectures = 0;
+                let monthlyTotalSeminars = 0;
+                
+                state.load.forEach(item => {
+                    if (item.date) {
+                        const itemDate = new Date(item.date);
+                        if (itemDate.getMonth() + 1 === currentMonthInfo.month && 
+                            itemDate.getFullYear() === currentMonthInfo.year) {
+                            monthlyTotalHours += item.hours || 0;
+                            monthlyTotalLectures += item.lectures || 0;
+                            monthlyTotalSeminars += item.seminars || 0;
+                        }
+                    }
+                });
+                
                 const topTeachers = Object.values(state.teacherStats)
                     .sort((a, b) => b.totalHours - a.totalHours)
                     .slice(0, 10);
@@ -3016,8 +3204,8 @@
 
                 let html = `
                     <div class="table-container">
-                        <h2 style="margin-bottom: 15px; color: #001a41;">
-                            <i class="fas fa-chart-line" style="color: #0038a8; margin-right: 8px;"></i>
+                        <h2 style="margin-bottom: 15px; color: white;">
+                            <i class="fas fa-chart-line" style="color: #ff6b9d; margin-right: 8px;"></i>
                             Аналитика учебной нагрузки
                         </h2>
                         
@@ -3060,13 +3248,46 @@
                             </div>
                         </div>
 
+                        <div style="margin: 20px 0; padding: 20px; background: rgba(255, 107, 157, 0.2); border-radius: 18px;">
+                            <h3 style="color: white; margin-bottom: 15px;">Статистика за ${currentMonthInfo.monthName} ${currentMonthInfo.year}</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card" style="background: rgba(255, 255, 255, 0.05);">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>Часов за месяц</h4>
+                                        <span class="stat-value">${monthlyTotalHours}</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="background: rgba(255, 255, 255, 0.05);">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chalkboard"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>Лекции</h4>
+                                        <span class="stat-value">${monthlyTotalLectures}</span>
+                                    </div>
+                                </div>
+                                <div class="stat-card" style="background: rgba(255, 255, 255, 0.05);">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="stat-info">
+                                        <h4>Семинары</h4>
+                                        <span class="stat-value">${monthlyTotalSeminars}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-icon">
                                     <i class="fas fa-chalkboard"></i>
                                 </div>
                                 <div class="stat-info">
-                                    <h4>Лекции</h4>
+                                    <h4>Лекции (всего)</h4>
                                     <span class="stat-value">${totalLectures}</span>
                                 </div>
                             </div>
@@ -3075,7 +3296,7 @@
                                     <i class="fas fa-users"></i>
                                 </div>
                                 <div class="stat-info">
-                                    <h4>Семинары</h4>
+                                    <h4>Семинары (всего)</h4>
                                     <span class="stat-value">${totalSeminars}</span>
                                 </div>
                             </div>
@@ -3096,18 +3317,18 @@
                             </div>
                         </div>
 
-                        <h3 style="margin: 25px 0 15px;">Детальная статистика по преподавателям</h3>
-                        <div style="background: #f8faff; padding: 18px; border-radius: 18px;">
+                        <h3 style="margin: 25px 0 15px; color: white;">Детальная статистика по преподавателям</h3>
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 18px; border-radius: 18px;">
                             ${topTeachers.map((teacher, i) => `
-                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #e8edf5;">
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
                                     <div style="display: flex; align-items: center; gap: 8px;">
-                                        <span style="font-weight: 700; color: #0038a8;">${i+1}.</span>
-                                        <span style="font-weight: 600;">${teacher.teacherName}</span>
+                                        <span style="font-weight: 700; color: #ff6b9d;">${i+1}.</span>
+                                        <span style="font-weight: 600; color: white;">${teacher.teacherName}</span>
                                     </div>
-                                    <div style="display: flex; gap: 15px;">
-                                        <span><i class="fas fa-chalkboard" style="color: #0038a8;"></i> ${teacher.lectures}</span>
-                                        <span><i class="fas fa-users" style="color: #0038a8;"></i> ${teacher.seminars}</span>
-                                        <span style="font-weight: 700; color: #0038a8;">${teacher.totalHours} ч</span>
+                                    <div style="display: flex; gap: 15px; color: white;">
+                                        <span><i class="fas fa-chalkboard" style="color: #ff6b9d;"></i> ${teacher.lectures}</span>
+                                        <span><i class="fas fa-users" style="color: #ff6b9d;"></i> ${teacher.seminars}</span>
+                                        <span style="font-weight: 700; color: #ff6b9d;">${teacher.totalHours} ч</span>
                                     </div>
                                 </div>
                             `).join('')}
@@ -3142,7 +3363,7 @@
                     datasets: [{
                         label: 'Часов',
                         data: data.map(item => item.totalHours),
-                        backgroundColor: '#0038a8',
+                        backgroundColor: '#ff6b9d',
                         borderRadius: 6
                     }]
                 },
@@ -3150,12 +3371,16 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { display: false }
+                        legend: { labels: { color: 'white' } }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: '#e8edf5' }
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: 'white' }
+                        },
+                        x: {
+                            ticks: { color: 'white' }
                         }
                     }
                 }
@@ -3180,14 +3405,14 @@
                     datasets: [{
                         data: sortedData.map(item => item[1]),
                         backgroundColor: [
-                            '#0038a8',
-                            '#e41e26',
-                            '#f39c12',
-                            '#27ae60',
-                            '#9b59b6',
-                            '#3498db',
-                            '#e67e22',
-                            '#1abc9c'
+                            '#ff6b9d',
+                            '#ffa5c3',
+                            '#d44e7a',
+                            '#b23b62',
+                            '#ff8eb5',
+                            '#ffc1d0',
+                            '#e65c8c',
+                            '#cc4b78'
                         ]
                     }]
                 },
@@ -3195,7 +3420,10 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'right' }
+                        legend: { 
+                            labels: { color: 'white' },
+                            position: 'right' 
+                        }
                     }
                 }
             });
@@ -3208,18 +3436,18 @@
             
             if (state.currentView === 'schedule') {
                 if (state.scheduleView === 'groupSchedule' && state.selectedGroupName) {
-                    html += `<span><i class="fas fa-chevron-right"></i></span><span>${state.selectedGroupName}</span>`;
+                    html += `<span><i class="fas fa-chevron-right" style="color: #ffa5c3;"></i></span><span style="color: white;">${state.selectedGroupName}</span>`;
                 } else if (state.scheduleView === 'teacherSchedule' && state.selectedTeacherName) {
-                    html += `<span><i class="fas fa-chevron-right"></i></span><span>${state.selectedTeacherName}</span>`;
+                    html += `<span><i class="fas fa-chevron-right" style="color: #ffa5c3;"></i></span><span style="color: white;">${state.selectedTeacherName}</span>`;
                 }
             } else if (state.currentView === 'load') {
                 if (state.loadView === 'teacherDetail' && state.selectedTeacherName) {
-                    html += `<span><i class="fas fa-chevron-right"></i></span><span>${state.selectedTeacherName}</span>`;
+                    html += `<span><i class="fas fa-chevron-right" style="color: #ffa5c3;"></i></span><span style="color: white;">${state.selectedTeacherName}</span>`;
                 } else {
-                    html += `<span><i class="fas fa-chevron-right"></i></span><span>Учебная нагрузка</span>`;
+                    html += `<span><i class="fas fa-chevron-right" style="color: #ffa5c3;"></i></span><span style="color: white;">Учебная нагрузка</span>`;
                 }
             } else if (state.currentView === 'statistics') {
-                html += `<span><i class="fas fa-chevron-right"></i></span><span>Аналитика</span>`;
+                html += `<span><i class="fas fa-chevron-right" style="color: #ffa5c3;"></i></span><span style="color: white;">Аналитика</span>`;
             }
             
             breadcrumbsEl.innerHTML = html;
@@ -3448,24 +3676,24 @@
                 });
                 
                 html += `
-                    <div style="background: white; border-radius: 18px; padding: 15px; margin-bottom: 15px; border: 1px solid #e8edf5;">
+                    <div style="background: rgba(255, 255, 255, 0.1); border-radius: 18px; padding: 15px; margin-bottom: 15px; border: 1px solid rgba(255, 255, 255, 0.2);">
                         <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
-                            <div style="width: 40px; height: 40px; background: #f0f5ff; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #0038a8;">
+                            <div style="width: 40px; height: 40px; background: rgba(255, 107, 157, 0.3); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #ffa5c3;">
                                 <i class="fas fa-user-tie"></i>
                             </div>
-                            <div style="font-weight: 600; font-size: 1.1rem;">${teacherName}</div>
+                            <div style="font-weight: 600; font-size: 1.1rem; color: white;">${teacherName}</div>
                         </div>
                 `;
                 
                 teacherWindows.forEach(window => {
                     html += `
-                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: #f8faff; border-radius: 12px; margin-bottom: 5px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; margin-bottom: 5px;">
                             <div>
-                                <span style="font-weight: 600; color: #0038a8;">${window.day}</span>
-                                <span style="margin-left: 10px;">${window.pair} пара</span>
-                                ${window.reason ? `<span style="margin-left: 10px; color: #5a6f8c;"><i class="fas fa-comment"></i> ${window.reason}</span>` : ''}
+                                <span style="font-weight: 600; color: #ff6b9d;">${window.day}</span>
+                                <span style="margin-left: 10px; color: white;">${window.pair} пара</span>
+                                ${window.reason ? `<span style="margin-left: 10px; color: rgba(255, 255, 255, 0.7);"><i class="fas fa-comment"></i> ${window.reason}</span>` : ''}
                             </div>
-                            <button class="delete-window-btn" data-id="${window.id}" style="background: none; border: none; color: #e41e26; cursor: pointer;">
+                            <button class="delete-window-btn" data-id="${window.id}" style="background: none; border: none; color: #ff6b9d; cursor: pointer;">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -3554,7 +3782,7 @@
             if (!groupsList) return;
             
             if (!state.groups || state.groups.length === 0) {
-                groupsList.innerHTML = '<div style="color: #5a6f8c; text-align: center;">Нет доступных групп</div>';
+                groupsList.innerHTML = '<div style="color: rgba(255, 255, 255, 0.7); text-align: center;">Нет доступных групп</div>';
                 return;
             }
             
@@ -3570,14 +3798,14 @@
             let html = '';
             
             Object.keys(groupsByCourse).sort().forEach(course => {
-                html += `<div style="font-weight: 600; color: #0038a8; margin: 10px 0 5px;">${course} курс</div>`;
+                html += `<div style="font-weight: 600; color: #ff6b9d; margin: 10px 0 5px;">${course} курс</div>`;
                 
                 groupsByCourse[course].forEach(group => {
                     const formClass = getFormClass(group.form);
                     html += `
-                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; border-bottom: 1px solid #e8edf5;">
-                            <input type="checkbox" class="group-checkbox" value="${group.id}" data-name="${group.name}">
-                            <span>${group.name}</span>
+                        <label style="display: flex; align-items: center; gap: 8px; padding: 5px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                            <input type="checkbox" class="group-checkbox" value="${group.id}" data-name="${group.name}" style="accent-color: #ff6b9d;">
+                            <span style="color: white;">${group.name}</span>
                             <span class="form-badge ${formClass}" style="margin-left: auto;">${group.form || 'ОФО'}</span>
                         </label>
                     `;
@@ -3608,26 +3836,26 @@
                 }).join(', ');
                 
                 html += `
-                    <div style="background: white; border-radius: 18px; padding: 15px; margin-bottom: 10px; border: 1px solid #e8edf5;">
+                    <div style="background: rgba(255, 255, 255, 0.1); border-radius: 18px; padding: 15px; margin-bottom: 10px; border: 1px solid rgba(255, 255, 255, 0.2);">
                         <div style="display: flex; justify-content: space-between; align-items: start;">
                             <div style="flex: 1;">
-                                <div style="font-weight: 600; font-size: 1.1rem; color: #001a41;">
+                                <div style="font-weight: 600; font-size: 1.1rem; color: white;">
                                     ${stream.name || 'Поток'}
                                 </div>
-                                <div style="color: #0038a8; margin: 5px 0;">
+                                <div style="color: #ff6b9d; margin: 5px 0;">
                                     ${stream.subject} | ${stream.teacher}
                                 </div>
-                                <div style="color: #5a6f8c; font-size: 0.9rem;">
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
                                     <i class="far fa-calendar-alt"></i> ${stream.day}, ${stream.pair} пара
                                 </div>
-                                <div style="color: #5a6f8c; font-size: 0.9rem;">
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">
                                     <i class="fas fa-door-open"></i> ${stream.room || '—'}
                                 </div>
-                                <div style="color: #5a6f8c; font-size: 0.9rem; margin-top: 5px;">
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem; margin-top: 5px;">
                                     <i class="fas fa-users"></i> Группы: ${groupNames}
                                 </div>
                             </div>
-                            <button class="delete-stream-btn" data-id="${stream.id}" style="background: none; border: none; color: #e41e26; cursor: pointer;">
+                            <button class="delete-stream-btn" data-id="${stream.id}" style="background: none; border: none; color: #ff6b9d; cursor: pointer;">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
