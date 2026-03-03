@@ -678,7 +678,7 @@
         /* Карточки нагрузки */
         .teacher-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -694,6 +694,7 @@
 
         .stat-item {
             text-align: center;
+            flex: 1;
         }
 
         .stat-label {
@@ -1067,6 +1068,16 @@
             .control-panel { flex-direction: column; }
             .control-btn { width: 100%; justify-content: center; }
         }
+
+        /* Индикатор окна */
+        .window-badge {
+            background: #e41e26;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -1356,6 +1367,11 @@
                     <option value="5">5 пара (15:25-16:55)</option>
                     <option value="6">6 пара (17:00-18:30)</option>
                 </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Количество часов (будет вычтено из нагрузки)</label>
+                <input type="number" class="form-input" id="windowHoursInput" value="2" min="1" max="6">
             </div>
             
             <div class="form-group">
@@ -2042,6 +2058,7 @@
             };
         }
 
+        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ РАСЧЕТА НАГРУЗКИ С УЧЕТОМ ДАТ ==========
         function calculateTeacherStats() {
             state.teacherStats = {};
             state.teacherMonthlyStats = {};
@@ -2071,7 +2088,7 @@
                 state.teacherStats[name].seminars += item.seminars || 0;
                 state.teacherStats[name].records.push(item);
                 
-                // Месячная статистика
+                // Месячная статистика с проверкой даты
                 if (!state.teacherMonthlyStats[name]) {
                     state.teacherMonthlyStats[name] = {
                         teacherName: name,
@@ -2083,16 +2100,49 @@
                     };
                 }
                 
+                // Проверяем дату записи
                 if (item.date) {
-                    const d = new Date(item.date);
-                    if (d.getMonth() + 1 === current.month && d.getFullYear() === current.year) {
-                        state.teacherMonthlyStats[name].monthlyHours += item.hours || 0;
-                        state.teacherMonthlyStats[name].monthlyLectures += item.lectures || 0;
-                        state.teacherMonthlyStats[name].monthlySeminars += item.seminars || 0;
-                        state.teacherMonthlyStats[name].monthlyRecords.push(item);
+                    try {
+                        const d = new Date(item.date);
+                        if (!isNaN(d.getTime())) {
+                            if (d.getMonth() + 1 === current.month && d.getFullYear() === current.year) {
+                                state.teacherMonthlyStats[name].monthlyHours += item.hours || 0;
+                                state.teacherMonthlyStats[name].monthlyLectures += item.lectures || 0;
+                                state.teacherMonthlyStats[name].monthlySeminars += item.seminars || 0;
+                                state.teacherMonthlyStats[name].monthlyRecords.push(item);
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Ошибка парсинга даты:', item.date);
                     }
                 }
             });
+
+            // Учитываем окна (вычитаем часы из нагрузки)
+            if (state.windows?.length) {
+                state.windows.forEach(window => {
+                    if (window.teacher && window.hours && window.date) {
+                        const teacherName = window.teacher;
+                        if (state.teacherStats[teacherName]) {
+                            // Вычитаем из общей нагрузки
+                            state.teacherStats[teacherName].totalHours -= window.hours;
+                            
+                            // Проверяем, относится ли окно к текущему месяцу
+                            try {
+                                const windowDate = new Date(window.date);
+                                const current = getCurrentMonthYear();
+                                if (windowDate.getMonth() + 1 === current.month && windowDate.getFullYear() === current.year) {
+                                    if (state.teacherMonthlyStats[teacherName]) {
+                                        state.teacherMonthlyStats[teacherName].monthlyHours -= window.hours;
+                                    }
+                                }
+                            } catch (e) {
+                                console.warn('Ошибка парсинга даты окна:', window.date);
+                            }
+                        }
+                    }
+                });
+            }
         }
 
         function populateLoadFilters() {
@@ -2134,8 +2184,6 @@
                 }
                 if (loadSnap.exists()) {
                     state.load = Object.entries(loadSnap.val()).map(([id, data]) => ({ id, ...data }));
-                    calculateTeacherStats();
-                    populateLoadFilters();
                 }
                 if (windowsSnap.exists()) {
                     state.windows = Object.entries(windowsSnap.val()).map(([id, data]) => ({ id, ...data }));
@@ -2144,6 +2192,9 @@
                     state.streams = Object.entries(streamsSnap.val()).map(([id, data]) => ({ id, ...data }));
                 }
 
+                // Расчет статистики после загрузки всех данных
+                calculateTeacherStats();
+                populateLoadFilters();
                 filterGroups();
                 renderView();
             } catch (error) {
@@ -2325,8 +2376,12 @@
             }
         }
 
+        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ НАГРУЗКИ ==========
         function renderTeacherList() {
             if (!contentEl) return;
+            
+            // Пересчитываем статистику перед отображением
+            calculateTeacherStats();
             
             const stats = Object.values(state.teacherStats);
             if (!stats.length) {
@@ -2348,12 +2403,17 @@
             filtered.forEach(t => {
                 const short = t.teacherName.includes(' ') ? t.teacherName.split(' ').slice(0,2).join(' ') : t.teacherName;
                 const m = state.teacherMonthlyStats[t.teacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0 };
+                
+                // Проверяем, есть ли окна у преподавателя
+                const teacherWindows = state.windows?.filter(w => w.teacher === t.teacherName) || [];
+                const windowsCount = teacherWindows.length;
+                
                 html += `
                     <div class="teacher-load-card" data-teacher="${t.teacherName}">
                         <div class="card-header">
                             <div class="card-icon"><i class="fas fa-user-tie"></i></div>
                             <div>
-                                <div class="card-title">${short}</div>
+                                <div class="card-title">${short} ${windowsCount > 0 ? `<span class="window-badge">${windowsCount} окна</span>` : ''}</div>
                                 <div class="card-subtitle">${t.department}</div>
                             </div>
                         </div>
@@ -2382,6 +2442,9 @@
         function renderTeacherDetail() {
             if (!contentEl) return;
             
+            // Пересчитываем статистику
+            calculateTeacherStats();
+            
             const t = state.teacherStats[state.selectedTeacherName];
             const m = state.teacherMonthlyStats[state.selectedTeacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0, monthlyRecords:[] };
             
@@ -2398,12 +2461,21 @@
                     discMap[d] = { name:d, totalHours:0, monthlyHours:0, groups:new Set() };
                 }
                 discMap[d].totalHours += r.hours || 0;
+                
+                // Проверяем дату для месячной статистики
                 if (r.date) {
-                    const rd = new Date(r.date);
-                    if (rd.getMonth()+1 === monthInfo.month && rd.getFullYear() === monthInfo.year) {
-                        discMap[d].monthlyHours += r.hours || 0;
+                    try {
+                        const rd = new Date(r.date);
+                        if (!isNaN(rd.getTime())) {
+                            if (rd.getMonth()+1 === monthInfo.month && rd.getFullYear() === monthInfo.year) {
+                                discMap[d].monthlyHours += r.hours || 0;
+                            }
+                        }
+                    } catch (e) {
+                        console.warn('Ошибка парсинга даты:', r.date);
                     }
                 }
+                
                 if (r.course) discMap[d].groups.add(r.course);
             });
             const disciplines = Object.values(discMap).sort((a,b) => b.totalHours - a.totalHours);
@@ -2447,6 +2519,9 @@
             showLoader();
 
             setTimeout(() => {
+                // Пересчитываем статистику
+                calculateTeacherStats();
+                
                 const totalHours = state.load.reduce((s,i) => s + (i.hours||0), 0);
                 const totalLectures = state.load.reduce((s,i) => s + (i.lectures||0), 0);
                 const totalSeminars = state.load.reduce((s,i) => s + (i.seminars||0), 0);
@@ -2455,14 +2530,23 @@
                 let monthlyHours = 0, monthlyLectures = 0, monthlySeminars = 0;
                 state.load.forEach(i => {
                     if (i.date) {
-                        const d = new Date(i.date);
-                        if (d.getMonth()+1 === monthInfo.month && d.getFullYear() === monthInfo.year) {
-                            monthlyHours += i.hours||0;
-                            monthlyLectures += i.lectures||0;
-                            monthlySeminars += i.seminars||0;
+                        try {
+                            const d = new Date(i.date);
+                            if (!isNaN(d.getTime())) {
+                                if (d.getMonth()+1 === monthInfo.month && d.getFullYear() === monthInfo.year) {
+                                    monthlyHours += i.hours||0;
+                                    monthlyLectures += i.lectures||0;
+                                    monthlySeminars += i.seminars||0;
+                                }
+                            }
+                        } catch (e) {
+                            console.warn('Ошибка парсинга даты:', i.date);
                         }
                     }
                 });
+                
+                // Учитываем окна в статистике
+                const totalWindowHours = state.windows?.reduce((s,w) => s + (w.hours||0), 0) || 0;
                 
                 const topTeachers = Object.values(state.teacherStats)
                     .sort((a,b) => b.totalHours - a.totalHours).slice(0,10);
@@ -2489,6 +2573,7 @@
                                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard"></i></div><div class="stat-info"><h4>Лекции</h4><span class="stat-value">${monthlyLectures}</span></div></div>
                                 <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Семинары</h4><span class="stat-value">${monthlySeminars}</span></div></div>
                             </div>
+                            <p style="color:#5a6f8c; margin-top:10px;">Учтено окон: ${totalWindowHours} ч</p>
                         </div>
 
                         <div class="stats-grid">
@@ -2686,14 +2771,25 @@
             }
         }
 
+        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ СОХРАНЕНИЯ ОКНА ==========
         async function saveWindow(data) {
             try {
-                const ref = await db.ref('windows').push({
+                // Добавляем дату создания
+                const windowData = {
                     ...data,
+                    date: new Date().toISOString(),
                     createdAt: Date.now(),
                     createdBy: currentUser?.email || 'unknown'
-                });
-                state.windows.push({ id: ref.key, ...data });
+                };
+                
+                const ref = await db.ref('windows').push(windowData);
+                
+                // Обновляем локальное состояние
+                state.windows.push({ id: ref.key, ...windowData });
+                
+                // Пересчитываем статистику с учетом нового окна
+                calculateTeacherStats();
+                
                 return ref.key;
             } catch (e) {
                 console.error(e);
@@ -2705,6 +2801,10 @@
             try {
                 await db.ref(`windows/${id}`).remove();
                 state.windows = state.windows.filter(w => w.id !== id);
+                
+                // Пересчитываем статистику после удаления окна
+                calculateTeacherStats();
+                
                 return true;
             } catch (e) {
                 console.error(e);
@@ -2756,6 +2856,7 @@
                             <div>
                                 <span style="font-weight:600; color:#0038a8;">${w.day}</span>
                                 <span style="margin-left:10px; color:#1f344d;">${w.pair} пара</span>
+                                <span style="margin-left:10px; color:#e41e26; font-weight:500;">-${w.hours||2} ч</span>
                                 ${w.reason ? `<span style="margin-left:10px; color:#5a6f8c;"><i class="fas fa-comment"></i> ${w.reason}</span>` : ''}
                             </div>
                             <button class="delete-window-btn" data-id="${w.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
@@ -2771,10 +2872,15 @@
             document.querySelectorAll('.delete-window-btn').forEach(btn => {
                 btn.addEventListener('click', async (e) => {
                     e.stopPropagation();
-                    if (confirm('Удалить окно?')) {
+                    if (confirm('Удалить окно? Это вернет часы в нагрузку преподавателя.')) {
                         await deleteWindow(btn.dataset.id);
                         await renderWindowsList();
                         updateWindowFilters();
+                        
+                        // Обновляем отображение нагрузки, если мы на этой вкладке
+                        if (state.currentView === 'load') {
+                            renderView();
+                        }
                     }
                 });
             });
@@ -2785,7 +2891,7 @@
             if (!f) return;
             const teachers = [...new Set(state.windows.map(w => w.teacher))];
             f.innerHTML = '<option value="">Все преподаватели</option>';
-            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t}</option>`);
+            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t</option>`);
         }
 
         // ========== ФУНКЦИИ ДЛЯ ПОТОКОВ ==========
@@ -2931,28 +3037,49 @@
                 document.getElementById('addWindowModal').classList.add('active');
             });
 
+            // ========== ИСПРАВЛЕННЫЙ ОБРАБОТЧИК СОХРАНЕНИЯ ОКНА ==========
             document.getElementById('saveWindowBtn')?.addEventListener('click', async () => {
-                const t = document.getElementById('newWindowTeacherSelect').value;
-                const d = document.getElementById('newWindowDaySelect').value;
-                const p = document.getElementById('newWindowPairSelect').value;
-                const r = document.getElementById('newWindowReasonInput').value;
-                if (!t || !d || !p) {
+                const teacher = document.getElementById('newWindowTeacherSelect').value;
+                const day = document.getElementById('newWindowDaySelect').value;
+                const pair = document.getElementById('newWindowPairSelect').value;
+                const hours = parseInt(document.getElementById('windowHoursInput').value) || 2;
+                const reason = document.getElementById('newWindowReasonInput').value;
+                
+                if (!teacher || !day || !pair) {
                     alert('Заполните обязательные поля');
                     return;
                 }
-                await saveWindow({ teacher:t, day:d, pair:p, reason:r });
-                alert('Окно добавлено');
+                
+                // Сохраняем окно с указанием часов
+                await saveWindow({ 
+                    teacher, 
+                    day, 
+                    pair, 
+                    hours,
+                    reason 
+                });
+                
+                alert(`Окно добавлено. ${hours} ч вычтено из нагрузки преподавателя.`);
+                
                 document.getElementById('addWindowModal').classList.remove('active');
                 document.getElementById('newWindowReasonInput').value = '';
+                document.getElementById('windowHoursInput').value = '2';
+                
                 if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
                     await renderWindowsList();
                     updateWindowFilters();
+                }
+                
+                // Обновляем отображение нагрузки, если мы на этой вкладке
+                if (state.currentView === 'load') {
+                    renderView();
                 }
             });
 
             document.getElementById('cancelAddWindowBtn')?.addEventListener('click', () => {
                 document.getElementById('addWindowModal').classList.remove('active');
                 document.getElementById('newWindowReasonInput').value = '';
+                document.getElementById('windowHoursInput').value = '2';
             });
 
             document.getElementById('teacherWindowsCloseBtn')?.addEventListener('click', () => {
