@@ -1184,7 +1184,7 @@
         <div class="login-form" id="resetForm">
             <div class="login-input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" class="login-input" id="newPassword" placeholder="Новый пароль">
+                <input type="password" class="login-input" id="newPassword" placeholder="Новый пароль (минимум 6 символов)">
             </div>
             <div class="login-input-group">
                 <i class="fas fa-lock"></i>
@@ -1653,374 +1653,460 @@
         }
 
         // Обработчики переключения форм
-        loginTab?.addEventListener('click', () => {
-            loginTab.classList.add('active');
-            registerTab.classList.remove('active');
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-        });
+        if (loginTab) {
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+            });
+        }
 
-        registerTab?.addEventListener('click', () => {
-            registerTab.classList.add('active');
-            loginTab.classList.remove('active');
-            registerForm.classList.add('active');
-            loginForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-        });
+        if (registerTab) {
+            registerTab.addEventListener('click', () => {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+            });
+        }
 
-        forgotPasswordLink?.addEventListener('click', () => {
-            loginForm.classList.remove('active');
-            forgotForm.classList.add('active');
-        });
+        if (forgotPasswordLink) {
+            forgotPasswordLink.addEventListener('click', () => {
+                loginForm.classList.remove('active');
+                forgotForm.classList.add('active');
+            });
+        }
 
-        backToLoginFromForgot?.addEventListener('click', () => {
-            forgotForm.classList.remove('active');
-            loginForm.classList.add('active');
-        });
+        if (backToLoginFromForgot) {
+            backToLoginFromForgot.addEventListener('click', () => {
+                forgotForm.classList.remove('active');
+                loginForm.classList.add('active');
+            });
+        }
 
-        backToLoginFromVerify?.addEventListener('click', () => {
-            verifyForm.classList.remove('active');
-            loginForm.classList.add('active');
-            clearInterval(timerInterval);
-        });
+        if (backToLoginFromVerify) {
+            backToLoginFromVerify.addEventListener('click', () => {
+                verifyForm.classList.remove('active');
+                loginForm.classList.add('active');
+                if (timerInterval) clearInterval(timerInterval);
+            });
+        }
 
-        backToLoginFromReset?.addEventListener('click', () => {
-            resetForm.classList.remove('active');
-            loginForm.classList.add('active');
-        });
+        if (backToLoginFromReset) {
+            backToLoginFromReset.addEventListener('click', () => {
+                resetForm.classList.remove('active');
+                loginForm.classList.add('active');
+            });
+        }
 
         // Регистрация
-        registerBtn?.addEventListener('click', async () => {
-            const fullName = document.getElementById('regFullName')?.value.trim();
-            const email = document.getElementById('regEmail')?.value.trim();
-            const password = document.getElementById('regPassword')?.value;
-            const confirmPassword = document.getElementById('regConfirmPassword')?.value;
-            const errorEl = document.getElementById('registerError');
-            const successEl = document.getElementById('registerSuccess');
+        if (registerBtn) {
+            registerBtn.addEventListener('click', async () => {
+                const fullName = document.getElementById('regFullName')?.value.trim();
+                const email = document.getElementById('regEmail')?.value.trim();
+                const password = document.getElementById('regPassword')?.value;
+                const confirmPassword = document.getElementById('regConfirmPassword')?.value;
+                const errorEl = document.getElementById('registerError');
+                const successEl = document.getElementById('registerSuccess');
 
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
+                if (errorEl) errorEl.style.display = 'none';
+                if (successEl) successEl.style.display = 'none';
 
-            if (!fullName || !email || !password || !confirmPassword) {
-                errorEl.textContent = 'Заполните все поля';
-                errorEl.style.display = 'block';
-                return;
-            }
+                if (!fullName || !email || !password || !confirmPassword) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Заполните все поля';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            if (password.length < 6) {
-                errorEl.textContent = 'Пароль должен быть не менее 6 символов';
-                errorEl.style.display = 'block';
-                return;
-            }
+                if (password.length < 6) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            if (password !== confirmPassword) {
-                errorEl.textContent = 'Пароли не совпадают';
-                errorEl.style.display = 'block';
-                return;
-            }
+                if (password !== confirmPassword) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Пароли не совпадают';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            if (Object.values(users).some(u => u.email === email)) {
-                errorEl.textContent = 'Email уже зарегистрирован';
-                errorEl.style.display = 'block';
-                return;
-            }
+                const usersSnapshot = await db.ref('users').once('value');
+                const users = usersSnapshot.val() || {};
+                if (Object.values(users).some(u => u.email === email)) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Email уже зарегистрирован';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            verificationCode = generateCode();
-            pendingEmail = email;
-            pendingUserData = { fullName, email, password };
-            isVerifyingForRegistration = true;
+                verificationCode = generateCode();
+                pendingEmail = email;
+                pendingUserData = { fullName, email, password };
+                isVerifyingForRegistration = true;
 
-            const sent = await sendCode(email, verificationCode, 'register');
+                const sent = await sendCode(email, verificationCode, 'register');
 
-            if (sent) {
-                registerForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
-                
-                document.querySelectorAll('.code-input').forEach(input => {
-                    input.value = '';
-                    input.disabled = false;
-                });
-                
-                verifyBtn.disabled = false;
-                startTimer();
-                
-                successEl.textContent = 'Код подтверждения отправлен';
-                successEl.style.display = 'block';
-                setTimeout(() => successEl.style.display = 'none', 3000);
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
+                if (sent) {
+                    registerForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    const displayEl = document.getElementById('verifyEmailDisplay');
+                    if (displayEl) {
+                        displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                    }
+                    
+                    document.querySelectorAll('.code-input').forEach(input => {
+                        input.value = '';
+                        input.disabled = false;
+                    });
+                    
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                    
+                    if (successEl) {
+                        successEl.textContent = 'Код подтверждения отправлен';
+                        successEl.style.display = 'block';
+                        setTimeout(() => successEl.style.display = 'none', 3000);
+                    }
+                } else {
+                    if (errorEl) {
+                        errorEl.textContent = 'Ошибка отправки кода';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            });
+        }
 
         // Вход
-        loginBtn?.addEventListener('click', async () => {
-            const email = document.getElementById('loginEmail')?.value.trim();
-            const password = document.getElementById('loginPassword')?.value;
-            const errorEl = document.getElementById('loginError');
+        if (loginBtn) {
+            loginBtn.addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail')?.value.trim();
+                const password = document.getElementById('loginPassword')?.value;
+                const errorEl = document.getElementById('loginError');
 
-            errorEl.style.display = 'none';
+                if (errorEl) errorEl.style.display = 'none';
 
-            if (!email || !password) {
-                errorEl.textContent = 'Введите email и пароль';
-                errorEl.style.display = 'block';
-                return;
-            }
+                if (!email || !password) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Введите email и пароль';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            
-            const userEntry = Object.entries(users).find(([id, u]) => u.email === email && u.password === password);
-            
-            if (!userEntry) {
-                errorEl.textContent = 'Неверный email или пароль';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const [userId, userData] = userEntry;
-
-            verificationCode = generateCode();
-            pendingEmail = email;
-            pendingUserData = { id: userId, ...userData };
-            isVerifyingForRegistration = false;
-            isVerifyingForPasswordReset = false;
-
-            const sent = await sendCode(email, verificationCode, 'login');
-
-            if (sent) {
-                loginForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                const usersSnapshot = await db.ref('users').once('value');
+                const users = usersSnapshot.val() || {};
                 
-                document.querySelectorAll('.code-input').forEach(input => {
-                    input.value = '';
-                    input.disabled = false;
-                });
+                const userEntry = Object.entries(users).find(([id, u]) => u.email === email && u.password === password);
                 
-                verifyBtn.disabled = false;
-                startTimer();
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
+                if (!userEntry) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Неверный email или пароль';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                const [userId, userData] = userEntry;
+
+                verificationCode = generateCode();
+                pendingEmail = email;
+                pendingUserData = { id: userId, ...userData };
+                isVerifyingForRegistration = false;
+                isVerifyingForPasswordReset = false;
+
+                const sent = await sendCode(email, verificationCode, 'login');
+
+                if (sent) {
+                    loginForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    const displayEl = document.getElementById('verifyEmailDisplay');
+                    if (displayEl) {
+                        displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                    }
+                    
+                    document.querySelectorAll('.code-input').forEach(input => {
+                        input.value = '';
+                        input.disabled = false;
+                    });
+                    
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                } else {
+                    if (errorEl) {
+                        errorEl.textContent = 'Ошибка отправки кода';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            });
+        }
 
         // Восстановление пароля
-        forgotBtn?.addEventListener('click', async () => {
-            const email = document.getElementById('forgotEmail')?.value.trim();
-            const errorEl = document.getElementById('forgotError');
-            const successEl = document.getElementById('forgotSuccess');
+        if (forgotBtn) {
+            forgotBtn.addEventListener('click', async () => {
+                const email = document.getElementById('forgotEmail')?.value.trim();
+                const errorEl = document.getElementById('forgotError');
+                const successEl = document.getElementById('forgotSuccess');
 
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
+                if (errorEl) errorEl.style.display = 'none';
+                if (successEl) successEl.style.display = 'none';
 
-            if (!email || !email.includes('@')) {
-                errorEl.textContent = 'Введите корректный email';
-                errorEl.style.display = 'block';
-                return;
-            }
+                if (!email || !email.includes('@')) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Введите корректный email';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            
-            const userEntry = Object.entries(users).find(([id, u]) => u.email === email);
-            
-            if (!userEntry) {
-                errorEl.textContent = 'Пользователь не найден';
-                errorEl.style.display = 'block';
-                return;
-            }
+                const usersSnapshot = await db.ref('users').once('value');
+                const users = usersSnapshot.val() || {};
+                
+                const userEntry = Object.entries(users).find(([id, u]) => u.email === email);
+                
+                if (!userEntry) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Пользователь не найден';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
 
-            const [userId, userData] = userEntry;
+                const [userId, userData] = userEntry;
 
-            verificationCode = generateCode();
-            pendingEmail = email;
-            resetUserId = userId;
-            isVerifyingForPasswordReset = true;
+                verificationCode = generateCode();
+                pendingEmail = email;
+                resetUserId = userId;
+                isVerifyingForPasswordReset = true;
 
-            const sent = await sendCode(email, verificationCode, 'reset');
+                const sent = await sendCode(email, verificationCode, 'reset');
 
-            if (sent) {
-                forgotForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код восстановления отправлен на ${email}`;
+                if (sent) {
+                    forgotForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    const displayEl = document.getElementById('verifyEmailDisplay');
+                    if (displayEl) {
+                        displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код восстановления отправлен на ${email}`;
+                    }
+                    
+                    document.querySelectorAll('.code-input').forEach(input => {
+                        input.value = '';
+                        input.disabled = false;
+                    });
+                    
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                    
+                    if (successEl) {
+                        successEl.textContent = 'Код восстановления отправлен';
+                        successEl.style.display = 'block';
+                        setTimeout(() => successEl.style.display = 'none', 3000);
+                    }
+                } else {
+                    if (errorEl) {
+                        errorEl.textContent = 'Ошибка отправки кода';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            });
+        }
+
+        // Подтверждение кода
+        if (verifyBtn) {
+            verifyBtn.addEventListener('click', async () => {
+                const inputs = document.querySelectorAll('.code-input');
+                const enteredCode = Array.from(inputs).map(i => i.value).join('');
+                const errorEl = document.getElementById('verifyError');
+
+                if (enteredCode.length !== 6) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Введите 6-значный код';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                if (timeLeft <= 0) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Время действия кода истекло';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                if (enteredCode !== verificationCode) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Неверный код';
+                        errorEl.style.display = 'block';
+                    }
+                    inputs.forEach(input => input.value = '');
+                    if (inputs[0]) inputs[0].focus();
+                    return;
+                }
+
+                if (isVerifyingForRegistration) {
+                    const newUser = {
+                        fullName: pendingUserData.fullName,
+                        email: pendingUserData.email,
+                        password: pendingUserData.password,
+                        registeredAt: Date.now()
+                    };
+
+                    const userRef = await db.ref('users').push(newUser);
+                    await sendWelcomeEmail(pendingUserData.email, pendingUserData.fullName);
+                    currentUser = { id: userRef.key, ...newUser };
+                } else if (isVerifyingForPasswordReset) {
+                    verifyForm.classList.remove('active');
+                    resetForm.classList.add('active');
+                    clearInterval(timerInterval);
+                    return;
+                } else {
+                    currentUser = pendingUserData;
+                }
+
+                localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
+
+                clearInterval(timerInterval);
+                loginContainer.style.display = 'none';
+                mainSite.classList.add('visible');
+                if (userNameSpan) {
+                    userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                }
+
+                verifyForm.classList.remove('active');
+                loginForm.classList.add('active');
+                
+                const loginEmail = document.getElementById('loginEmail');
+                const loginPassword = document.getElementById('loginPassword');
+                if (loginEmail) loginEmail.value = '';
+                if (loginPassword) loginPassword.value = '';
+
+                loadMainSite();
+            });
+        }
+
+        // Сброс пароля
+        if (resetBtn) {
+            resetBtn.addEventListener('click', async () => {
+                const newPassword = document.getElementById('newPassword')?.value;
+                const confirmPassword = document.getElementById('confirmNewPassword')?.value;
+                const errorEl = document.getElementById('resetError');
+                const successEl = document.getElementById('resetSuccess');
+
+                if (errorEl) errorEl.style.display = 'none';
+                if (successEl) successEl.style.display = 'none';
+
+                if (!newPassword || !confirmPassword) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Заполните все поля';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                if (newPassword.length < 6) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                if (newPassword !== confirmPassword) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Пароли не совпадают';
+                        errorEl.style.display = 'block';
+                    }
+                    return;
+                }
+
+                try {
+                    await db.ref(`users/${resetUserId}/password`).set(newPassword);
+                    
+                    if (successEl) {
+                        successEl.textContent = 'Пароль успешно изменен';
+                        successEl.style.display = 'block';
+                    }
+                    
+                    setTimeout(() => {
+                        resetForm.classList.remove('active');
+                        loginForm.classList.add('active');
+                    }, 2000);
+                } catch (error) {
+                    if (errorEl) {
+                        errorEl.textContent = 'Ошибка при смене пароля';
+                        errorEl.style.display = 'block';
+                    }
+                }
+            });
+        }
+
+        // Повторная отправка кода
+        if (resendCode) {
+            resendCode.addEventListener('click', async () => {
+                verificationCode = generateCode();
+                const purpose = isVerifyingForRegistration ? 'register' : (isVerifyingForPasswordReset ? 'reset' : 'login');
+                await sendCode(pendingEmail, verificationCode, purpose);
+                
+                clearInterval(timerInterval);
+                startTimer();
                 
                 document.querySelectorAll('.code-input').forEach(input => {
                     input.value = '';
                     input.disabled = false;
                 });
                 
-                verifyBtn.disabled = false;
-                startTimer();
-                
-                successEl.textContent = 'Код восстановления отправлен';
-                successEl.style.display = 'block';
-                setTimeout(() => successEl.style.display = 'none', 3000);
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Подтверждение кода
-        verifyBtn?.addEventListener('click', async () => {
-            const inputs = document.querySelectorAll('.code-input');
-            const enteredCode = Array.from(inputs).map(i => i.value).join('');
-            const errorEl = document.getElementById('verifyError');
-
-            if (enteredCode.length !== 6) {
-                errorEl.textContent = 'Введите 6-значный код';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (timeLeft <= 0) {
-                errorEl.textContent = 'Время действия кода истекло';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (enteredCode !== verificationCode) {
-                errorEl.textContent = 'Неверный код';
-                errorEl.style.display = 'block';
-                inputs.forEach(input => input.value = '');
-                inputs[0]?.focus();
-                return;
-            }
-
-            if (isVerifyingForRegistration) {
-                const newUser = {
-                    fullName: pendingUserData.fullName,
-                    email: pendingUserData.email,
-                    password: pendingUserData.password,
-                    registeredAt: Date.now()
-                };
-
-                const userRef = await db.ref('users').push(newUser);
-                await sendWelcomeEmail(pendingUserData.email, pendingUserData.fullName);
-                currentUser = { id: userRef.key, ...newUser };
-            } else if (isVerifyingForPasswordReset) {
-                verifyForm.classList.remove('active');
-                resetForm.classList.add('active');
-                clearInterval(timerInterval);
-                return;
-            } else {
-                currentUser = pendingUserData;
-            }
-
-            localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
-
-            clearInterval(timerInterval);
-            loginContainer.style.display = 'none';
-            mainSite.classList.add('visible');
-            if (userNameSpan) {
-                userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
-            }
-
-            verifyForm.classList.remove('active');
-            loginForm.classList.add('active');
-            
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-
-            loadMainSite();
-        });
-
-        // Сброс пароля
-        resetBtn?.addEventListener('click', async () => {
-            const newPassword = document.getElementById('newPassword')?.value;
-            const confirmPassword = document.getElementById('confirmNewPassword')?.value;
-            const errorEl = document.getElementById('resetError');
-            const successEl = document.getElementById('resetSuccess');
-
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
-
-            if (!newPassword || !confirmPassword) {
-                errorEl.textContent = 'Заполните все поля';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                errorEl.textContent = 'Пароль должен быть не менее 6 символов';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                errorEl.textContent = 'Пароли не совпадают';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            try {
-                await db.ref(`users/${resetUserId}/password`).set(newPassword);
-                
-                successEl.textContent = 'Пароль успешно изменен';
-                successEl.style.display = 'block';
-                
-                setTimeout(() => {
-                    resetForm.classList.remove('active');
-                    loginForm.classList.add('active');
-                }, 2000);
-            } catch (error) {
-                errorEl.textContent = 'Ошибка при смене пароля';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Повторная отправка кода
-        resendCode?.addEventListener('click', async () => {
-            verificationCode = generateCode();
-            const purpose = isVerifyingForRegistration ? 'register' : (isVerifyingForPasswordReset ? 'reset' : 'login');
-            await sendCode(pendingEmail, verificationCode, purpose);
-            
-            clearInterval(timerInterval);
-            startTimer();
-            
-            document.querySelectorAll('.code-input').forEach(input => {
-                input.value = '';
-                input.disabled = false;
+                if (verifyBtn) verifyBtn.disabled = false;
             });
-            
-            verifyBtn.disabled = false;
-        });
+        }
 
         // Выход
-        logoutBtn?.addEventListener('click', () => {
-            localStorage.removeItem('finuniversity_user');
-            
-            currentUser = null;
-            loginContainer.style.display = 'block';
-            mainSite.classList.remove('visible');
-            
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-            
-            ['loginEmail','loginPassword','regFullName','regEmail','regPassword','regConfirmPassword','forgotEmail']
-                .forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = '';
-                });
-            
-            clearInterval(timerInterval);
-        });
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('finuniversity_user');
+                
+                currentUser = null;
+                loginContainer.style.display = 'block';
+                mainSite.classList.remove('visible');
+                
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+                
+                const loginEmail = document.getElementById('loginEmail');
+                const loginPassword = document.getElementById('loginPassword');
+                const regFullName = document.getElementById('regFullName');
+                const regEmail = document.getElementById('regEmail');
+                const regPassword = document.getElementById('regPassword');
+                const regConfirmPassword = document.getElementById('regConfirmPassword');
+                const forgotEmail = document.getElementById('forgotEmail');
+                
+                if (loginEmail) loginEmail.value = '';
+                if (loginPassword) loginPassword.value = '';
+                if (regFullName) regFullName.value = '';
+                if (regEmail) regEmail.value = '';
+                if (regPassword) regPassword.value = '';
+                if (regConfirmPassword) regConfirmPassword.value = '';
+                if (forgotEmail) forgotEmail.value = '';
+                
+                if (timerInterval) clearInterval(timerInterval);
+            });
+        }
 
         setupCodeInputs();
 
@@ -2058,7 +2144,7 @@
             };
         }
 
-        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ РАСЧЕТА НАГРУЗКИ С УЧЕТОМ ДАТ ==========
+        // Функция расчета статистики с учетом дат и окон
         function calculateTeacherStats() {
             state.teacherStats = {};
             state.teacherMonthlyStats = {};
@@ -2067,6 +2153,7 @@
             
             const current = getCurrentMonthYear();
             
+            // Сначала суммируем нагрузку
             state.load.forEach(item => {
                 const name = item.teacherName || item.teacher;
                 if (!name || name === 'Неизвестный преподаватель') return;
@@ -2088,7 +2175,7 @@
                 state.teacherStats[name].seminars += item.seminars || 0;
                 state.teacherStats[name].records.push(item);
                 
-                // Месячная статистика с проверкой даты
+                // Месячная статистика
                 if (!state.teacherMonthlyStats[name]) {
                     state.teacherMonthlyStats[name] = {
                         teacherName: name,
@@ -2100,7 +2187,6 @@
                     };
                 }
                 
-                // Проверяем дату записи
                 if (item.date) {
                     try {
                         const d = new Date(item.date);
@@ -2118,26 +2204,27 @@
                 }
             });
 
-            // Учитываем окна (вычитаем часы из нагрузки)
+            // Вычитаем часы из окон
             if (state.windows?.length) {
                 state.windows.forEach(window => {
-                    if (window.teacher && window.hours && window.date) {
+                    if (window.teacher && window.hours) {
                         const teacherName = window.teacher;
                         if (state.teacherStats[teacherName]) {
                             // Вычитаем из общей нагрузки
                             state.teacherStats[teacherName].totalHours -= window.hours;
                             
-                            // Проверяем, относится ли окно к текущему месяцу
+                            // Вычитаем из месячной нагрузки, если окно в текущем месяце
                             try {
-                                const windowDate = new Date(window.date);
-                                const current = getCurrentMonthYear();
-                                if (windowDate.getMonth() + 1 === current.month && windowDate.getFullYear() === current.year) {
-                                    if (state.teacherMonthlyStats[teacherName]) {
-                                        state.teacherMonthlyStats[teacherName].monthlyHours -= window.hours;
+                                const windowDate = new Date(window.date || window.createdAt);
+                                if (!isNaN(windowDate.getTime())) {
+                                    if (windowDate.getMonth() + 1 === current.month && windowDate.getFullYear() === current.year) {
+                                        if (state.teacherMonthlyStats[teacherName]) {
+                                            state.teacherMonthlyStats[teacherName].monthlyHours -= window.hours;
+                                        }
                                     }
                                 }
                             } catch (e) {
-                                console.warn('Ошибка парсинга даты окна:', window.date);
+                                console.warn('Ошибка парсинга даты окна');
                             }
                         }
                     }
@@ -2150,7 +2237,7 @@
             Object.values(state.teacherStats).forEach(s => s.department && depts.add(s.department));
             if (departmentFilter) {
                 departmentFilter.innerHTML = '<option value="">Все кафедры</option>';
-                [...depts].sort().forEach(d => departmentFilter.innerHTML += `<option value="${d}">${d}</option>`);
+                [...depts].sort().forEach(d => departmentFilter.innerHTML += `<option value="${d}">${d</option>`);
             }
         }
 
@@ -2376,7 +2463,6 @@
             }
         }
 
-        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ ОТОБРАЖЕНИЯ НАГРУЗКИ ==========
         function renderTeacherList() {
             if (!contentEl) return;
             
@@ -2462,7 +2548,6 @@
                 }
                 discMap[d].totalHours += r.hours || 0;
                 
-                // Проверяем дату для месячной статистики
                 if (r.date) {
                     try {
                         const rd = new Date(r.date);
@@ -2753,10 +2838,12 @@
             btn.addEventListener('click', () => setCourse(btn.dataset.course));
         });
 
-        departmentFilter?.addEventListener('change', (e) => {
-            state.departmentFilter = e.target.value;
-            renderView();
-        });
+        if (departmentFilter) {
+            departmentFilter.addEventListener('change', (e) => {
+                state.departmentFilter = e.target.value;
+                renderView();
+            });
+        }
 
         // ========== ФУНКЦИИ ДЛЯ ОКОН ==========
 
@@ -2771,10 +2858,8 @@
             }
         }
 
-        // ========== ИСПРАВЛЕННАЯ ФУНКЦИЯ СОХРАНЕНИЯ ОКНА ==========
         async function saveWindow(data) {
             try {
-                // Добавляем дату создания
                 const windowData = {
                     ...data,
                     date: new Date().toISOString(),
@@ -2783,8 +2868,6 @@
                 };
                 
                 const ref = await db.ref('windows').push(windowData);
-                
-                // Обновляем локальное состояние
                 state.windows.push({ id: ref.key, ...windowData });
                 
                 // Пересчитываем статистику с учетом нового окна
@@ -2851,6 +2934,7 @@
                         </div>
                 `;
                 wins.forEach(w => {
+                    const dateStr = w.date ? new Date(w.date).toLocaleDateString('ru-RU') : '';
                     html += `
                         <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:white; border-radius:12px; margin-bottom:5px;">
                             <div>
@@ -2858,6 +2942,7 @@
                                 <span style="margin-left:10px; color:#1f344d;">${w.pair} пара</span>
                                 <span style="margin-left:10px; color:#e41e26; font-weight:500;">-${w.hours||2} ч</span>
                                 ${w.reason ? `<span style="margin-left:10px; color:#5a6f8c;"><i class="fas fa-comment"></i> ${w.reason}</span>` : ''}
+                                ${dateStr ? `<span style="margin-left:10px; color:#8a9bb5; font-size:0.8rem;"><i class="far fa-calendar-alt"></i> ${dateStr}</span>` : ''}
                             </div>
                             <button class="delete-window-btn" data-id="${w.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
                                 <i class="fas fa-trash"></i>
@@ -2891,7 +2976,7 @@
             if (!f) return;
             const teachers = [...new Set(state.windows.map(w => w.teacher))];
             f.innerHTML = '<option value="">Все преподаватели</option>';
-            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t</option>`);
+            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t}</option>`);
         }
 
         // ========== ФУНКЦИИ ДЛЯ ПОТОКОВ ==========
@@ -2950,11 +3035,12 @@
             Object.keys(byCourse).sort().forEach(c => {
                 html += `<div style="font-weight:600; color:#0038a8; margin:10px 0 5px;">${c} курс</div>`;
                 byCourse[c].forEach(g => {
+                    const formClass = getFormClass(g.form);
                     html += `
                         <label style="display:flex; align-items:center; gap:8px; padding:5px; border-bottom:1px solid #e8edf5;">
                             <input type="checkbox" class="group-checkbox" value="${g.id}" data-name="${g.name}" style="accent-color:#0038a8;">
                             <span style="color:#001a41;">${g.name}</span>
-                            <span class="form-badge ${getFormClass(g.form)}" style="margin-left:auto;">${g.form||'ОФО'}</span>
+                            <span class="form-badge ${formClass}" style="margin-left:auto;">${g.form||'ОФО'}</span>
                         </label>
                     `;
                 });
@@ -2972,7 +3058,10 @@
             }
             let html = '';
             state.streams.sort((a,b) => (a.name||'').localeCompare(b.name||'')).forEach(s => {
-                const groupNames = (s.groups||[]).map(id => state.groups.find(g => g.id === id)?.name || id).join(', ');
+                const groupNames = (s.groups||[]).map(id => {
+                    const g = state.groups.find(g => g.id === id);
+                    return g ? g.name : id;
+                }).join(', ');
                 html += `
                     <div style="background:#f8faff; border-radius:16px; padding:15px; margin-bottom:10px;">
                         <div style="display:flex; justify-content:space-between;">
@@ -3013,119 +3102,143 @@
 
         function initAllHandlers() {
             // Окна преподавателей
-            document.getElementById('teacherWindowsBtn')?.addEventListener('click', async () => {
-                const m = document.getElementById('teacherWindowsModal');
-                if (m) {
-                    await renderWindowsList();
-                    updateWindowFilters();
-                    m.classList.add('active');
-                }
-            });
-
-            document.getElementById('addWindowBtn')?.addEventListener('click', () => {
-                const sel = document.getElementById('newWindowTeacherSelect');
-                if (sel) {
-                    sel.innerHTML = '<option value="">Выберите преподавателя</option>';
-                    const teachers = Object.values(state.teacherStats).map(t => t.teacherName).sort();
-                    teachers.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
-                }
-                document.getElementById('addWindowModal').classList.add('active');
-            });
-
-            document.getElementById('addWindowFromListBtn')?.addEventListener('click', () => {
-                document.getElementById('teacherWindowsModal').classList.remove('active');
-                document.getElementById('addWindowModal').classList.add('active');
-            });
-
-            // ========== ИСПРАВЛЕННЫЙ ОБРАБОТЧИК СОХРАНЕНИЯ ОКНА ==========
-            document.getElementById('saveWindowBtn')?.addEventListener('click', async () => {
-                const teacher = document.getElementById('newWindowTeacherSelect').value;
-                const day = document.getElementById('newWindowDaySelect').value;
-                const pair = document.getElementById('newWindowPairSelect').value;
-                const hours = parseInt(document.getElementById('windowHoursInput').value) || 2;
-                const reason = document.getElementById('newWindowReasonInput').value;
-                
-                if (!teacher || !day || !pair) {
-                    alert('Заполните обязательные поля');
-                    return;
-                }
-                
-                // Сохраняем окно с указанием часов
-                await saveWindow({ 
-                    teacher, 
-                    day, 
-                    pair, 
-                    hours,
-                    reason 
+            const teacherWindowsBtn = document.getElementById('teacherWindowsBtn');
+            if (teacherWindowsBtn) {
+                teacherWindowsBtn.addEventListener('click', async () => {
+                    const m = document.getElementById('teacherWindowsModal');
+                    if (m) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                        m.classList.add('active');
+                    }
                 });
-                
-                alert(`Окно добавлено. ${hours} ч вычтено из нагрузки преподавателя.`);
-                
-                document.getElementById('addWindowModal').classList.remove('active');
-                document.getElementById('newWindowReasonInput').value = '';
-                document.getElementById('windowHoursInput').value = '2';
-                
-                if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
-                    await renderWindowsList();
-                    updateWindowFilters();
-                }
-                
-                // Обновляем отображение нагрузки, если мы на этой вкладке
-                if (state.currentView === 'load') {
-                    renderView();
-                }
-            });
+            }
 
-            document.getElementById('cancelAddWindowBtn')?.addEventListener('click', () => {
-                document.getElementById('addWindowModal').classList.remove('active');
-                document.getElementById('newWindowReasonInput').value = '';
-                document.getElementById('windowHoursInput').value = '2';
-            });
+            const addWindowBtn = document.getElementById('addWindowBtn');
+            if (addWindowBtn) {
+                addWindowBtn.addEventListener('click', () => {
+                    const sel = document.getElementById('newWindowTeacherSelect');
+                    if (sel) {
+                        sel.innerHTML = '<option value="">Выберите преподавателя</option>';
+                        const teachers = Object.values(state.teacherStats).map(t => t.teacherName).sort();
+                        teachers.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
+                    }
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
 
-            document.getElementById('teacherWindowsCloseBtn')?.addEventListener('click', () => {
-                document.getElementById('teacherWindowsModal').classList.remove('active');
-            });
+            const addWindowFromListBtn = document.getElementById('addWindowFromListBtn');
+            if (addWindowFromListBtn) {
+                addWindowFromListBtn.addEventListener('click', () => {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
 
-            document.getElementById('windowTeacherFilter')?.addEventListener('change', renderWindowsList);
-            document.getElementById('windowDayFilter')?.addEventListener('change', renderWindowsList);
+            const saveWindowBtn = document.getElementById('saveWindowBtn');
+            if (saveWindowBtn) {
+                saveWindowBtn.addEventListener('click', async () => {
+                    const teacher = document.getElementById('newWindowTeacherSelect').value;
+                    const day = document.getElementById('newWindowDaySelect').value;
+                    const pair = document.getElementById('newWindowPairSelect').value;
+                    const hours = parseInt(document.getElementById('windowHoursInput').value) || 2;
+                    const reason = document.getElementById('newWindowReasonInput').value;
+                    
+                    if (!teacher || !day || !pair) {
+                        alert('Заполните обязательные поля');
+                        return;
+                    }
+                    
+                    await saveWindow({ teacher, day, pair, hours, reason });
+                    alert(`Окно добавлено. ${hours} ч вычтено из нагрузки преподавателя.`);
+                    
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                    document.getElementById('windowHoursInput').value = '2';
+                    
+                    if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                    }
+                    
+                    if (state.currentView === 'load') {
+                        renderView();
+                    }
+                });
+            }
+
+            const cancelAddWindowBtn = document.getElementById('cancelAddWindowBtn');
+            if (cancelAddWindowBtn) {
+                cancelAddWindowBtn.addEventListener('click', () => {
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                    document.getElementById('windowHoursInput').value = '2';
+                });
+            }
+
+            const teacherWindowsCloseBtn = document.getElementById('teacherWindowsCloseBtn');
+            if (teacherWindowsCloseBtn) {
+                teacherWindowsCloseBtn.addEventListener('click', () => {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                });
+            }
+
+            const windowTeacherFilter = document.getElementById('windowTeacherFilter');
+            if (windowTeacherFilter) {
+                windowTeacherFilter.addEventListener('change', renderWindowsList);
+            }
+
+            const windowDayFilter = document.getElementById('windowDayFilter');
+            if (windowDayFilter) {
+                windowDayFilter.addEventListener('change', renderWindowsList);
+            }
 
             // Потоки
-            document.getElementById('streamsBtn')?.addEventListener('click', async () => {
-                const m = document.getElementById('streamsModal');
-                if (m) {
-                    renderGroupsCheckboxes();
-                    updateStreamTeacherSelect();
+            const streamsBtn = document.getElementById('streamsBtn');
+            if (streamsBtn) {
+                streamsBtn.addEventListener('click', async () => {
+                    const m = document.getElementById('streamsModal');
+                    if (m) {
+                        renderGroupsCheckboxes();
+                        updateStreamTeacherSelect();
+                        await renderStreamsList();
+                        m.classList.add('active');
+                    }
+                });
+            }
+
+            const createStreamBtn = document.getElementById('createStreamBtn');
+            if (createStreamBtn) {
+                createStreamBtn.addEventListener('click', async () => {
+                    const name = document.getElementById('streamNameInput').value;
+                    const subj = document.getElementById('streamSubjectInput').value;
+                    const teacher = document.getElementById('streamTeacherSelect').value;
+                    const day = document.getElementById('streamDaySelect').value;
+                    const pair = document.getElementById('streamPairSelect').value;
+                    const room = document.getElementById('streamRoomInput').value;
+                    const groups = [...document.querySelectorAll('.group-checkbox:checked')].map(cb => cb.value);
+                    
+                    if (!name || !subj || !teacher || !groups.length) {
+                        alert('Заполните название, дисциплину, преподавателя и выберите группы');
+                        return;
+                    }
+                    
+                    await saveStream({ name, subject:subj, teacher, day, pair, room, groups });
+                    alert('Поток создан');
+                    document.getElementById('streamNameInput').value = '';
+                    document.getElementById('streamSubjectInput').value = '';
+                    document.getElementById('streamRoomInput').value = '';
+                    document.querySelectorAll('.group-checkbox:checked').forEach(cb => cb.checked = false);
                     await renderStreamsList();
-                    m.classList.add('active');
-                }
-            });
+                });
+            }
 
-            document.getElementById('createStreamBtn')?.addEventListener('click', async () => {
-                const name = document.getElementById('streamNameInput').value;
-                const subj = document.getElementById('streamSubjectInput').value;
-                const teacher = document.getElementById('streamTeacherSelect').value;
-                const day = document.getElementById('streamDaySelect').value;
-                const pair = document.getElementById('streamPairSelect').value;
-                const room = document.getElementById('streamRoomInput').value;
-                const groups = [...document.querySelectorAll('.group-checkbox:checked')].map(cb => cb.value);
-                
-                if (!name || !subj || !teacher || !groups.length) {
-                    alert('Заполните название, дисциплину, преподавателя и выберите группы');
-                    return;
-                }
-                
-                await saveStream({ name, subject:subj, teacher, day, pair, room, groups });
-                alert('Поток создан');
-                document.getElementById('streamNameInput').value = '';
-                document.getElementById('streamSubjectInput').value = '';
-                document.getElementById('streamRoomInput').value = '';
-                document.querySelectorAll('.group-checkbox:checked').forEach(cb => cb.checked = false);
-                await renderStreamsList();
-            });
-
-            document.getElementById('streamsCloseBtn')?.addEventListener('click', () => {
-                document.getElementById('streamsModal').classList.remove('active');
-            });
+            const streamsCloseBtn = document.getElementById('streamsCloseBtn');
+            if (streamsCloseBtn) {
+                streamsCloseBtn.addEventListener('click', () => {
+                    document.getElementById('streamsModal').classList.remove('active');
+                });
+            }
         }
 
         // Закрытие модалок по клику вне
@@ -3145,8 +3258,8 @@
             btn.addEventListener('click', () => setRole(btn.dataset.role));
         });
 
-        homeBtn?.addEventListener('click', goHome);
-        backBtn?.addEventListener('click', goHome);
+        if (homeBtn) homeBtn.addEventListener('click', goHome);
+        if (backBtn) backBtn.addEventListener('click', goHome);
 
         // ========== ЗАПУСК ==========
         if (!checkSavedSession()) {
