@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Финансовый университет | Расписание и нагрузка</title>
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Контейнер авторизации */
+        .login-container {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 35, 80, 0.1);
+            max-width: 450px;
+            width: 100%;
+            border: 1px solid #e8edf5;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-logo {
+            width: 70px;
+            height: 70px;
+            background: #0038a8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0 auto 15px;
+        }
+
+        .login-logo::before {
+            content: "Ф";
+            font-family: 'Times New Roman', serif;
+            font-size: 42px;
+        }
+
+        .login-header h2 {
+            color: #001a41;
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            color: #5a6f8c;
+        }
+
+        .auth-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e8edf5;
+            padding-bottom: 10px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            color: #5a6f8c;
+            transition: all 0.2s;
+        }
+
+        .auth-tab:hover {
+            background: #f0f5ff;
+            color: #0038a8;
+        }
+
+        .auth-tab.active {
+            background: #0038a8;
+            color: white;
+        }
+
+        .login-form {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .login-form.active {
+            display: flex;
+        }
+
+        .login-input-group {
+            position: relative;
+        }
+
+        .login-input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8a9bb5;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e8edf5;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #ffffff;
+        }
+
+        .login-input:focus {
+            border-color: #0038a8;
+            outline: none;
+        }
+
+        .login-btn {
+            background: #0038a8;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .login-btn:hover {
+            background: #002a80;
+        }
+
+        .login-btn:disabled {
+            background: #a0b8d0;
+            cursor: not-allowed;
+        }
+
+        .login-error {
+            color: #e41e26;
+            text-align: center;
+            padding: 8px;
+            background: #fff1f0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .login-success {
+            color: #27ae60;
+            text-align: center;
+            padding: 8px;
+            background: #e8f8f0;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .forgot-password-link {
+            text-align: right;
+        }
+        
+        .forgot-password-link span {
+            color: #0038a8;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 15px;
+        }
+        
+        .back-to-login span {
+            color: #0038a8;
+            font-size: 0.9rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* 2FA */
+        .code-input-container {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 50px;
+            border: 2px solid #e8edf5;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .code-input:focus {
+            border-color: #0038a8;
+            outline: none;
+        }
+
+        .timer-text {
+            text-align: center;
+            color: #5a6f8c;
+            margin: 10px 0;
+        }
+
+        .resend-link {
+            color: #0038a8;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .email-display {
+            background: #f8faff;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Основной сайт */
+        .university-wrapper {
+            width: 100%;
+            max-width: 1400px;
+            background: #ffffff;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 35, 80, 0.1);
+            padding: 30px;
+            display: none;
+        }
+
+        .university-wrapper.visible {
+            display: block;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e8edf5;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .university-emblem {
+            width: 60px;
+            height: 60px;
+            background: #0038a8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        .university-emblem::before {
+            content: "Ф";
+            font-family: 'Times New Roman', serif;
+            font-size: 34px;
+        }
+
+        .university-title h1 {
+            font-size: 1.6rem;
+            color: #001a41;
+        }
+
+        .university-title p {
+            color: #0038a8;
+            font-size: 0.8rem;
+        }
+
+        .date-badge {
+            background: #f8faff;
+            padding: 8px 16px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #0038a8;
+            border: 1px solid #e8edf5;
+        }
+
+        .user-info {
+            background: #f8faff;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: #0038a8;
+            border: 1px solid #e8edf5;
+        }
+
+        .logout-btn {
+            background: white;
+            border: 2px solid #e41e26;
+            color: #e41e26;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #e41e26;
+            color: white;
+        }
+
+        .main-menu {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e8edf5;
+            padding-bottom: 10px;
+        }
+
+        .menu-card {
+            padding: 12px 25px;
+            background: none;
+            border: none;
+            color: #5a6f8c;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .menu-card i {
+            color: #0038a8;
+        }
+
+        .menu-card:hover {
+            color: #0038a8;
+            background: #f0f5ff;
+        }
+
+        .menu-card.active {
+            color: #0038a8;
+            border-bottom: 3px solid #0038a8;
+            background: #f0f5ff;
+        }
+
+        .role-tabs {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .role-btn {
+            flex: 1;
+            background: #f8faff;
+            border: 2px solid #e8edf5;
+            border-radius: 40px;
+            padding: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #5a6f8c;
+            cursor: pointer;
+        }
+
+        .role-btn.active {
+            border-color: #0038a8;
+            background: #f0f5ff;
+            color: #0038a8;
+        }
+
+        .content-area {
+            min-height: 400px;
+        }
+
+        .loader {
+            display: flex;
+            justify-content: center;
+            padding: 60px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f0f5ff;
+            border-top: 4px solid #0038a8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 35, 80, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active { display: flex; }
+
+        .modal-content {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Форма авторизации -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-header">
+            <div class="login-logo"></div>
+            <h2>Финансовый университет</h2>
+            <p>Вход в систему расписания и нагрузки</p>
+        </div>
+        
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="loginTab">Вход</div>
+            <div class="auth-tab" id="registerTab">Регистрация</div>
+        </div>
+
+        <!-- Форма входа -->
+        <div class="login-form active" id="loginForm">
+            <div class="login-input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="login-input" id="loginEmail" placeholder="Email">
+            </div>
+            <div class="login-input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="login-input" id="loginPassword" placeholder="Пароль">
+            </div>
+            <div class="forgot-password-link">
+                <span id="forgotPasswordLink">Забыли пароль?</span>
+            </div>
+            <button class="login-btn" id="loginBtn">Войти</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+
+        <!-- Форма регистрации -->
+        <div class="login-form" id="registerForm">
+            <div class="login-input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" class="login-input" id="regFullName" placeholder="ФИО">
+            </div>
+            <div class="login-input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="login-input" id="regEmail" placeholder="Email">
+            </div>
+            <div class="login-input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="login-input" id="regPassword" placeholder="Пароль (минимум 6 символов)">
+            </div>
+            <div class="login-input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="login-input" id="regConfirmPassword" placeholder="Подтвердите пароль">
+            </div>
+            <button class="login-btn" id="registerBtn">Зарегистрироваться</button>
+            <div class="login-error" id="registerError"></div>
+            <div class="login-success" id="registerSuccess"></div>
+        </div>
+
+        <!-- Форма восстановления -->
+        <div class="login-form" id="forgotForm">
+            <div class="login-input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="email" class="login-input" id="forgotEmail" placeholder="Введите ваш email">
+            </div>
+            <button class="login-btn" id="forgotBtn">Отправить код</button>
+            <div class="back-to-login">
+                <span id="backToLoginFromForgot">← Вернуться</span>
+            </div>
+            <div class="login-error" id="forgotError"></div>
+            <div class="login-success" id="forgotSuccess"></div>
+        </div>
+
+        <!-- Форма подтверждения -->
+        <div class="login-form" id="verifyForm">
+            <div class="email-display" id="verifyEmailDisplay">
+                <i class="fas fa-envelope"></i> Код отправлен
+            </div>
+            <div class="code-input-container">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+            </div>
+            <div class="timer-text">Код действителен <span id="timer">05:00</span></div>
+            <button class="login-btn" id="verifyBtn">Подтвердить</button>
+            <div style="text-align: center;">
+                <span class="resend-link" id="resendCode">Отправить повторно</span>
+            </div>
+            <div class="back-to-login">
+                <span id="backToLoginFromVerify">← Вернуться</span>
+            </div>
+            <div class="login-error" id="verifyError"></div>
+        </div>
+
+        <!-- Форма сброса пароля -->
+        <div class="login-form" id="resetForm">
+            <div class="login-input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="login-input" id="newPassword" placeholder="Новый пароль">
+            </div>
+            <div class="login-input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" class="login-input" id="confirmNewPassword" placeholder="Подтвердите">
+            </div>
+            <button class="login-btn" id="resetBtn">Сохранить</button>
+            <div class="back-to-login">
+                <span id="backToLoginFromReset">← Вернуться</span>
+            </div>
+            <div class="login-error" id="resetError"></div>
+            <div class="login-success" id="resetSuccess"></div>
+        </div>
+    </div>
+
+    <!-- Основной сайт (упрощенный для теста) -->
+    <div class="university-wrapper" id="mainSite">
+        <div class="header">
+            <div class="logo-area">
+                <div class="university-emblem"></div>
+                <div class="university-title">
+                    <h1>Финансовый университет</h1>
+                    <p>при Правительстве РФ</p>
+                </div>
+            </div>
+            <div style="display: flex; gap: 15px;">
+                <div class="date-badge" id="currentDate"></div>
+                <div class="user-info" id="userInfo"><i class="fas fa-user"></i> <span id="userName"></span></div>
+                <button class="logout-btn" id="logoutBtn">Выйти</button>
+            </div>
+        </div>
+        <div class="main-menu">
+            <div class="menu-card active"><i class="fas fa-calendar-alt"></i> Расписание</div>
+        </div>
+        <div class="content-area" id="content">
+            <div style="text-align: center; padding: 50px; color: #5a6f8c;">
+                <i class="fas fa-check-circle" style="font-size: 48px; color: #27ae60; margin-bottom: 20px;"></i>
+                <h2>Вход выполнен успешно!</h2>
+                <p>Добро пожаловать в систему расписания Финансового университета</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ИНИЦИАЛИЗАЦИЯ В САМОМ НАЧАЛЕ
+        (function() {
+            // Firebase конфиг
+            const firebaseConfig = {
+                apiKey: "AIzaSyAnq7VrvegGghnHAxgm7-vOxgaRKMOZQ8w",
+                authDomain: "aaaaa-bb226.firebaseapp.com",
+                databaseURL: "https://aaaaa-bb226-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "aaaaa-bb226",
+                storageBucket: "aaaaa-bb226.firebasestorage.app",
+                messagingSenderId: "636694456068",
+                appId: "1:636694456068:web:66eb251acda8f98c57d251"
+            };
+
+            // Инициализация Firebase
+            firebase.initializeApp(firebaseConfig);
+            const db = firebase.database();
+
+            // Инициализация EmailJS
+            emailjs.init("1nIeu26r-6K_gkTuw");
+
+            // Глобальные переменные
+            let currentUser = null;
+            let verificationCode = '';
+            let pendingEmail = '';
+            let pendingUserData = null;
+            let resetUserId = null;
+            let isVerifyingForRegistration = false;
+            let isVerifyingForPasswordReset = false;
+            let timerInterval = null;
+            let timeLeft = 300;
+
+            // DOM элементы
+            const loginContainer = document.getElementById('loginContainer');
+            const mainSite = document.getElementById('mainSite');
+            const currentDateSpan = document.getElementById('currentDate');
+            const userNameSpan = document.getElementById('userName');
+
+            // Текущая дата
+            if (currentDateSpan) {
+                const now = new Date();
+                currentDateSpan.textContent = now.toLocaleDateString('ru-RU', {
+                    day: 'numeric', month: 'long', year: 'numeric'
+                });
+            }
+
+            // ===== ПРОВЕРКА СОХРАНЕННОЙ СЕССИИ =====
+            const savedUser = localStorage.getItem('finuniversity_user');
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    loginContainer.style.display = 'none';
+                    mainSite.classList.add('visible');
+                    if (userNameSpan) {
+                        userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                    }
+                } catch (e) {
+                    localStorage.removeItem('finuniversity_user');
+                }
+            }
+
+            // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
+            function generateCode() {
+                return Math.floor(100000 + Math.random() * 900000).toString();
+            }
+
+            async function sendCode(email, code, purpose) {
+                try {
+                    await emailjs.send('service_dh633ft', 'template_9skd6nj', {
+                        to_email: email,
+                        code: code,
+                        from_name: 'Финансовый университет',
+                        to_name: email.split('@')[0],
+                        message: purpose === 'reset' ? 'Код восстановления' : 
+                                 purpose === 'register' ? 'Код регистрации' : 'Код входа'
+                    });
+                    return true;
+                } catch (e) {
+                    console.error('EmailJS error:', e);
+                    return false;
+                }
+            }
+
+            function startTimer() {
+                timeLeft = 300;
+                const timerEl = document.getElementById('timer');
+                if (timerInterval) clearInterval(timerInterval);
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        if (timerEl) timerEl.textContent = '00:00';
+                        const verifyBtn = document.getElementById('verifyBtn');
+                        if (verifyBtn) verifyBtn.disabled = true;
+                    } else {
+                        const m = Math.floor(timeLeft / 60);
+                        const s = timeLeft % 60;
+                        if (timerEl) timerEl.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+                    }
+                }, 1000);
+            }
+
+            // ===== ПЕРЕКЛЮЧЕНИЕ ВКЛАДОК =====
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const forgotForm = document.getElementById('forgotForm');
+            const verifyForm = document.getElementById('verifyForm');
+            const resetForm = document.getElementById('resetForm');
+
+            if (loginTab) {
+                loginTab.onclick = function() {
+                    loginTab.classList.add('active');
+                    registerTab.classList.remove('active');
+                    loginForm.classList.add('active');
+                    registerForm.classList.remove('active');
+                    forgotForm.classList.remove('active');
+                    verifyForm.classList.remove('active');
+                    resetForm.classList.remove('active');
+                };
+            }
+
+            if (registerTab) {
+                registerTab.onclick = function() {
+                    registerTab.classList.add('active');
+                    loginTab.classList.remove('active');
+                    registerForm.classList.add('active');
+                    loginForm.classList.remove('active');
+                    forgotForm.classList.remove('active');
+                    verifyForm.classList.remove('active');
+                    resetForm.classList.remove('active');
+                };
+            }
+
+            const forgotLink = document.getElementById('forgotPasswordLink');
+            if (forgotLink) {
+                forgotLink.onclick = function() {
+                    loginForm.classList.remove('active');
+                    forgotForm.classList.add('active');
+                };
+            }
+
+            const backFromForgot = document.getElementById('backToLoginFromForgot');
+            if (backFromForgot) {
+                backFromForgot.onclick = function() {
+                    forgotForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                };
+            }
+
+            const backFromVerify = document.getElementById('backToLoginFromVerify');
+            if (backFromVerify) {
+                backFromVerify.onclick = function() {
+                    verifyForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                    if (timerInterval) clearInterval(timerInterval);
+                };
+            }
+
+            const backFromReset = document.getElementById('backToLoginFromReset');
+            if (backFromReset) {
+                backFromReset.onclick = function() {
+                    resetForm.classList.remove('active');
+                    loginForm.classList.add('active');
+                };
+            }
+
+            // ===== РЕГИСТРАЦИЯ =====
+            const registerBtn = document.getElementById('registerBtn');
+            if (registerBtn) {
+                registerBtn.onclick = async function() {
+                    const name = document.getElementById('regFullName')?.value.trim();
+                    const email = document.getElementById('regEmail')?.value.trim();
+                    const pass = document.getElementById('regPassword')?.value;
+                    const pass2 = document.getElementById('regConfirmPassword')?.value;
+                    const errorEl = document.getElementById('registerError');
+                    const successEl = document.getElementById('registerSuccess');
+
+                    if (errorEl) errorEl.style.display = 'none';
+                    if (successEl) successEl.style.display = 'none';
+
+                    if (!name || !email || !pass || !pass2) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Заполните все поля';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (pass.length < 6) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (pass !== pass2) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Пароли не совпадают';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    try {
+                        const users = await db.ref('users').once('value');
+                        if (Object.values(users.val() || {}).some(u => u.email === email)) {
+                            if (errorEl) {
+                                errorEl.textContent = 'Email уже зарегистрирован';
+                                errorEl.style.display = 'block';
+                            }
+                            return;
+                        }
+
+                        verificationCode = generateCode();
+                        pendingEmail = email;
+                        pendingUserData = { fullName: name, email, password: pass };
+                        isVerifyingForRegistration = true;
+
+                        const sent = await sendCode(email, verificationCode, 'register');
+                        if (sent) {
+                            registerForm.classList.remove('active');
+                            verifyForm.classList.add('active');
+                            const displayEl = document.getElementById('verifyEmailDisplay');
+                            if (displayEl) {
+                                displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                            }
+                            document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                            const verifyBtn = document.getElementById('verifyBtn');
+                            if (verifyBtn) verifyBtn.disabled = false;
+                            startTimer();
+                            if (successEl) {
+                                successEl.textContent = 'Код отправлен';
+                                successEl.style.display = 'block';
+                                setTimeout(() => successEl.style.display = 'none', 3000);
+                            }
+                        } else {
+                            if (errorEl) {
+                                errorEl.textContent = 'Ошибка отправки кода';
+                                errorEl.style.display = 'block';
+                            }
+                        }
+                    } catch (e) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка: ' + e.message;
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                };
+            }
+
+            // ===== ВХОД =====
+            const loginBtn = document.getElementById('loginBtn');
+            if (loginBtn) {
+                loginBtn.onclick = async function() {
+                    const email = document.getElementById('loginEmail')?.value.trim();
+                    const pass = document.getElementById('loginPassword')?.value;
+                    const errorEl = document.getElementById('loginError');
+
+                    if (errorEl) errorEl.style.display = 'none';
+
+                    if (!email || !pass) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Введите email и пароль';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    try {
+                        const users = await db.ref('users').once('value');
+                        const userEntry = Object.entries(users.val() || {}).find(([id, u]) => u.email === email && u.password === pass);
+
+                        if (!userEntry) {
+                            if (errorEl) {
+                                errorEl.textContent = 'Неверный email или пароль';
+                                errorEl.style.display = 'block';
+                            }
+                            return;
+                        }
+
+                        const [userId, userData] = userEntry;
+                        verificationCode = generateCode();
+                        pendingEmail = email;
+                        pendingUserData = { id: userId, ...userData };
+                        isVerifyingForRegistration = false;
+                        isVerifyingForPasswordReset = false;
+
+                        const sent = await sendCode(email, verificationCode, 'login');
+                        if (sent) {
+                            loginForm.classList.remove('active');
+                            verifyForm.classList.add('active');
+                            const displayEl = document.getElementById('verifyEmailDisplay');
+                            if (displayEl) {
+                                displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                            }
+                            document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                            const verifyBtn = document.getElementById('verifyBtn');
+                            if (verifyBtn) verifyBtn.disabled = false;
+                            startTimer();
+                        } else {
+                            if (errorEl) {
+                                errorEl.textContent = 'Ошибка отправки кода';
+                                errorEl.style.display = 'block';
+                            }
+                        }
+                    } catch (e) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка: ' + e.message;
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                };
+            }
+
+            // ===== ВОССТАНОВЛЕНИЕ =====
+            const forgotBtn = document.getElementById('forgotBtn');
+            if (forgotBtn) {
+                forgotBtn.onclick = async function() {
+                    const email = document.getElementById('forgotEmail')?.value.trim();
+                    const errorEl = document.getElementById('forgotError');
+                    const successEl = document.getElementById('forgotSuccess');
+
+                    if (errorEl) errorEl.style.display = 'none';
+                    if (successEl) successEl.style.display = 'none';
+
+                    if (!email || !email.includes('@')) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Введите корректный email';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    try {
+                        const users = await db.ref('users').once('value');
+                        const userEntry = Object.entries(users.val() || {}).find(([id, u]) => u.email === email);
+
+                        if (!userEntry) {
+                            if (errorEl) {
+                                errorEl.textContent = 'Пользователь не найден';
+                                errorEl.style.display = 'block';
+                            }
+                            return;
+                        }
+
+                        const [userId, userData] = userEntry;
+                        verificationCode = generateCode();
+                        pendingEmail = email;
+                        resetUserId = userId;
+                        isVerifyingForPasswordReset = true;
+
+                        const sent = await sendCode(email, verificationCode, 'reset');
+                        if (sent) {
+                            forgotForm.classList.remove('active');
+                            verifyForm.classList.add('active');
+                            const displayEl = document.getElementById('verifyEmailDisplay');
+                            if (displayEl) {
+                                displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                            }
+                            document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                            const verifyBtn = document.getElementById('verifyBtn');
+                            if (verifyBtn) verifyBtn.disabled = false;
+                            startTimer();
+                            if (successEl) {
+                                successEl.textContent = 'Код отправлен';
+                                successEl.style.display = 'block';
+                                setTimeout(() => successEl.style.display = 'none', 3000);
+                            }
+                        } else {
+                            if (errorEl) {
+                                errorEl.textContent = 'Ошибка отправки кода';
+                                errorEl.style.display = 'block';
+                            }
+                        }
+                    } catch (e) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка: ' + e.message;
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                };
+            }
+
+            // ===== ПОДТВЕРЖДЕНИЕ КОДА =====
+            const verifyBtn = document.getElementById('verifyBtn');
+            if (verifyBtn) {
+                verifyBtn.onclick = async function() {
+                    const inputs = document.querySelectorAll('.code-input');
+                    const code = Array.from(inputs).map(i => i.value).join('');
+                    const errorEl = document.getElementById('verifyError');
+
+                    if (code.length !== 6) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Введите 6-значный код';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (timeLeft <= 0) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Код истек';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (code !== verificationCode) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Неверный код';
+                            errorEl.style.display = 'block';
+                        }
+                        inputs.forEach(i => i.value = '');
+                        if (inputs[0]) inputs[0].focus();
+                        return;
+                    }
+
+                    try {
+                        if (isVerifyingForRegistration) {
+                            const newUser = {
+                                fullName: pendingUserData.fullName,
+                                email: pendingUserData.email,
+                                password: pendingUserData.password,
+                                registeredAt: Date.now()
+                            };
+                            const ref = await db.ref('users').push(newUser);
+                            currentUser = { id: ref.key, ...newUser };
+                        } else if (isVerifyingForPasswordReset) {
+                            verifyForm.classList.remove('active');
+                            resetForm.classList.add('active');
+                            if (timerInterval) clearInterval(timerInterval);
+                            return;
+                        } else {
+                            currentUser = pendingUserData;
+                        }
+
+                        localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
+                        if (timerInterval) clearInterval(timerInterval);
+                        loginContainer.style.display = 'none';
+                        mainSite.classList.add('visible');
+                        if (userNameSpan) {
+                            userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                        }
+
+                        verifyForm.classList.remove('active');
+                        loginForm.classList.add('active');
+                        const loginEmail = document.getElementById('loginEmail');
+                        const loginPassword = document.getElementById('loginPassword');
+                        if (loginEmail) loginEmail.value = '';
+                        if (loginPassword) loginPassword.value = '';
+                    } catch (e) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка: ' + e.message;
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                };
+            }
+
+            // ===== СБРОС ПАРОЛЯ =====
+            const resetBtn = document.getElementById('resetBtn');
+            if (resetBtn) {
+                resetBtn.onclick = async function() {
+                    const pass = document.getElementById('newPassword')?.value;
+                    const pass2 = document.getElementById('confirmNewPassword')?.value;
+                    const errorEl = document.getElementById('resetError');
+                    const successEl = document.getElementById('resetSuccess');
+
+                    if (errorEl) errorEl.style.display = 'none';
+                    if (successEl) successEl.style.display = 'none';
+
+                    if (!pass || !pass2) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Заполните поля';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (pass.length < 6) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    if (pass !== pass2) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Пароли не совпадают';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    try {
+                        await db.ref(`users/${resetUserId}/password`).set(pass);
+                        if (successEl) {
+                            successEl.textContent = 'Пароль изменен';
+                            successEl.style.display = 'block';
+                        }
+                        setTimeout(() => {
+                            resetForm.classList.remove('active');
+                            loginForm.classList.add('active');
+                        }, 2000);
+                    } catch (e) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка: ' + e.message;
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                };
+            }
+
+            // ===== ПОВТОРНАЯ ОТПРАВКА =====
+            const resendCode = document.getElementById('resendCode');
+            if (resendCode) {
+                resendCode.onclick = async function() {
+                    verificationCode = generateCode();
+                    const purpose = isVerifyingForRegistration ? 'register' : (isVerifyingForPasswordReset ? 'reset' : 'login');
+                    await sendCode(pendingEmail, verificationCode, purpose);
+                    if (timerInterval) clearInterval(timerInterval);
+                    startTimer();
+                    document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                    const verifyBtn = document.getElementById('verifyBtn');
+                    if (verifyBtn) verifyBtn.disabled = false;
+                };
+            }
+
+            // ===== ВЫХОД =====
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.onclick = function() {
+                    localStorage.removeItem('finuniversity_user');
+                    currentUser = null;
+                    loginContainer.style.display = 'block';
+                    mainSite.classList.remove('visible');
+                    loginForm.classList.add('active');
+                    registerForm.classList.remove('active');
+                    forgotForm.classList.remove('active');
+                    verifyForm.classList.remove('active');
+                    resetForm.classList.remove('active');
+                    if (timerInterval) clearInterval(timerInterval);
+                };
+            }
+
+            // ===== АВТОМАТИЧЕСКИЙ ПЕРЕХОД МЕЖДУ ПОЛЯМИ КОДА =====
+            document.querySelectorAll('.code-input').forEach((input, index, arr) => {
+                input.oninput = function(e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                    if (this.value && index < arr.length - 1) arr[index + 1].focus();
+                };
+                input.onkeydown = function(e) {
+                    if (e.key === 'Backspace' && !this.value && index > 0) arr[index - 1].focus();
+                };
+            });
+        })();
+    </script>
+</body>
+</html>
