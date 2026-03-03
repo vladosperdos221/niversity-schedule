@@ -9,13 +9,13 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
     
-    <!-- EmailJS для отправки кода на почту -->
+    <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     
-    <!-- Font Awesome для иконок -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- Chart.js для графиков -->
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     
     <style>
@@ -23,7 +23,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Golos Text', 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Golos Text', 'Montserrat', 'Segoe UI', sans-serif;
         }
 
         body {
@@ -36,7 +36,7 @@
             color: #1f344d;
         }
 
-        /* Стили для авторизации */
+        /* Стили авторизации */
         .login-container {
             background: #ffffff;
             border-radius: 30px;
@@ -45,8 +45,6 @@
             max-width: 500px;
             width: 100%;
             border: 1px solid #e8edf5;
-            max-height: 90vh;
-            overflow-y: auto;
         }
 
         .login-header {
@@ -78,13 +76,11 @@
         .login-header h2 {
             color: #001a41;
             font-size: 1.8rem;
-            font-weight: 600;
             margin-bottom: 5px;
         }
 
         .login-header p {
             color: #5a6f8c;
-            font-size: 0.95rem;
         }
 
         .auth-tabs {
@@ -101,10 +97,8 @@
             padding: 10px;
             border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
             font-weight: 600;
             color: #5a6f8c;
-            font-size: 1rem;
         }
 
         .auth-tab:hover {
@@ -115,23 +109,6 @@
         .auth-tab.active {
             background: #0038a8;
             color: white;
-        }
-
-        .forgot-password-link {
-            text-align: right;
-            margin-top: -5px;
-            margin-bottom: 10px;
-        }
-        
-        .forgot-password-link span {
-            color: #0038a8;
-            font-size: 0.85rem;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        
-        .forgot-password-link span:hover {
-            color: #002a80;
         }
 
         .login-form {
@@ -154,7 +131,6 @@
             top: 50%;
             transform: translateY(-50%);
             color: #8a9bb5;
-            font-size: 1rem;
         }
 
         .login-input {
@@ -163,7 +139,6 @@
             border: 2px solid #e8edf5;
             border-radius: 12px;
             font-size: 1rem;
-            transition: all 0.2s;
             background: #ffffff;
         }
 
@@ -181,22 +156,14 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: 5px;
         }
 
         .login-btn:hover {
             background: #002a80;
         }
 
-        .login-btn:disabled {
-            background: #a0b8d0;
-            cursor: not-allowed;
-        }
-
         .login-error {
             color: #e41e26;
-            font-size: 0.9rem;
             text-align: center;
             padding: 8px;
             background: #fff1f0;
@@ -206,7 +173,6 @@
 
         .login-success {
             color: #27ae60;
-            font-size: 0.9rem;
             text-align: center;
             padding: 8px;
             background: #e8f8f0;
@@ -214,65 +180,15 @@
             display: none;
         }
 
-        .login-footer {
-            text-align: center;
-            margin-top: 25px;
-            color: #8a9bb5;
-            font-size: 0.8rem;
+        .forgot-password-link {
+            text-align: right;
         }
-
-        /* Стили для 2FA */
-        .code-input-container {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            margin: 20px 0;
-        }
-
-        .code-input {
-            width: 40px;
-            height: 50px;
-            border: 2px solid #e8edf5;
-            border-radius: 8px;
-            font-size: 1.4rem;
-            text-align: center;
-            font-weight: 600;
-            color: #001a41;
-            transition: all 0.2s;
-        }
-
-        .code-input:focus {
-            border-color: #0038a8;
-            outline: none;
-        }
-
-        .timer-text {
-            text-align: center;
-            color: #5a6f8c;
+        
+        .forgot-password-link span {
+            color: #0038a8;
             font-size: 0.85rem;
-            margin: 10px 0;
-        }
-
-        .resend-link {
-            color: #0038a8;
-            text-decoration: underline;
             cursor: pointer;
-            font-weight: 500;
-        }
-
-        .email-display {
-            background: #f8faff;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            margin: 15px 0;
-            color: #001a41;
-            font-weight: 500;
-        }
-
-        .email-display i {
-            color: #0038a8;
-            margin-right: 8px;
+            text-decoration: underline;
         }
 
         .back-to-login {
@@ -287,7 +203,47 @@
             text-decoration: underline;
         }
 
-        /* Основной сайт */
+        /* 2FA */
+        .code-input-container {
+            display: flex;
+            gap: 6px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .code-input {
+            width: 40px;
+            height: 50px;
+            border: 2px solid #e8edf5;
+            border-radius: 8px;
+            font-size: 1.4rem;
+            text-align: center;
+        }
+
+        .code-input:focus {
+            border-color: #0038a8;
+            outline: none;
+        }
+
+        .timer-text {
+            text-align: center;
+            color: #5a6f8c;
+            margin: 10px 0;
+        }
+
+        .resend-link {
+            color: #0038a8;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .email-display {
+            background: #f8faff;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
         .university-wrapper {
             width: 100%;
             max-width: 1400px;
@@ -302,13 +258,10 @@
             display: block;
         }
 
-        /* Шапка */
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 20px;
             margin-bottom: 30px;
             padding-bottom: 20px;
             border-bottom: 2px solid #e8edf5;
@@ -330,27 +283,22 @@
             justify-content: center;
             color: white;
             font-size: 28px;
-            font-weight: 700;
         }
 
         .university-emblem::before {
             content: "Ф";
             font-family: 'Times New Roman', serif;
-            font-weight: 800;
             font-size: 34px;
         }
 
         .university-title h1 {
             font-size: 1.6rem;
-            font-weight: 600;
             color: #001a41;
         }
 
         .university-title p {
             color: #0038a8;
-            font-weight: 500;
             font-size: 0.8rem;
-            letter-spacing: 0.5px;
         }
 
         .date-badge {
@@ -361,20 +309,14 @@
             align-items: center;
             gap: 8px;
             color: #0038a8;
-            font-weight: 500;
-            font-size: 0.9rem;
             border: 1px solid #e8edf5;
         }
 
         .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
             background: #f8faff;
             padding: 8px 16px;
             border-radius: 40px;
             color: #0038a8;
-            font-weight: 500;
             border: 1px solid #e8edf5;
         }
 
@@ -386,7 +328,6 @@
             border-radius: 40px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .logout-btn:hover {
@@ -394,52 +335,6 @@
             color: white;
         }
 
-        /* Навигация */
-        .nav-panel {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .breadcrumbs {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: #f8faff;
-            padding: 8px 20px;
-            border-radius: 40px;
-        }
-
-        .breadcrumbs button {
-            background: none;
-            border: none;
-            color: #0038a8;
-            font-weight: 600;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 20px;
-        }
-
-        .breadcrumbs button:hover {
-            background: #f0f5ff;
-        }
-
-        .back-btn {
-            background: #0038a8;
-            border: none;
-            color: white;
-            padding: 8px 25px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .back-btn:hover {
-            background: #002a80;
-        }
-
-        /* Главное меню */
         .main-menu {
             display: flex;
             gap: 15px;
@@ -456,7 +351,6 @@
             font-weight: 600;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.2s;
             border-radius: 8px 8px 0 0;
             display: flex;
             align-items: center;
@@ -465,7 +359,6 @@
 
         .menu-card i {
             color: #0038a8;
-            font-size: 1.2rem;
         }
 
         .menu-card:hover {
@@ -479,38 +372,6 @@
             background: #f0f5ff;
         }
 
-        /* Панель управления */
-        .control-panel {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            background: #f8faff;
-            padding: 15px 20px;
-            border-radius: 16px;
-        }
-
-        .control-btn {
-            background: white;
-            border: 2px solid #0038a8;
-            color: #0038a8;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .control-btn:hover {
-            background: #0038a8;
-            color: white;
-        }
-
-        /* Ролевые кнопки */
         .role-tabs {
             display: flex;
             gap: 15px;
@@ -527,7 +388,6 @@
             font-weight: 600;
             color: #5a6f8c;
             cursor: pointer;
-            transition: all 0.2s;
         }
 
         .role-btn i {
@@ -541,12 +401,10 @@
             color: #0038a8;
         }
 
-        /* Кнопки курсов */
         .course-buttons {
             display: flex;
             gap: 12px;
             margin: 20px 0;
-            flex-wrap: wrap;
         }
 
         .course-btn {
@@ -557,9 +415,7 @@
             background: white;
             color: #0038a8;
             font-weight: 600;
-            font-size: 1.1rem;
             cursor: pointer;
-            min-width: 100px;
         }
 
         .course-btn.active {
@@ -567,37 +423,24 @@
             color: white;
         }
 
-        /* Фильтры */
         .filters-bar {
             background: #f8faff;
             border-radius: 16px;
             padding: 15px 20px;
             margin-bottom: 25px;
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            align-items: center;
         }
 
         .filter-select {
             padding: 8px 15px;
             border: 2px solid #e8edf5;
             border-radius: 30px;
-            font-size: 0.95rem;
             min-width: 200px;
             background: white;
-            cursor: pointer;
         }
 
-        .filter-select:focus {
-            border-color: #0038a8;
-            outline: none;
-        }
-
-        /* Карточки */
-        .cards-grid {
+        .cards-grid, .teacher-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 20px;
             margin-top: 20px;
         }
@@ -608,7 +451,6 @@
             padding: 25px;
             box-shadow: 0 5px 20px rgba(0, 35, 80, 0.05);
             border: 1px solid #e8edf5;
-            transition: all 0.2s;
             cursor: pointer;
         }
 
@@ -642,334 +484,16 @@
             color: #001a41;
         }
 
-        .card-subtitle {
-            color: #5a6f8c;
-            font-size: 0.9rem;
-            margin-top: 4px;
-        }
-
-        .card-badges {
-            display: flex;
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .card-footer {
-            color: #0038a8;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-
-        /* Бейджи форм обучения */
         .form-badge {
             padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.8rem;
-            font-weight: 600;
             display: inline-block;
         }
 
         .form-badge.ofo { background: #0038a8; color: white; }
         .form-badge.zfo { background: #e41e26; color: white; }
-        .form-badge.ozfo { background: #f39c12; color: white; }
-        .form-badge.ozo { background: #27ae60; color: white; }
-        .form-badge.zfous { background: #9b59b6; color: white; }
 
-        /* Карточки нагрузки */
-        .teacher-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .teacher-load-stats {
-            display: flex;
-            justify-content: space-between;
-            margin: 15px 0;
-            padding: 10px 0;
-            border-top: 1px solid #e8edf5;
-            border-bottom: 1px solid #e8edf5;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            color: #5a6f8c;
-            margin-bottom: 3px;
-        }
-
-        .stat-value {
-            font-weight: 700;
-            color: #0038a8;
-            font-size: 1.1rem;
-        }
-
-        .teacher-load-hours {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 15px;
-            font-weight: 600;
-        }
-
-        .teacher-load-hours span:last-child {
-            color: #0038a8;
-            font-size: 1.3rem;
-        }
-
-        /* Детальная карточка */
-        .teacher-detail-card {
-            background: white;
-            border-radius: 25px;
-            padding: 30px;
-            box-shadow: 0 5px 20px rgba(0, 35, 80, 0.05);
-            border: 1px solid #e8edf5;
-        }
-
-        .teacher-detail-header {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #f0f5ff;
-        }
-
-        .teacher-detail-avatar {
-            width: 80px;
-            height: 80px;
-            background: #0038a8;
-            border-radius: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2.5rem;
-        }
-
-        .teacher-detail-info h2 {
-            font-size: 1.8rem;
-            color: #001a41;
-            margin-bottom: 5px;
-        }
-
-        .teacher-detail-info p {
-            color: #5a6f8c;
-            font-size: 1rem;
-        }
-
-        .monthly-summary {
-            background: #f8faff;
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-around;
-            border: 1px solid #e8edf5;
-        }
-
-        .monthly-item {
-            text-align: center;
-        }
-
-        .monthly-label {
-            font-size: 0.85rem;
-            color: #5a6f8c;
-            margin-bottom: 5px;
-        }
-
-        .monthly-value {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: #0038a8;
-        }
-
-        .discipline-list {
-            display: grid;
-            gap: 12px;
-        }
-
-        .discipline-item {
-            background: #f8faff;
-            border-radius: 16px;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid #e8edf5;
-        }
-
-        .discipline-info h4 {
-            color: #001a41;
-            margin-bottom: 5px;
-        }
-
-        .discipline-info p {
-            color: #5a6f8c;
-            font-size: 0.9rem;
-        }
-
-        .discipline-hours {
-            font-weight: 700;
-            color: #0038a8;
-            font-size: 1.3rem;
-        }
-
-        /* Таблицы */
-        .table-container {
-            background: white;
-            border-radius: 25px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0, 35, 80, 0.05);
-            border: 1px solid #e8edf5;
-            overflow-x: auto;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            background: #0038a8;
-            color: white;
-            font-weight: 600;
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        .data-table td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e8edf5;
-            color: #1f344d;
-        }
-
-        .data-table tbody tr:hover {
-            background: #f8faff;
-        }
-
-        .badge {
-            background: #f0f5ff;
-            color: #0038a8;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-
-        .day-badge {
-            background: #f0f5ff;
-            color: #0038a8;
-            padding: 8px 20px;
-            border-radius: 30px;
-            margin: 15px 0 10px;
-            display: inline-block;
-            font-weight: 600;
-        }
-
-        /* Графики */
-        .charts-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 30px 0;
-        }
-
-        .chart-container {
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #e8edf5;
-            height: 350px;
-        }
-
-        .chart-container h3 {
-            margin-bottom: 15px;
-            color: #001a41;
-            font-size: 1.1rem;
-        }
-
-        .chart-wrapper {
-            height: 280px;
-        }
-
-        /* Статистика */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: #f8faff;
-            border-radius: 20px;
-            padding: 20px;
-            border: 1px solid #e8edf5;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .stat-icon {
-            width: 50px;
-            height: 50px;
-            background: #0038a8;
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.4rem;
-        }
-
-        .stat-info h4 {
-            color: #5a6f8c;
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 5px;
-        }
-
-        .stat-info .stat-value {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #001a41;
-        }
-
-        /* Загрузчик */
-        .loader {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 60px;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid #f0f5ff;
-            border-top: 4px solid #0038a8;
-            border-right: 4px solid #0038a8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        .error-message, .empty-message {
-            background: #f8faff;
-            border-radius: 25px;
-            padding: 40px;
-            text-align: center;
-            color: #5a6f8c;
-            border: 2px dashed #cbd6e6;
-        }
-
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -989,9 +513,6 @@
             padding: 30px;
             max-width: 600px;
             width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
         }
 
         .modal-title {
@@ -1006,7 +527,6 @@
         .form-label {
             display: block;
             color: #5a6f8c;
-            font-weight: 500;
             margin-bottom: 8px;
         }
 
@@ -1017,11 +537,6 @@
             border-radius: 14px;
             font-size: 1rem;
             background: white;
-        }
-
-        .form-input:focus, .form-select:focus {
-            border-color: #0038a8;
-            outline: none;
         }
 
         .modal-actions {
@@ -1036,7 +551,6 @@
             border: none;
             border-radius: 14px;
             font-weight: 600;
-            font-size: 1rem;
             cursor: pointer;
         }
 
@@ -1045,28 +559,27 @@
             color: white;
         }
 
-        .modal-btn.save:hover { background: #002a80; }
-
         .modal-btn.cancel {
             background: #f0f4f8;
             color: #5a6f8c;
         }
 
-        .modal-btn.cancel:hover { background: #e4e9f2; }
-
-        /* Адаптивность */
-        @media (max-width: 768px) {
-            .header { flex-direction: column; text-align: center; }
-            .logo-area { flex-direction: column; }
-            .main-menu { flex-direction: column; }
-            .role-tabs { flex-direction: column; }
-            .charts-grid { grid-template-columns: 1fr; }
-            .code-input-container { flex-wrap: wrap; }
-            .code-input { width: 35px; height: 45px; }
-            .course-buttons { flex-direction: column; }
-            .control-panel { flex-direction: column; }
-            .control-btn { width: 100%; justify-content: center; }
+        .loader {
+            display: flex;
+            justify-content: center;
+            padding: 60px;
         }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #f0f5ff;
+            border-top: 4px solid #0038a8;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -1123,49 +636,41 @@
             <div class="login-success" id="registerSuccess"></div>
         </div>
 
-        <!-- Форма восстановления пароля -->
+        <!-- Форма восстановления -->
         <div class="login-form" id="forgotForm">
             <div class="login-input-group">
                 <i class="fas fa-envelope"></i>
                 <input type="email" class="login-input" id="forgotEmail" placeholder="Введите ваш email">
             </div>
-            <button class="login-btn" id="forgotBtn">Отправить код восстановления</button>
+            <button class="login-btn" id="forgotBtn">Отправить код</button>
             <div class="back-to-login">
-                <span id="backToLoginFromForgot">← Вернуться ко входу</span>
+                <span id="backToLoginFromForgot">← Вернуться</span>
             </div>
             <div class="login-error" id="forgotError"></div>
             <div class="login-success" id="forgotSuccess"></div>
         </div>
 
-        <!-- Форма подтверждения кода -->
+        <!-- Форма подтверждения -->
         <div class="login-form" id="verifyForm">
             <div class="email-display" id="verifyEmailDisplay">
-                <i class="fas fa-envelope"></i> <span>Код отправлен на email</span>
+                <i class="fas fa-envelope"></i> Код отправлен
             </div>
-            
             <div class="code-input-container">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
-                <input type="text" class="code-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
+                <input type="text" class="code-input" maxlength="1">
             </div>
-            
-            <div class="timer-text" id="timerText">
-                Код действителен <span id="timer">05:00</span>
-            </div>
-            
+            <div class="timer-text">Код действителен <span id="timer">05:00</span></div>
             <button class="login-btn" id="verifyBtn">Подтвердить</button>
-            
             <div style="text-align: center;">
-                <span class="resend-link" id="resendCode">Отправить код повторно</span>
+                <span class="resend-link" id="resendCode">Отправить повторно</span>
             </div>
-            
             <div class="back-to-login">
                 <span id="backToLoginFromVerify">← Вернуться</span>
             </div>
-            
             <div class="login-error" id="verifyError"></div>
         </div>
 
@@ -1177,280 +682,63 @@
             </div>
             <div class="login-input-group">
                 <i class="fas fa-lock"></i>
-                <input type="password" class="login-input" id="confirmNewPassword" placeholder="Подтвердите пароль">
+                <input type="password" class="login-input" id="confirmNewPassword" placeholder="Подтвердите">
             </div>
-            <button class="login-btn" id="resetBtn">Сохранить новый пароль</button>
+            <button class="login-btn" id="resetBtn">Сохранить</button>
             <div class="back-to-login">
-                <span id="backToLoginFromReset">← Вернуться ко входу</span>
+                <span id="backToLoginFromReset">← Вернуться</span>
             </div>
             <div class="login-error" id="resetError"></div>
             <div class="login-success" id="resetSuccess"></div>
         </div>
-        
-        <div class="login-footer">
-            <p>© 2026 Финансовый университет</p>
-        </div>
     </div>
 
-    <!-- Основной сайт -->
+    <!-- Основной сайт (будет показан после входа) -->
     <div class="university-wrapper" id="mainSite">
-        <!-- Шапка -->
         <div class="header">
             <div class="logo-area">
                 <div class="university-emblem"></div>
                 <div class="university-title">
                     <h1>Финансовый университет</h1>
-                    <p>при Правительстве Российской Федерации</p>
+                    <p>при Правительстве РФ</p>
                 </div>
             </div>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <div class="date-badge">
-                    <i class="far fa-calendar-alt"></i>
-                    <span id="currentDate"></span>
-                </div>
-                <div class="user-info" id="userInfo">
-                    <i class="fas fa-user"></i>
-                    <span id="userName"></span>
-                </div>
+            <div style="display: flex; gap: 15px;">
+                <div class="date-badge" id="currentDate"></div>
+                <div class="user-info" id="userInfo"><i class="fas fa-user"></i> <span id="userName"></span></div>
                 <button class="logout-btn" id="logoutBtn">Выйти</button>
             </div>
         </div>
 
-        <!-- Навигация -->
-        <div class="nav-panel">
-            <div class="breadcrumbs" id="breadcrumbs">
-                <button id="homeBtn"><i class="fas fa-home"></i> Главная</button>
-            </div>
-            <button class="back-btn" id="backBtn" style="visibility: hidden;">← Назад</button>
-        </div>
-
-        <!-- Панель управления -->
-        <div class="control-panel" id="controlPanel">
-            <button class="control-btn" id="teacherWindowsBtn">
-                <i class="fas fa-clock"></i> Окна преподавателей
-            </button>
-            <button class="control-btn" id="addWindowBtn">
-                <i class="fas fa-plus"></i> Добавить окно
-            </button>
-            <button class="control-btn" id="streamsBtn">
-                <i class="fas fa-layer-group"></i> Потоки
-            </button>
-        </div>
-
-        <!-- Главное меню -->
         <div class="main-menu" id="mainMenu">
-            <div class="menu-card active" data-view="schedule">
-                <i class="fas fa-calendar-alt"></i> Расписание
-            </div>
-            <div class="menu-card" data-view="load">
-                <i class="fas fa-chart-pie"></i> Учебная нагрузка
-            </div>
-            <div class="menu-card" data-view="statistics">
-                <i class="fas fa-chart-line"></i> Аналитика
-            </div>
+            <div class="menu-card active" data-view="schedule"><i class="fas fa-calendar-alt"></i> Расписание</div>
+            <div class="menu-card" data-view="load"><i class="fas fa-chart-pie"></i> Нагрузка</div>
+            <div class="menu-card" data-view="statistics"><i class="fas fa-chart-line"></i> Аналитика</div>
         </div>
 
-        <!-- Ролевые кнопки -->
         <div class="role-tabs" id="roleTabs" style="display: none;">
-            <button class="role-btn active" data-role="student">
-                <i class="fas fa-user-graduate"></i> Студенты
-            </button>
-            <button class="role-btn" data-role="teacher">
-                <i class="fas fa-chalkboard-teacher"></i> Преподаватели
-            </button>
+            <button class="role-btn active" data-role="student"><i class="fas fa-user-graduate"></i> Студенты</button>
+            <button class="role-btn" data-role="teacher"><i class="fas fa-chalkboard-teacher"></i> Преподаватели</button>
         </div>
 
-        <!-- Кнопки курсов -->
-        <div class="course-buttons" id="courseButtonsContainer" style="display: none;">
+        <div class="course-buttons" id="courseButtons" style="display: none;">
             <button class="course-btn active" data-course="1">1 курс</button>
             <button class="course-btn" data-course="2">2 курс</button>
             <button class="course-btn" data-course="3">3 курс</button>
             <button class="course-btn" data-course="4">4 курс</button>
         </div>
 
-        <!-- Фильтры -->
         <div class="filters-bar" id="loadFilters" style="display: none;">
-            <select class="filter-select" id="departmentFilter">
-                <option value="">Все кафедры</option>
-            </select>
+            <select class="filter-select" id="departmentFilter"><option value="">Все кафедры</option></select>
         </div>
 
-        <!-- Контент -->
         <div class="content-area" id="content">
-            <div class="loader">
-                <div class="spinner"></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно для окон преподавателей -->
-    <div class="modal" id="teacherWindowsModal">
-        <div class="modal-content" style="max-width: 600px;">
-            <div class="modal-title">
-                <i class="fas fa-clock"></i> Окна преподавателей
-            </div>
-            
-            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                <select class="filter-select" id="windowTeacherFilter" style="flex: 2;">
-                    <option value="">Все преподаватели</option>
-                </select>
-                
-                <select class="filter-select" id="windowDayFilter" style="flex: 1;">
-                    <option value="">Все дни</option>
-                    <option value="Понедельник">Понедельник</option>
-                    <option value="Вторник">Вторник</option>
-                    <option value="Среда">Среда</option>
-                    <option value="Четверг">Четверг</option>
-                    <option value="Пятница">Пятница</option>
-                    <option value="Суббота">Суббота</option>
-                </select>
-            </div>
-            
-            <div id="windowsList" style="max-height: 400px; overflow-y: auto; margin-bottom: 20px;"></div>
-            
-            <button class="control-btn" id="addWindowFromListBtn" style="width: 100%; margin-bottom: 10px;">
-                <i class="fas fa-plus"></i> Добавить новое окно
-            </button>
-            
-            <div class="modal-actions">
-                <button class="modal-btn cancel" id="teacherWindowsCloseBtn">
-                    <i class="fas fa-times"></i> Закрыть
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно для добавления окна -->
-    <div class="modal" id="addWindowModal">
-        <div class="modal-content">
-            <div class="modal-title">
-                <i class="fas fa-plus-circle"></i> Добавить окно преподавателю
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Преподаватель</label>
-                <select class="form-select" id="newWindowTeacherSelect">
-                    <option value="">Выберите преподавателя</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">День недели</label>
-                <select class="form-select" id="newWindowDaySelect">
-                    <option value="Понедельник">Понедельник</option>
-                    <option value="Вторник">Вторник</option>
-                    <option value="Среда">Среда</option>
-                    <option value="Четверг">Четверг</option>
-                    <option value="Пятница">Пятница</option>
-                    <option value="Суббота">Суббота</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Номер пары</label>
-                <select class="form-select" id="newWindowPairSelect">
-                    <option value="1">1 пара (8:30-10:00)</option>
-                    <option value="2">2 пара (10:05-11:35)</option>
-                    <option value="3">3 пара (12:15-13:45)</option>
-                    <option value="4">4 пара (13:50-15:20)</option>
-                    <option value="5">5 пара (15:25-16:55)</option>
-                    <option value="6">6 пара (17:00-18:30)</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label">Причина (опционально)</label>
-                <input type="text" class="form-input" id="newWindowReasonInput" placeholder="Например: методическая работа">
-            </div>
-            
-            <div class="modal-actions">
-                <button class="modal-btn save" id="saveWindowBtn">Сохранить</button>
-                <button class="modal-btn cancel" id="cancelAddWindowBtn">Отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно для потоков -->
-    <div class="modal" id="streamsModal">
-        <div class="modal-content" style="max-width: 700px;">
-            <div class="modal-title">
-                <i class="fas fa-layer-group"></i> Управление потоками
-            </div>
-            
-            <!-- Форма создания потока -->
-            <div style="background: #f8faff; border-radius: 16px; padding: 20px; margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: #001a41;">Создать новый поток</h3>
-                
-                <div class="form-group">
-                    <label class="form-label">Название потока</label>
-                    <input type="text" class="form-input" id="streamNameInput" placeholder="Например: Поток 1 курса">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Дисциплина</label>
-                    <input type="text" class="form-input" id="streamSubjectInput" placeholder="Например: Математический анализ">
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Преподаватель</label>
-                    <select class="form-select" id="streamTeacherSelect">
-                        <option value="">Выберите преподавателя</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Группы в потоке</label>
-                    <div style="max-height: 150px; overflow-y: auto; border: 2px solid #e8edf5; border-radius: 14px; padding: 10px;">
-                        <div id="groupsList"></div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">День недели</label>
-                    <select class="form-select" id="streamDaySelect">
-                        <option value="Понедельник">Понедельник</option>
-                        <option value="Вторник">Вторник</option>
-                        <option value="Среда">Среда</option>
-                        <option value="Четверг">Четверг</option>
-                        <option value="Пятница">Пятница</option>
-                        <option value="Суббота">Суббота</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Номер пары</label>
-                    <select class="form-select" id="streamPairSelect">
-                        <option value="1">1 пара</option>
-                        <option value="2">2 пара</option>
-                        <option value="3">3 пара</option>
-                        <option value="4">4 пара</option>
-                        <option value="5">5 пара</option>
-                        <option value="6">6 пара</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label class="form-label">Аудитория</label>
-                    <input type="text" class="form-input" id="streamRoomInput" placeholder="Например: 301">
-                </div>
-                
-                <button class="control-btn" id="createStreamBtn" style="width: 100%;">
-                    <i class="fas fa-plus"></i> Создать поток
-                </button>
-            </div>
-            
-            <!-- Список существующих потоков -->
-            <h3 style="margin-bottom: 15px; color: #001a41;">Существующие потоки</h3>
-            <div id="streamsList" style="max-height: 300px; overflow-y: auto;"></div>
-            
-            <div class="modal-actions" style="margin-top: 15px;">
-                <button class="modal-btn cancel" id="streamsCloseBtn">Закрыть</button>
-            </div>
+            <div class="loader"><div class="spinner"></div></div>
         </div>
     </div>
 
     <script>
-        // Конфигурация Firebase
+        // Инициализация Firebase и EmailJS
         const firebaseConfig = {
             apiKey: "AIzaSyAnq7VrvegGghnHAxgm7-vOxgaRKMOZQ8w",
             authDomain: "aaaaa-bb226.firebaseapp.com",
@@ -1461,14 +749,11 @@
             appId: "1:636694456068:web:66eb251acda8f98c57d251"
         };
 
-        // Инициализация Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-
-        // Инициализация EmailJS
         emailjs.init("1nIeu26r-6K_gkTuw");
 
-        // ========== DOM ЭЛЕМЕНТЫ ==========
+        // ===== ЭЛЕМЕНТЫ =====
         const loginContainer = document.getElementById('loginContainer');
         const mainSite = document.getElementById('mainSite');
         const loginTab = document.getElementById('loginTab');
@@ -1484,33 +769,15 @@
         const verifyBtn = document.getElementById('verifyBtn');
         const resetBtn = document.getElementById('resetBtn');
         const logoutBtn = document.getElementById('logoutBtn');
-        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-        const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
-        const backToLoginFromVerify = document.getElementById('backToLoginFromVerify');
-        const backToLoginFromReset = document.getElementById('backToLoginFromReset');
+        const forgotLink = document.getElementById('forgotPasswordLink');
+        const backFromForgot = document.getElementById('backToLoginFromForgot');
+        const backFromVerify = document.getElementById('backToLoginFromVerify');
+        const backFromReset = document.getElementById('backToLoginFromReset');
         const resendCode = document.getElementById('resendCode');
         const userNameSpan = document.getElementById('userName');
         const currentDateSpan = document.getElementById('currentDate');
 
-        const contentEl = document.getElementById('content');
-        const breadcrumbsEl = document.getElementById('breadcrumbs');
-        const backBtn = document.getElementById('backBtn');
-        const homeBtn = document.getElementById('homeBtn');
-        const menuCards = document.querySelectorAll('.menu-card');
-        const roleTabs = document.getElementById('roleTabs');
-        const courseButtonsContainer = document.getElementById('courseButtonsContainer');
-        const courseBtns = document.querySelectorAll('.course-btn');
-        const loadFilters = document.getElementById('loadFilters');
-        const departmentFilter = document.getElementById('departmentFilter');
-
-        // Текущая дата
-        if (currentDateSpan) {
-            currentDateSpan.textContent = new Date().toLocaleDateString('ru-RU', {
-                day: 'numeric', month: 'long', year: 'numeric'
-            });
-        }
-
-        // Состояние авторизации
+        // ===== ПЕРЕМЕННЫЕ =====
         let currentUser = null;
         let verificationCode = '';
         let pendingEmail = '';
@@ -1521,1513 +788,421 @@
         let timerInterval = null;
         let timeLeft = 300;
 
-        // Состояние приложения
-        let state = {
-            currentView: 'schedule',
-            currentRole: 'student',
-            scheduleView: 'list',
-            loadView: 'teachers',
-            selectedTeacherId: null,
-            selectedTeacherName: null,
-            selectedGroupId: null,
-            selectedGroupName: '',
-            selectedCourse: '1',
-            schedule: [],
-            groups: [],
-            teachers: [],
-            load: [],
-            windows: [],
-            streams: [],
-            teacherStats: {},
-            teacherMonthlyStats: {},
-            departmentFilter: '',
-            filteredGroups: []
-        };
-
-        // ========== ПРОВЕРКА СЕССИИ ==========
-        function checkSavedSession() {
-            const savedUser = localStorage.getItem('finuniversity_user');
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    loginContainer.style.display = 'none';
-                    mainSite.classList.add('visible');
-                    if (userNameSpan) {
-                        userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
-                    }
-                    setTimeout(() => loadMainSite(), 100);
-                    return true;
-                } catch (e) {
-                    localStorage.removeItem('finuniversity_user');
-                }
-            }
-            return false;
+        // Текущая дата
+        if (currentDateSpan) {
+            currentDateSpan.textContent = new Date().toLocaleDateString('ru-RU', {
+                day: 'numeric', month: 'long', year: 'numeric'
+            });
         }
 
-        // ========== ФУНКЦИИ АВТОРИЗАЦИИ ==========
+        // ===== ПЕРЕКЛЮЧЕНИЕ ФОРМ =====
+        if (loginTab) {
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+            });
+        }
+
+        if (registerTab) {
+            registerTab.addEventListener('click', () => {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+            });
+        }
+
+        if (forgotLink) {
+            forgotLink.addEventListener('click', () => {
+                loginForm.classList.remove('active');
+                forgotForm.classList.add('active');
+            });
+        }
+
+        if (backFromForgot) {
+            backFromForgot.addEventListener('click', () => {
+                forgotForm.classList.remove('active');
+                loginForm.classList.add('active');
+            });
+        }
+
+        if (backFromVerify) {
+            backFromVerify.addEventListener('click', () => {
+                verifyForm.classList.remove('active');
+                loginForm.classList.add('active');
+                if (timerInterval) clearInterval(timerInterval);
+            });
+        }
+
+        if (backFromReset) {
+            backFromReset.addEventListener('click', () => {
+                resetForm.classList.remove('active');
+                loginForm.classList.add('active');
+            });
+        }
+
+        // ===== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =====
         function generateCode() {
             return Math.floor(100000 + Math.random() * 900000).toString();
         }
 
-        async function sendCode(email, code, purpose = 'login') {
+        async function sendCode(email, code, purpose) {
             try {
                 await emailjs.send('service_dh633ft', 'template_9skd6nj', {
                     to_email: email,
                     code: code,
                     from_name: 'Финансовый университет',
                     to_name: email.split('@')[0],
-                    message: purpose === 'reset' ? `Код восстановления: ${code}` : 
-                             purpose === 'register' ? `Код регистрации: ${code}` : `Код входа: ${code}`
+                    message: purpose === 'reset' ? 'Код восстановления' : 
+                             purpose === 'register' ? 'Код регистрации' : 'Код входа'
                 });
                 return true;
-            } catch (error) {
-                console.error('Ошибка отправки:', error);
-                return false;
-            }
-        }
-
-        async function sendWelcomeEmail(email, name) {
-            try {
-                await emailjs.send('service_dh633ft', 'template_w2fxqw8', {
-                    to_email: email, to_name: name, from_name: 'Финансовый университет'
-                });
-                return true;
-            } catch (error) {
-                console.error('Ошибка отправки приветствия:', error);
+            } catch (e) {
+                console.error(e);
                 return false;
             }
         }
 
         function startTimer() {
             timeLeft = 300;
-            const timerElement = document.getElementById('timer');
-            
+            const timerEl = document.getElementById('timer');
             if (timerInterval) clearInterval(timerInterval);
-            
             timerInterval = setInterval(() => {
                 timeLeft--;
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
-                    timerElement.textContent = '00:00';
+                    timerEl.textContent = '00:00';
                     if (verifyBtn) verifyBtn.disabled = true;
-                    document.querySelectorAll('.code-input').forEach(input => input.disabled = true);
                 } else {
-                    const minutes = Math.floor(timeLeft / 60);
-                    const seconds = timeLeft % 60;
-                    timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                    const m = Math.floor(timeLeft / 60);
+                    const s = timeLeft % 60;
+                    timerEl.textContent = `${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
                 }
             }, 1000);
         }
 
-        function setupCodeInputs() {
-            const inputs = document.querySelectorAll('.code-input');
-            inputs.forEach((input, index) => {
-                input.addEventListener('input', (e) => {
-                    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-                    if (e.target.value && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
-                });
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                        inputs[index - 1].focus();
-                    }
-                });
-            });
-        }
-
-        // Обработчики переключения форм
-        loginTab?.addEventListener('click', () => {
-            loginTab.classList.add('active');
-            registerTab.classList.remove('active');
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-        });
-
-        registerTab?.addEventListener('click', () => {
-            registerTab.classList.add('active');
-            loginTab.classList.remove('active');
-            registerForm.classList.add('active');
-            loginForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-        });
-
-        forgotPasswordLink?.addEventListener('click', () => {
-            loginForm.classList.remove('active');
-            forgotForm.classList.add('active');
-        });
-
-        backToLoginFromForgot?.addEventListener('click', () => {
-            forgotForm.classList.remove('active');
-            loginForm.classList.add('active');
-        });
-
-        backToLoginFromVerify?.addEventListener('click', () => {
-            verifyForm.classList.remove('active');
-            loginForm.classList.add('active');
-            clearInterval(timerInterval);
-        });
-
-        backToLoginFromReset?.addEventListener('click', () => {
-            resetForm.classList.remove('active');
-            loginForm.classList.add('active');
-        });
-
-        // Регистрация
-        registerBtn?.addEventListener('click', async () => {
-            const fullName = document.getElementById('regFullName')?.value.trim();
-            const email = document.getElementById('regEmail')?.value.trim();
-            const password = document.getElementById('regPassword')?.value;
-            const confirmPassword = document.getElementById('regConfirmPassword')?.value;
-            const errorEl = document.getElementById('registerError');
-            const successEl = document.getElementById('registerSuccess');
-
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
-
-            if (!fullName || !email || !password || !confirmPassword) {
-                errorEl.textContent = 'Заполните все поля';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (password.length < 6) {
-                errorEl.textContent = 'Пароль должен быть не менее 6 символов';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                errorEl.textContent = 'Пароли не совпадают';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            if (Object.values(users).some(u => u.email === email)) {
-                errorEl.textContent = 'Email уже зарегистрирован';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            verificationCode = generateCode();
-            pendingEmail = email;
-            pendingUserData = { fullName, email, password };
-            isVerifyingForRegistration = true;
-
-            const sent = await sendCode(email, verificationCode, 'register');
-
-            if (sent) {
-                registerForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
-                
-                document.querySelectorAll('.code-input').forEach(input => {
-                    input.value = '';
-                    input.disabled = false;
-                });
-                
-                verifyBtn.disabled = false;
-                startTimer();
-                
-                successEl.textContent = 'Код подтверждения отправлен';
-                successEl.style.display = 'block';
-                setTimeout(() => successEl.style.display = 'none', 3000);
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Вход
-        loginBtn?.addEventListener('click', async () => {
-            const email = document.getElementById('loginEmail')?.value.trim();
-            const password = document.getElementById('loginPassword')?.value;
-            const errorEl = document.getElementById('loginError');
-
-            errorEl.style.display = 'none';
-
-            if (!email || !password) {
-                errorEl.textContent = 'Введите email и пароль';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            
-            const userEntry = Object.entries(users).find(([id, u]) => u.email === email && u.password === password);
-            
-            if (!userEntry) {
-                errorEl.textContent = 'Неверный email или пароль';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const [userId, userData] = userEntry;
-
-            verificationCode = generateCode();
-            pendingEmail = email;
-            pendingUserData = { id: userId, ...userData };
-            isVerifyingForRegistration = false;
-            isVerifyingForPasswordReset = false;
-
-            const sent = await sendCode(email, verificationCode, 'login');
-
-            if (sent) {
-                loginForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
-                
-                document.querySelectorAll('.code-input').forEach(input => {
-                    input.value = '';
-                    input.disabled = false;
-                });
-                
-                verifyBtn.disabled = false;
-                startTimer();
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Восстановление пароля
-        forgotBtn?.addEventListener('click', async () => {
-            const email = document.getElementById('forgotEmail')?.value.trim();
-            const errorEl = document.getElementById('forgotError');
-            const successEl = document.getElementById('forgotSuccess');
-
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
-
-            if (!email || !email.includes('@')) {
-                errorEl.textContent = 'Введите корректный email';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const usersSnapshot = await db.ref('users').once('value');
-            const users = usersSnapshot.val() || {};
-            
-            const userEntry = Object.entries(users).find(([id, u]) => u.email === email);
-            
-            if (!userEntry) {
-                errorEl.textContent = 'Пользователь не найден';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            const [userId, userData] = userEntry;
-
-            verificationCode = generateCode();
-            pendingEmail = email;
-            resetUserId = userId;
-            isVerifyingForPasswordReset = true;
-
-            const sent = await sendCode(email, verificationCode, 'reset');
-
-            if (sent) {
-                forgotForm.classList.remove('active');
-                verifyForm.classList.add('active');
-                document.getElementById('verifyEmailDisplay').innerHTML = 
-                    `<i class="fas fa-envelope"></i> Код восстановления отправлен на ${email}`;
-                
-                document.querySelectorAll('.code-input').forEach(input => {
-                    input.value = '';
-                    input.disabled = false;
-                });
-                
-                verifyBtn.disabled = false;
-                startTimer();
-                
-                successEl.textContent = 'Код восстановления отправлен';
-                successEl.style.display = 'block';
-                setTimeout(() => successEl.style.display = 'none', 3000);
-            } else {
-                errorEl.textContent = 'Ошибка отправки кода';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Подтверждение кода
-        verifyBtn?.addEventListener('click', async () => {
-            const inputs = document.querySelectorAll('.code-input');
-            const enteredCode = Array.from(inputs).map(i => i.value).join('');
-            const errorEl = document.getElementById('verifyError');
-
-            if (enteredCode.length !== 6) {
-                errorEl.textContent = 'Введите 6-значный код';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (timeLeft <= 0) {
-                errorEl.textContent = 'Время действия кода истекло';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (enteredCode !== verificationCode) {
-                errorEl.textContent = 'Неверный код';
-                errorEl.style.display = 'block';
-                inputs.forEach(input => input.value = '');
-                inputs[0]?.focus();
-                return;
-            }
-
-            if (isVerifyingForRegistration) {
-                const newUser = {
-                    fullName: pendingUserData.fullName,
-                    email: pendingUserData.email,
-                    password: pendingUserData.password,
-                    registeredAt: Date.now()
-                };
-
-                const userRef = await db.ref('users').push(newUser);
-                await sendWelcomeEmail(pendingUserData.email, pendingUserData.fullName);
-                currentUser = { id: userRef.key, ...newUser };
-            } else if (isVerifyingForPasswordReset) {
-                verifyForm.classList.remove('active');
-                resetForm.classList.add('active');
-                clearInterval(timerInterval);
-                return;
-            } else {
-                currentUser = pendingUserData;
-            }
-
-            localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
-
-            clearInterval(timerInterval);
-            loginContainer.style.display = 'none';
-            mainSite.classList.add('visible');
-            if (userNameSpan) {
-                userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
-            }
-
-            verifyForm.classList.remove('active');
-            loginForm.classList.add('active');
-            
-            document.getElementById('loginEmail').value = '';
-            document.getElementById('loginPassword').value = '';
-
-            loadMainSite();
-        });
-
-        // Сброс пароля
-        resetBtn?.addEventListener('click', async () => {
-            const newPassword = document.getElementById('newPassword')?.value;
-            const confirmPassword = document.getElementById('confirmNewPassword')?.value;
-            const errorEl = document.getElementById('resetError');
-            const successEl = document.getElementById('resetSuccess');
-
-            errorEl.style.display = 'none';
-            successEl.style.display = 'none';
-
-            if (!newPassword || !confirmPassword) {
-                errorEl.textContent = 'Заполните все поля';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (newPassword.length < 6) {
-                errorEl.textContent = 'Пароль должен быть не менее 6 символов';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                errorEl.textContent = 'Пароли не совпадают';
-                errorEl.style.display = 'block';
-                return;
-            }
-
-            try {
-                await db.ref(`users/${resetUserId}/password`).set(newPassword);
-                
-                successEl.textContent = 'Пароль успешно изменен';
-                successEl.style.display = 'block';
-                
-                setTimeout(() => {
-                    resetForm.classList.remove('active');
-                    loginForm.classList.add('active');
-                }, 2000);
-            } catch (error) {
-                errorEl.textContent = 'Ошибка при смене пароля';
-                errorEl.style.display = 'block';
-            }
-        });
-
-        // Повторная отправка кода
-        resendCode?.addEventListener('click', async () => {
-            verificationCode = generateCode();
-            const purpose = isVerifyingForRegistration ? 'register' : (isVerifyingForPasswordReset ? 'reset' : 'login');
-            await sendCode(pendingEmail, verificationCode, purpose);
-            
-            clearInterval(timerInterval);
-            startTimer();
-            
-            document.querySelectorAll('.code-input').forEach(input => {
-                input.value = '';
-                input.disabled = false;
-            });
-            
-            verifyBtn.disabled = false;
-        });
-
-        // Выход
-        logoutBtn?.addEventListener('click', () => {
-            localStorage.removeItem('finuniversity_user');
-            
-            currentUser = null;
-            loginContainer.style.display = 'block';
-            mainSite.classList.remove('visible');
-            
-            loginForm.classList.add('active');
-            registerForm.classList.remove('active');
-            forgotForm.classList.remove('active');
-            verifyForm.classList.remove('active');
-            resetForm.classList.remove('active');
-            
-            ['loginEmail','loginPassword','regFullName','regEmail','regPassword','regConfirmPassword','forgotEmail']
-                .forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.value = '';
-                });
-            
-            clearInterval(timerInterval);
-        });
-
-        setupCodeInputs();
-
-        // ========== ОСНОВНЫЕ ФУНКЦИИ ==========
-
-        function getFormClass(form) {
-            if (!form) return 'ofo';
-            const f = form.toLowerCase();
-            if (f.includes('офо')) return 'ofo';
-            if (f.includes('зфо')) return 'zfo';
-            if (f.includes('озфо')) return 'ozfo';
-            if (f.includes('озо')) return 'ozo';
-            if (f.includes('ускорен')) return 'zfous';
-            return 'ofo';
-        }
-
-        function showLoader() {
-            if (contentEl) contentEl.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
-        }
-
-        function showError(message) {
-            if (contentEl) contentEl.innerHTML = `<div class="error-message">${message}</div>`;
-        }
-
-        function showEmpty(message) {
-            if (contentEl) contentEl.innerHTML = `<div class="empty-message">${message}</div>`;
-        }
-
-        function getCurrentMonthYear() {
-            const now = new Date();
-            return {
-                month: now.getMonth() + 1,
-                year: now.getFullYear(),
-                monthName: now.toLocaleString('ru-RU', { month: 'long' })
-            };
-        }
-
-        function calculateTeacherStats() {
-            state.teacherStats = {};
-            state.teacherMonthlyStats = {};
-            
-            if (!state.load?.length) return;
-            
-            const current = getCurrentMonthYear();
-            
-            state.load.forEach(item => {
-                const name = item.teacherName || item.teacher;
-                if (!name || name === 'Неизвестный преподаватель') return;
-                
-                // Общая статистика
-                if (!state.teacherStats[name]) {
-                    state.teacherStats[name] = {
-                        teacherName: name,
-                        department: item.department || 'Кафедра',
-                        totalHours: 0,
-                        lectures: 0,
-                        seminars: 0,
-                        records: []
-                    };
-                }
-                
-                state.teacherStats[name].totalHours += item.hours || 0;
-                state.teacherStats[name].lectures += item.lectures || 0;
-                state.teacherStats[name].seminars += item.seminars || 0;
-                state.teacherStats[name].records.push(item);
-                
-                // Месячная статистика
-                if (!state.teacherMonthlyStats[name]) {
-                    state.teacherMonthlyStats[name] = {
-                        teacherName: name,
-                        department: item.department || 'Кафедра',
-                        monthlyHours: 0,
-                        monthlyLectures: 0,
-                        monthlySeminars: 0,
-                        monthlyRecords: []
-                    };
-                }
-                
-                if (item.date) {
-                    const d = new Date(item.date);
-                    if (d.getMonth() + 1 === current.month && d.getFullYear() === current.year) {
-                        state.teacherMonthlyStats[name].monthlyHours += item.hours || 0;
-                        state.teacherMonthlyStats[name].monthlyLectures += item.lectures || 0;
-                        state.teacherMonthlyStats[name].monthlySeminars += item.seminars || 0;
-                        state.teacherMonthlyStats[name].monthlyRecords.push(item);
-                    }
-                }
-            });
-        }
-
-        function populateLoadFilters() {
-            const depts = new Set();
-            Object.values(state.teacherStats).forEach(s => s.department && depts.add(s.department));
-            if (departmentFilter) {
-                departmentFilter.innerHTML = '<option value="">Все кафедры</option>';
-                [...depts].sort().forEach(d => departmentFilter.innerHTML += `<option value="${d}">${d}</option>`);
-            }
-        }
-
-        function filterGroups() {
-            if (state.groups) {
-                state.filteredGroups = state.groups.filter(g => g.course == state.selectedCourse);
-            }
-        }
-
-        async function loadMainSite() {
-            try {
-                showLoader();
-                
-                const [groupsSnap, teachersSnap, scheduleSnap, loadSnap, windowsSnap, streamsSnap] = await Promise.all([
-                    db.ref('groups').once('value'),
-                    db.ref('teachers').once('value'),
-                    db.ref('schedule').once('value'),
-                    db.ref('load').once('value'),
-                    db.ref('windows').once('value'),
-                    db.ref('streams').once('value')
-                ]);
-
-                if (groupsSnap.exists()) {
-                    state.groups = Object.entries(groupsSnap.val()).map(([id, data]) => ({ id, ...data }));
-                }
-                if (teachersSnap.exists()) {
-                    state.teachers = Object.entries(teachersSnap.val()).map(([id, data]) => ({ id, ...data }));
-                }
-                if (scheduleSnap.exists()) {
-                    state.schedule = Object.entries(scheduleSnap.val()).map(([id, data]) => ({ id, ...data }));
-                }
-                if (loadSnap.exists()) {
-                    state.load = Object.entries(loadSnap.val()).map(([id, data]) => ({ id, ...data }));
-                    calculateTeacherStats();
-                    populateLoadFilters();
-                }
-                if (windowsSnap.exists()) {
-                    state.windows = Object.entries(windowsSnap.val()).map(([id, data]) => ({ id, ...data }));
-                }
-                if (streamsSnap.exists()) {
-                    state.streams = Object.entries(streamsSnap.val()).map(([id, data]) => ({ id, ...data }));
-                }
-
-                filterGroups();
-                renderView();
-            } catch (error) {
-                showError('Ошибка загрузки данных: ' + error.message);
-            }
-        }
-
-        async function renderView() {
-            if (state.currentView === 'schedule') await renderSchedule();
-            else if (state.currentView === 'load') {
-                if (state.loadView === 'teachers') renderTeacherList();
-                else if (state.loadView === 'teacherDetail') renderTeacherDetail();
-            } else if (state.currentView === 'statistics') renderStatistics();
-        }
-
-        async function renderSchedule() {
-            if (state.scheduleView === 'list') {
-                if (state.currentRole === 'student') renderGroupsList();
-                else renderTeachersList();
-            } else if (state.scheduleView === 'groupSchedule') await renderGroupSchedule();
-            else if (state.scheduleView === 'teacherSchedule') await renderTeacherSchedule();
-        }
-
-        function renderGroupsList() {
-            if (!state.filteredGroups?.length) {
-                showEmpty(`Нет групп на ${state.selectedCourse} курсе`);
-                return;
-            }
-
-            let html = '<div class="cards-grid">';
-            state.filteredGroups.forEach(g => {
-                html += `
-                    <div class="group-card" data-id="${g.id}" data-name="${g.name}">
-                        <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-users"></i></div>
-                            <div>
-                                <div class="card-title">${g.name}</div>
-                                <div class="card-subtitle">${g.fullName || ''}</div>
-                            </div>
-                        </div>
-                        <div class="card-badges">
-                            <span class="form-badge ${getFormClass(g.form)}">${g.form || 'ОФО'}</span>
-                        </div>
-                        <div class="card-footer"><i class="fas fa-arrow-right"></i> Просмотреть расписание</div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            contentEl.innerHTML = html;
-
-            document.querySelectorAll('.group-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    state.selectedGroupId = card.dataset.id;
-                    state.selectedGroupName = card.dataset.name;
-                    state.scheduleView = 'groupSchedule';
-                    setBackVisibility(true);
-                    updateBreadcrumbs();
-                    renderView();
-                });
-            });
-        }
-
-        function renderTeachersList() {
-            if (!state.teachers?.length) {
-                showEmpty('Нет преподавателей');
-                return;
-            }
-
-            const sorted = [...state.teachers].sort((a,b) => (a.fullName||'').localeCompare(b.fullName||''));
-            let html = '<div class="cards-grid">';
-            sorted.forEach(t => {
-                html += `
-                    <div class="teacher-card" data-id="${t.id}" data-name="${t.fullName}">
-                        <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
-                            <div>
-                                <div class="card-title">${t.fullName}</div>
-                                <div class="card-subtitle">${t.shortName||''} | ${t.department||''}</div>
-                            </div>
-                        </div>
-                        <div class="card-footer"><i class="fas fa-arrow-right"></i> Просмотреть расписание</div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            contentEl.innerHTML = html;
-
-            document.querySelectorAll('.teacher-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    state.selectedTeacherId = card.dataset.id;
-                    state.selectedTeacherName = card.dataset.name;
-                    state.scheduleView = 'teacherSchedule';
-                    setBackVisibility(true);
-                    updateBreadcrumbs();
-                    renderView();
-                });
-            });
-        }
-
-        async function renderGroupSchedule() {
-            if (!contentEl) return;
-            showLoader();
-
-            try {
-                const lessons = state.schedule.filter(l => l.groupId === state.selectedGroupId);
-                if (!lessons.length) {
-                    showEmpty('У группы нет занятий');
+        // ===== РЕГИСТРАЦИЯ =====
+        if (registerBtn) {
+            registerBtn.addEventListener('click', async () => {
+                const name = document.getElementById('regFullName')?.value.trim();
+                const email = document.getElementById('regEmail')?.value.trim();
+                const pass = document.getElementById('regPassword')?.value;
+                const pass2 = document.getElementById('regConfirmPassword')?.value;
+                const errorEl = document.getElementById('registerError');
+                const successEl = document.getElementById('registerSuccess');
+
+                errorEl.style.display = 'none';
+                successEl.style.display = 'none';
+
+                if (!name || !email || !pass || !pass2) {
+                    errorEl.textContent = 'Заполните все поля';
+                    errorEl.style.display = 'block';
                     return;
                 }
 
-                const days = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-                const grouped = {};
-                lessons.forEach(l => {
-                    const d = l.dayOfWeek || 'Другой';
-                    if (!grouped[d]) grouped[d] = [];
-                    grouped[d].push(l);
-                });
-
-                let html = `<h2 style="margin-bottom:20px;color:#001a41"><i class="fas fa-users" style="color:#0038a8"></i> Расписание группы: <strong>${state.selectedGroupName}</strong></h2>`;
-
-                for (const day of days) {
-                    if (grouped[day]) {
-                        grouped[day].sort((a,b) => (a.pairNumber||0) - (b.pairNumber||0));
-                        html += `<div class="day-badge"><i class="far fa-calendar-alt"></i> ${day}</div>`;
-                        html += `<table class="data-table"><thead><tr><th>Пара</th><th>Время</th><th>Дисциплина</th><th>Преподаватель</th><th>Ауд.</th></tr></thead><tbody>`;
-                        for (const l of grouped[day]) {
-                            const t = state.teachers.find(x => x.id === l.teacherId);
-                            const tn = t ? (t.shortName || t.fullName) : l.teacherId;
-                            html += `<tr><td>${l.pairNumber||''}</td><td>${l.time||'—'}</td><td>${l.subject||'—'}</td><td>${tn}</td><td><span class="badge">${l.room||'—'}</span></td></tr>`;
-                        }
-                        html += '</tbody></table>';
-                    }
-                }
-                contentEl.innerHTML = html;
-            } catch (error) {
-                showError('Ошибка: ' + error.message);
-            }
-        }
-
-        async function renderTeacherSchedule() {
-            if (!contentEl) return;
-            showLoader();
-
-            try {
-                const lessons = state.schedule.filter(l => l.teacherId === state.selectedTeacherId);
-                if (!lessons.length) {
-                    showEmpty('У преподавателя нет занятий');
+                if (pass.length < 6) {
+                    errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                    errorEl.style.display = 'block';
                     return;
                 }
 
-                const days = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
-                const grouped = {};
-                lessons.forEach(l => {
-                    const d = l.dayOfWeek || 'Другой';
-                    if (!grouped[d]) grouped[d] = [];
-                    grouped[d].push(l);
-                });
-
-                let html = `<h2 style="margin-bottom:20px;color:#001a41"><i class="fas fa-chalkboard-teacher" style="color:#0038a8"></i> Расписание преподавателя: <strong>${state.selectedTeacherName}</strong></h2>`;
-
-                for (const day of days) {
-                    if (grouped[day]) {
-                        grouped[day].sort((a,b) => (a.pairNumber||0) - (b.pairNumber||0));
-                        html += `<div class="day-badge"><i class="far fa-calendar-alt"></i> ${day}</div>`;
-                        html += `<table class="data-table"><thead><tr><th>Пара</th><th>Время</th><th>Дисциплина</th><th>Группа</th><th>Ауд.</th></tr></thead><tbody>`;
-                        for (const l of grouped[day]) {
-                            const g = state.groups.find(x => x.id === l.groupId);
-                            const gn = g ? g.name : l.groupId;
-                            const f = g ? g.form : '';
-                            const fc = getFormClass(f);
-                            html += `<tr><td>${l.pairNumber||''}</td><td>${l.time||'—'}</td><td>${l.subject||'—'}</td><td>${gn} <span class="form-badge ${fc}">${f||'ОФО'}</span></td><td><span class="badge">${l.room||'—'}</span></td></tr>`;
-                        }
-                        html += '</tbody></table>';
-                    }
+                if (pass !== pass2) {
+                    errorEl.textContent = 'Пароли не совпадают';
+                    errorEl.style.display = 'block';
+                    return;
                 }
-                contentEl.innerHTML = html;
-            } catch (error) {
-                showError('Ошибка: ' + error.message);
-            }
-        }
 
-        function renderTeacherList() {
-            if (!contentEl) return;
-            
-            const stats = Object.values(state.teacherStats);
-            if (!stats.length) {
-                showEmpty('Нет данных о нагрузке');
-                return;
-            }
-
-            let filtered = stats;
-            if (state.departmentFilter) {
-                filtered = filtered.filter(t => t.department === state.departmentFilter);
-            }
-
-            filtered.sort((a,b) => (a.teacherName||'').localeCompare(b.teacherName||''));
-
-            const monthInfo = getCurrentMonthYear();
-            let html = `<div style="margin-bottom:20px;color:#001a41;text-align:center"><h3>Текущий месяц: ${monthInfo.monthName} ${monthInfo.year}</h3></div>`;
-            html += '<div class="teacher-cards">';
-
-            filtered.forEach(t => {
-                const short = t.teacherName.includes(' ') ? t.teacherName.split(' ').slice(0,2).join(' ') : t.teacherName;
-                const m = state.teacherMonthlyStats[t.teacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0 };
-                html += `
-                    <div class="teacher-load-card" data-teacher="${t.teacherName}">
-                        <div class="card-header">
-                            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
-                            <div>
-                                <div class="card-title">${short}</div>
-                                <div class="card-subtitle">${t.department}</div>
-                            </div>
-                        </div>
-                        <div class="teacher-load-stats">
-                            <div class="stat-item"><div class="stat-label">За месяц</div><div class="stat-value">${m.monthlyHours} ч</div></div>
-                            <div class="stat-item"><div class="stat-label">Лекции</div><div class="stat-value">${m.monthlyLectures}</div></div>
-                            <div class="stat-item"><div class="stat-label">Семинары</div><div class="stat-value">${m.monthlySeminars}</div></div>
-                        </div>
-                        <div class="teacher-load-hours">
-                            <span>Всего часов:</span>
-                            <span>${t.totalHours} ч</span>
-                        </div>
-                    </div>
-                `;
-            });
-            html += '</div>';
-            contentEl.innerHTML = html;
-
-            document.querySelectorAll('.teacher-load-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    showTeacherDetail(card.dataset.teacher);
-                });
-            });
-        }
-
-        function renderTeacherDetail() {
-            if (!contentEl) return;
-            
-            const t = state.teacherStats[state.selectedTeacherName];
-            const m = state.teacherMonthlyStats[state.selectedTeacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0, monthlyRecords:[] };
-            
-            if (!t) {
-                showEmpty('Информация не найдена');
-                return;
-            }
-
-            const monthInfo = getCurrentMonthYear();
-            const discMap = {};
-            t.records.forEach(r => {
-                const d = r.discipline || 'Без названия';
-                if (!discMap[d]) {
-                    discMap[d] = { name:d, totalHours:0, monthlyHours:0, groups:new Set() };
+                const users = await db.ref('users').once('value');
+                if (Object.values(users.val() || {}).some(u => u.email === email)) {
+                    errorEl.textContent = 'Email уже зарегистрирован';
+                    errorEl.style.display = 'block';
+                    return;
                 }
-                discMap[d].totalHours += r.hours || 0;
-                if (r.date) {
-                    const rd = new Date(r.date);
-                    if (rd.getMonth()+1 === monthInfo.month && rd.getFullYear() === monthInfo.year) {
-                        discMap[d].monthlyHours += r.hours || 0;
-                    }
-                }
-                if (r.course) discMap[d].groups.add(r.course);
-            });
-            const disciplines = Object.values(discMap).sort((a,b) => b.totalHours - a.totalHours);
 
-            let html = `
-                <div class="teacher-detail-card">
-                    <div class="teacher-detail-header">
-                        <div class="teacher-detail-avatar"><i class="fas fa-user-tie"></i></div>
-                        <div class="teacher-detail-info">
-                            <h2>${t.teacherName}</h2>
-                            <p>${t.department}</p>
-                        </div>
-                    </div>
-                    <div class="monthly-summary">
-                        <div class="monthly-item"><div class="monthly-label">За ${monthInfo.monthName}</div><div class="monthly-value">${m.monthlyHours} ч</div></div>
-                        <div class="monthly-item"><div class="monthly-label">Лекции</div><div class="monthly-value">${m.monthlyLectures}</div></div>
-                        <div class="monthly-item"><div class="monthly-label">Семинары</div><div class="monthly-value">${m.monthlySeminars}</div></div>
-                        <div class="monthly-item"><div class="monthly-label">Всего</div><div class="monthly-value">${t.totalHours} ч</div></div>
-                    </div>
-                    <h3 style="margin:20px 0 12px; color:#001a41;">Дисциплины</h3>
-                    <div class="discipline-list">
-            `;
-            disciplines.forEach(d => {
-                html += `
-                    <div class="discipline-item">
-                        <div class="discipline-info">
-                            <h4>${d.name}</h4>
-                            <p>Группы: ${[...d.groups].join(', ') || '—'}</p>
-                            <p style="font-size:0.8rem; color:#0038a8;">За месяц: ${d.monthlyHours} ч</p>
-                        </div>
-                        <div class="discipline-hours">${d.totalHours} ч</div>
-                    </div>
-                `;
-            });
-            html += '</div></div>';
-            contentEl.innerHTML = html;
-        }
+                verificationCode = generateCode();
+                pendingEmail = email;
+                pendingUserData = { fullName: name, email, password: pass };
+                isVerifyingForRegistration = true;
 
-        function renderStatistics() {
-            if (!contentEl) return;
-            showLoader();
-
-            setTimeout(() => {
-                const totalHours = state.load.reduce((s,i) => s + (i.hours||0), 0);
-                const totalLectures = state.load.reduce((s,i) => s + (i.lectures||0), 0);
-                const totalSeminars = state.load.reduce((s,i) => s + (i.seminars||0), 0);
-                
-                const monthInfo = getCurrentMonthYear();
-                let monthlyHours = 0, monthlyLectures = 0, monthlySeminars = 0;
-                state.load.forEach(i => {
-                    if (i.date) {
-                        const d = new Date(i.date);
-                        if (d.getMonth()+1 === monthInfo.month && d.getFullYear() === monthInfo.year) {
-                            monthlyHours += i.hours||0;
-                            monthlyLectures += i.lectures||0;
-                            monthlySeminars += i.seminars||0;
-                        }
-                    }
-                });
-                
-                const topTeachers = Object.values(state.teacherStats)
-                    .sort((a,b) => b.totalHours - a.totalHours).slice(0,10);
-
-                const deptStats = {};
-                Object.values(state.teacherStats).forEach(t => {
-                    if (t.department) deptStats[t.department] = (deptStats[t.department]||0) + t.totalHours;
-                });
-
-                let html = `
-                    <div class="table-container">
-                        <h2 style="margin-bottom:15px;color:#001a41;"><i class="fas fa-chart-line" style="color:#0038a8;"></i> Аналитика учебной нагрузки</h2>
-                        <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Группы</h4><span class="stat-value">${state.groups.length}</span></div></div>
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="stat-info"><h4>Преподаватели</h4><span class="stat-value">${Object.keys(state.teacherStats).length}</span></div></div>
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-info"><h4>Записей</h4><span class="stat-value">${state.load.length}</span></div></div>
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-info"><h4>Всего часов</h4><span class="stat-value">${totalHours}</span></div></div>
-                        </div>
-
-                        <div style="margin:20px 0; padding:20px; background:#f8faff; border-radius:16px;">
-                            <h3 style="margin-bottom:15px;color:#001a41;">Статистика за ${monthInfo.monthName} ${monthInfo.year}</h3>
-                            <div class="stats-grid">
-                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-info"><h4>Часов за месяц</h4><span class="stat-value">${monthlyHours}</span></div></div>
-                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard"></i></div><div class="stat-info"><h4>Лекции</h4><span class="stat-value">${monthlyLectures}</span></div></div>
-                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Семинары</h4><span class="stat-value">${monthlySeminars}</span></div></div>
-                            </div>
-                        </div>
-
-                        <div class="stats-grid">
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard"></i></div><div class="stat-info"><h4>Лекции (всего)</h4><span class="stat-value">${totalLectures}</span></div></div>
-                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Семинары (всего)</h4><span class="stat-value">${totalSeminars}</span></div></div>
-                        </div>
-
-                        <div class="charts-grid">
-                            <div class="chart-container"><h3>Топ-10 преподавателей</h3><div class="chart-wrapper"><canvas id="teacherChart"></canvas></div></div>
-                            <div class="chart-container"><h3>Распределение по кафедрам</h3><div class="chart-wrapper"><canvas id="departmentChart"></canvas></div></div>
-                        </div>
-
-                        <h3 style="margin:25px 0 15px;color:#001a41;">Детальная статистика</h3>
-                        <div style="background:#f8faff; border-radius:16px; padding:18px;">
-                            ${topTeachers.map((t,i) => `
-                                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #e8edf5;">
-                                    <div><span style="font-weight:700; color:#0038a8;">${i+1}.</span> <span style="font-weight:600;">${t.teacherName}</span></div>
-                                    <div><i class="fas fa-chalkboard" style="color:#0038a8;"></i> ${t.lectures} <i class="fas fa-users" style="color:#0038a8; margin-left:10px;"></i> ${t.seminars} <span style="font-weight:700; color:#0038a8; margin-left:10px;">${t.totalHours} ч</span></div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                contentEl.innerHTML = html;
-
-                setTimeout(() => {
-                    const ctx1 = document.getElementById('teacherChart')?.getContext('2d');
-                    if (ctx1) {
-                        new Chart(ctx1, {
-                            type: 'bar',
-                            data: {
-                                labels: topTeachers.map(t => t.teacherName.split(' ').slice(0,2).join(' ')),
-                                datasets: [{ label:'Часов', data: topTeachers.map(t => t.totalHours), backgroundColor:'#0038a8' }]
-                            },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display:false } } }
-                        });
-                    }
-                    const ctx2 = document.getElementById('departmentChart')?.getContext('2d');
-                    if (ctx2) {
-                        const sorted = Object.entries(deptStats).sort((a,b) => b[1]-a[1]).slice(0,8);
-                        new Chart(ctx2, {
-                            type: 'doughnut',
-                            data: {
-                                labels: sorted.map(i => i[0]),
-                                datasets: [{ data: sorted.map(i => i[1]), backgroundColor: ['#0038a8','#e41e26','#f39c12','#27ae60','#9b59b6','#3498db','#e67e22','#1abc9c'] }]
-                            },
-                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'right' } } }
-                        });
-                    }
-                }, 100);
-            }, 500);
-        }
-
-        function updateBreadcrumbs() {
-            if (!breadcrumbsEl) return;
-            let html = '<button id="homeBtn"><i class="fas fa-home"></i> Главная</button>';
-            if (state.currentView === 'schedule') {
-                if (state.scheduleView === 'groupSchedule' && state.selectedGroupName) {
-                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedGroupName}</span>`;
-                } else if (state.scheduleView === 'teacherSchedule' && state.selectedTeacherName) {
-                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedTeacherName}</span>`;
-                }
-            } else if (state.currentView === 'load') {
-                if (state.loadView === 'teacherDetail' && state.selectedTeacherName) {
-                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedTeacherName}</span>`;
+                if (await sendCode(email, verificationCode, 'register')) {
+                    registerForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    document.getElementById('verifyEmailDisplay').innerHTML = 
+                        `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                    document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                    successEl.textContent = 'Код отправлен';
+                    successEl.style.display = 'block';
+                    setTimeout(() => successEl.style.display = 'none', 3000);
                 } else {
-                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">Учебная нагрузка</span>`;
-                }
-            } else if (state.currentView === 'statistics') {
-                html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">Аналитика</span>`;
-            }
-            breadcrumbsEl.innerHTML = html;
-            document.getElementById('homeBtn')?.addEventListener('click', goHome);
-        }
-
-        function setBackVisibility(v) {
-            if (backBtn) backBtn.style.visibility = v ? 'visible' : 'hidden';
-        }
-
-        function goHome() {
-            if (state.currentView === 'schedule') {
-                state.scheduleView = 'list';
-                state.selectedGroupId = null;
-                state.selectedGroupName = '';
-                state.selectedTeacherId = null;
-                state.selectedTeacherName = '';
-                setBackVisibility(false);
-                filterGroups();
-                renderView();
-            } else if (state.currentView === 'load') {
-                state.loadView = 'teachers';
-                state.selectedTeacherId = null;
-                state.selectedTeacherName = null;
-                setBackVisibility(false);
-                renderView();
-            } else {
-                setView('schedule');
-            }
-            updateBreadcrumbs();
-        }
-
-        function setView(view) {
-            state.currentView = view;
-            menuCards.forEach(c => {
-                if (c.dataset.view === view) c.classList.add('active');
-                else c.classList.remove('active');
-            });
-
-            roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
-            
-            if (view === 'schedule') {
-                courseButtonsContainer.style.display = state.currentRole === 'student' ? 'flex' : 'none';
-                loadFilters.style.display = 'none';
-                state.scheduleView = 'list';
-                state.selectedGroupId = null;
-                state.selectedGroupName = '';
-                state.selectedTeacherId = null;
-                state.selectedTeacherName = '';
-                setBackVisibility(false);
-                filterGroups();
-                renderView();
-            } else if (view === 'load') {
-                courseButtonsContainer.style.display = 'none';
-                loadFilters.style.display = 'flex';
-                state.loadView = 'teachers';
-                state.selectedTeacherId = null;
-                state.selectedTeacherName = null;
-                setBackVisibility(false);
-                renderView();
-            } else {
-                courseButtonsContainer.style.display = 'none';
-                loadFilters.style.display = 'none';
-                setBackVisibility(true);
-                renderView();
-            }
-            updateBreadcrumbs();
-        }
-
-        function setRole(role) {
-            state.currentRole = role;
-            state.scheduleView = 'list';
-            state.selectedGroupId = null;
-            state.selectedGroupName = '';
-            state.selectedTeacherId = null;
-            state.selectedTeacherName = '';
-            
-            document.querySelectorAll('.role-btn').forEach(btn => {
-                if (btn.dataset.role === role) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-
-            courseButtonsContainer.style.display = role === 'student' ? 'flex' : 'none';
-            setBackVisibility(false);
-            filterGroups();
-            renderView();
-        }
-
-        function setCourse(course) {
-            state.selectedCourse = course;
-            courseBtns.forEach(btn => {
-                if (btn.dataset.course === course) btn.classList.add('active');
-                else btn.classList.remove('active');
-            });
-            filterGroups();
-            renderView();
-        }
-
-        function showTeacherDetail(name) {
-            state.loadView = 'teacherDetail';
-            state.selectedTeacherName = name;
-            setBackVisibility(true);
-            updateBreadcrumbs();
-            renderView();
-        }
-
-        courseBtns.forEach(btn => {
-            btn.addEventListener('click', () => setCourse(btn.dataset.course));
-        });
-
-        departmentFilter?.addEventListener('change', (e) => {
-            state.departmentFilter = e.target.value;
-            renderView();
-        });
-
-        // ========== ФУНКЦИИ ДЛЯ ОКОН ==========
-
-        async function loadWindows() {
-            try {
-                const snap = await db.ref('windows').once('value');
-                state.windows = snap.exists() ? Object.entries(snap.val()).map(([id,d]) => ({ id, ...d })) : [];
-                return state.windows;
-            } catch (e) {
-                console.error(e);
-                return [];
-            }
-        }
-
-        async function saveWindow(data) {
-            try {
-                const ref = await db.ref('windows').push({
-                    ...data,
-                    createdAt: Date.now(),
-                    createdBy: currentUser?.email || 'unknown'
-                });
-                state.windows.push({ id: ref.key, ...data });
-                return ref.key;
-            } catch (e) {
-                console.error(e);
-                throw e;
-            }
-        }
-
-        async function deleteWindow(id) {
-            try {
-                await db.ref(`windows/${id}`).remove();
-                state.windows = state.windows.filter(w => w.id !== id);
-                return true;
-            } catch (e) {
-                console.error(e);
-                throw e;
-            }
-        }
-
-        async function renderWindowsList() {
-            const list = document.getElementById('windowsList');
-            if (!list) return;
-            
-            await loadWindows();
-            
-            const tFilter = document.getElementById('windowTeacherFilter').value;
-            const dFilter = document.getElementById('windowDayFilter').value;
-            
-            let filtered = state.windows;
-            if (tFilter) filtered = filtered.filter(w => w.teacher === tFilter);
-            if (dFilter) filtered = filtered.filter(w => w.day === dFilter);
-            
-            if (!filtered.length) {
-                list.innerHTML = '<div class="empty-message">Нет окон преподавателей</div>';
-                return;
-            }
-            
-            const grouped = {};
-            filtered.forEach(w => {
-                if (!grouped[w.teacher]) grouped[w.teacher] = [];
-                grouped[w.teacher].push(w);
-            });
-            
-            let html = '';
-            const dayOrder = {'Понедельник':1,'Вторник':2,'Среда':3,'Четверг':4,'Пятница':5,'Суббота':6};
-            
-            for (const [teacher, wins] of Object.entries(grouped)) {
-                wins.sort((a,b) => (dayOrder[a.day]||7) - (dayOrder[b.day]||7) || (a.pair||0) - (b.pair||0));
-                html += `
-                    <div style="background:#f8faff; border-radius:16px; padding:15px; margin-bottom:15px;">
-                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
-                            <div style="width:40px; height:40px; background:#f0f5ff; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#0038a8;">
-                                <i class="fas fa-user-tie"></i>
-                            </div>
-                            <div style="font-weight:600; color:#001a41;">${teacher}</div>
-                        </div>
-                `;
-                wins.forEach(w => {
-                    html += `
-                        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:white; border-radius:12px; margin-bottom:5px;">
-                            <div>
-                                <span style="font-weight:600; color:#0038a8;">${w.day}</span>
-                                <span style="margin-left:10px; color:#1f344d;">${w.pair} пара</span>
-                                ${w.reason ? `<span style="margin-left:10px; color:#5a6f8c;"><i class="fas fa-comment"></i> ${w.reason}</span>` : ''}
-                            </div>
-                            <button class="delete-window-btn" data-id="${w.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    `;
-                });
-                html += '</div>';
-            }
-            list.innerHTML = html;
-            
-            document.querySelectorAll('.delete-window-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    if (confirm('Удалить окно?')) {
-                        await deleteWindow(btn.dataset.id);
-                        await renderWindowsList();
-                        updateWindowFilters();
-                    }
-                });
-            });
-        }
-
-        function updateWindowFilters() {
-            const f = document.getElementById('windowTeacherFilter');
-            if (!f) return;
-            const teachers = [...new Set(state.windows.map(w => w.teacher))];
-            f.innerHTML = '<option value="">Все преподаватели</option>';
-            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t}</option>`);
-        }
-
-        // ========== ФУНКЦИИ ДЛЯ ПОТОКОВ ==========
-
-        async function loadStreams() {
-            try {
-                const snap = await db.ref('streams').once('value');
-                state.streams = snap.exists() ? Object.entries(snap.val()).map(([id,d]) => ({ id, ...d })) : [];
-                return state.streams;
-            } catch (e) {
-                console.error(e);
-                return [];
-            }
-        }
-
-        async function saveStream(data) {
-            try {
-                const ref = await db.ref('streams').push({
-                    ...data,
-                    createdAt: Date.now(),
-                    createdBy: currentUser?.email || 'unknown'
-                });
-                state.streams.push({ id: ref.key, ...data });
-                return ref.key;
-            } catch (e) {
-                console.error(e);
-                throw e;
-            }
-        }
-
-        async function deleteStream(id) {
-            try {
-                await db.ref(`streams/${id}`).remove();
-                state.streams = state.streams.filter(s => s.id !== id);
-                return true;
-            } catch (e) {
-                console.error(e);
-                throw e;
-            }
-        }
-
-        function renderGroupsCheckboxes() {
-            const list = document.getElementById('groupsList');
-            if (!list) return;
-            if (!state.groups?.length) {
-                list.innerHTML = '<div style="color:#5a6f8c; text-align:center;">Нет групп</div>';
-                return;
-            }
-            const byCourse = {};
-            state.groups.forEach(g => {
-                const c = g.course || '1';
-                if (!byCourse[c]) byCourse[c] = [];
-                byCourse[c].push(g);
-            });
-            let html = '';
-            Object.keys(byCourse).sort().forEach(c => {
-                html += `<div style="font-weight:600; color:#0038a8; margin:10px 0 5px;">${c} курс</div>`;
-                byCourse[c].forEach(g => {
-                    html += `
-                        <label style="display:flex; align-items:center; gap:8px; padding:5px; border-bottom:1px solid #e8edf5;">
-                            <input type="checkbox" class="group-checkbox" value="${g.id}" data-name="${g.name}" style="accent-color:#0038a8;">
-                            <span style="color:#001a41;">${g.name}</span>
-                            <span class="form-badge ${getFormClass(g.form)}" style="margin-left:auto;">${g.form||'ОФО'}</span>
-                        </label>
-                    `;
-                });
-            });
-            list.innerHTML = html;
-        }
-
-        async function renderStreamsList() {
-            const list = document.getElementById('streamsList');
-            if (!list) return;
-            await loadStreams();
-            if (!state.streams.length) {
-                list.innerHTML = '<div class="empty-message">Нет созданных потоков</div>';
-                return;
-            }
-            let html = '';
-            state.streams.sort((a,b) => (a.name||'').localeCompare(b.name||'')).forEach(s => {
-                const groupNames = (s.groups||[]).map(id => state.groups.find(g => g.id === id)?.name || id).join(', ');
-                html += `
-                    <div style="background:#f8faff; border-radius:16px; padding:15px; margin-bottom:10px;">
-                        <div style="display:flex; justify-content:space-between;">
-                            <div style="flex:1;">
-                                <div style="font-weight:600; font-size:1.1rem; color:#001a41;">${s.name||'Поток'}</div>
-                                <div style="color:#0038a8; margin:5px 0;">${s.subject} | ${s.teacher}</div>
-                                <div style="color:#5a6f8c;">${s.day}, ${s.pair} пара | ${s.room||'—'}</div>
-                                <div style="color:#5a6f8c; margin-top:5px;">Группы: ${groupNames}</div>
-                            </div>
-                            <button class="delete-stream-btn" data-id="${s.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            });
-            list.innerHTML = html;
-            document.querySelectorAll('.delete-stream-btn').forEach(btn => {
-                btn.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    if (confirm('Удалить поток?')) {
-                        await deleteStream(btn.dataset.id);
-                        await renderStreamsList();
-                    }
-                });
-            });
-        }
-
-        function updateStreamTeacherSelect() {
-            const sel = document.getElementById('streamTeacherSelect');
-            if (!sel) return;
-            sel.innerHTML = '<option value="">Выберите преподавателя</option>';
-            const teachers = Object.values(state.teacherStats).map(t => t.teacherName).sort();
-            teachers.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
-        }
-
-        // ========== ИНИЦИАЛИЗАЦИЯ ОБРАБОТЧИКОВ ==========
-
-        function initAllHandlers() {
-            // Окна преподавателей
-            document.getElementById('teacherWindowsBtn')?.addEventListener('click', async () => {
-                const m = document.getElementById('teacherWindowsModal');
-                if (m) {
-                    await renderWindowsList();
-                    updateWindowFilters();
-                    m.classList.add('active');
+                    errorEl.textContent = 'Ошибка отправки';
+                    errorEl.style.display = 'block';
                 }
             });
+        }
 
-            document.getElementById('addWindowBtn')?.addEventListener('click', () => {
-                const sel = document.getElementById('newWindowTeacherSelect');
-                if (sel) {
-                    sel.innerHTML = '<option value="">Выберите преподавателя</option>';
-                    const teachers = Object.values(state.teacherStats).map(t => t.teacherName).sort();
-                    teachers.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
-                }
-                document.getElementById('addWindowModal').classList.add('active');
-            });
+        // ===== ВХОД =====
+        if (loginBtn) {
+            loginBtn.addEventListener('click', async () => {
+                const email = document.getElementById('loginEmail')?.value.trim();
+                const pass = document.getElementById('loginPassword')?.value;
+                const errorEl = document.getElementById('loginError');
 
-            document.getElementById('addWindowFromListBtn')?.addEventListener('click', () => {
-                document.getElementById('teacherWindowsModal').classList.remove('active');
-                document.getElementById('addWindowModal').classList.add('active');
-            });
+                errorEl.style.display = 'none';
 
-            document.getElementById('saveWindowBtn')?.addEventListener('click', async () => {
-                const t = document.getElementById('newWindowTeacherSelect').value;
-                const d = document.getElementById('newWindowDaySelect').value;
-                const p = document.getElementById('newWindowPairSelect').value;
-                const r = document.getElementById('newWindowReasonInput').value;
-                if (!t || !d || !p) {
-                    alert('Заполните обязательные поля');
+                if (!email || !pass) {
+                    errorEl.textContent = 'Введите email и пароль';
+                    errorEl.style.display = 'block';
                     return;
                 }
-                await saveWindow({ teacher:t, day:d, pair:p, reason:r });
-                alert('Окно добавлено');
-                document.getElementById('addWindowModal').classList.remove('active');
-                document.getElementById('newWindowReasonInput').value = '';
-                if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
-                    await renderWindowsList();
-                    updateWindowFilters();
-                }
-            });
 
-            document.getElementById('cancelAddWindowBtn')?.addEventListener('click', () => {
-                document.getElementById('addWindowModal').classList.remove('active');
-                document.getElementById('newWindowReasonInput').value = '';
-            });
+                const users = await db.ref('users').once('value');
+                const userEntry = Object.entries(users.val() || {}).find(([id, u]) => u.email === email && u.password === pass);
 
-            document.getElementById('teacherWindowsCloseBtn')?.addEventListener('click', () => {
-                document.getElementById('teacherWindowsModal').classList.remove('active');
-            });
-
-            document.getElementById('windowTeacherFilter')?.addEventListener('change', renderWindowsList);
-            document.getElementById('windowDayFilter')?.addEventListener('change', renderWindowsList);
-
-            // Потоки
-            document.getElementById('streamsBtn')?.addEventListener('click', async () => {
-                const m = document.getElementById('streamsModal');
-                if (m) {
-                    renderGroupsCheckboxes();
-                    updateStreamTeacherSelect();
-                    await renderStreamsList();
-                    m.classList.add('active');
-                }
-            });
-
-            document.getElementById('createStreamBtn')?.addEventListener('click', async () => {
-                const name = document.getElementById('streamNameInput').value;
-                const subj = document.getElementById('streamSubjectInput').value;
-                const teacher = document.getElementById('streamTeacherSelect').value;
-                const day = document.getElementById('streamDaySelect').value;
-                const pair = document.getElementById('streamPairSelect').value;
-                const room = document.getElementById('streamRoomInput').value;
-                const groups = [...document.querySelectorAll('.group-checkbox:checked')].map(cb => cb.value);
-                
-                if (!name || !subj || !teacher || !groups.length) {
-                    alert('Заполните название, дисциплину, преподавателя и выберите группы');
+                if (!userEntry) {
+                    errorEl.textContent = 'Неверный email или пароль';
+                    errorEl.style.display = 'block';
                     return;
                 }
-                
-                await saveStream({ name, subject:subj, teacher, day, pair, room, groups });
-                alert('Поток создан');
-                document.getElementById('streamNameInput').value = '';
-                document.getElementById('streamSubjectInput').value = '';
-                document.getElementById('streamRoomInput').value = '';
-                document.querySelectorAll('.group-checkbox:checked').forEach(cb => cb.checked = false);
-                await renderStreamsList();
-            });
 
-            document.getElementById('streamsCloseBtn')?.addEventListener('click', () => {
-                document.getElementById('streamsModal').classList.remove('active');
+                const [userId, userData] = userEntry;
+                verificationCode = generateCode();
+                pendingEmail = email;
+                pendingUserData = { id: userId, ...userData };
+                isVerifyingForRegistration = false;
+                isVerifyingForPasswordReset = false;
+
+                if (await sendCode(email, verificationCode, 'login')) {
+                    loginForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    document.getElementById('verifyEmailDisplay').innerHTML = 
+                        `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                    document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                } else {
+                    errorEl.textContent = 'Ошибка отправки';
+                    errorEl.style.display = 'block';
+                }
             });
         }
 
-        // Закрытие модалок по клику вне
-        window.addEventListener('click', (e) => {
-            ['teacherWindowsModal','addWindowModal','streamsModal'].forEach(id => {
-                const m = document.getElementById(id);
-                if (e.target === m) m.classList.remove('active');
+        // ===== ВОССТАНОВЛЕНИЕ =====
+        if (forgotBtn) {
+            forgotBtn.addEventListener('click', async () => {
+                const email = document.getElementById('forgotEmail')?.value.trim();
+                const errorEl = document.getElementById('forgotError');
+                const successEl = document.getElementById('forgotSuccess');
+
+                errorEl.style.display = 'none';
+                successEl.style.display = 'none';
+
+                if (!email || !email.includes('@')) {
+                    errorEl.textContent = 'Введите корректный email';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                const users = await db.ref('users').once('value');
+                const userEntry = Object.entries(users.val() || {}).find(([id, u]) => u.email === email);
+
+                if (!userEntry) {
+                    errorEl.textContent = 'Пользователь не найден';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                const [userId, userData] = userEntry;
+                verificationCode = generateCode();
+                pendingEmail = email;
+                resetUserId = userId;
+                isVerifyingForPasswordReset = true;
+
+                if (await sendCode(email, verificationCode, 'reset')) {
+                    forgotForm.classList.remove('active');
+                    verifyForm.classList.add('active');
+                    document.getElementById('verifyEmailDisplay').innerHTML = 
+                        `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                    document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                    if (verifyBtn) verifyBtn.disabled = false;
+                    startTimer();
+                    successEl.textContent = 'Код отправлен';
+                    successEl.style.display = 'block';
+                    setTimeout(() => successEl.style.display = 'none', 3000);
+                } else {
+                    errorEl.textContent = 'Ошибка отправки';
+                    errorEl.style.display = 'block';
+                }
+            });
+        }
+
+        // ===== ПОДТВЕРЖДЕНИЕ КОДА =====
+        if (verifyBtn) {
+            verifyBtn.addEventListener('click', async () => {
+                const inputs = document.querySelectorAll('.code-input');
+                const code = Array.from(inputs).map(i => i.value).join('');
+                const errorEl = document.getElementById('verifyError');
+
+                if (code.length !== 6) {
+                    errorEl.textContent = 'Введите 6-значный код';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (timeLeft <= 0) {
+                    errorEl.textContent = 'Код истек';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (code !== verificationCode) {
+                    errorEl.textContent = 'Неверный код';
+                    errorEl.style.display = 'block';
+                    inputs.forEach(i => i.value = '');
+                    if (inputs[0]) inputs[0].focus();
+                    return;
+                }
+
+                if (isVerifyingForRegistration) {
+                    const newUser = {
+                        fullName: pendingUserData.fullName,
+                        email: pendingUserData.email,
+                        password: pendingUserData.password,
+                        registeredAt: Date.now()
+                    };
+                    const ref = await db.ref('users').push(newUser);
+                    currentUser = { id: ref.key, ...newUser };
+                } else if (isVerifyingForPasswordReset) {
+                    verifyForm.classList.remove('active');
+                    resetForm.classList.add('active');
+                    clearInterval(timerInterval);
+                    return;
+                } else {
+                    currentUser = pendingUserData;
+                }
+
+                localStorage.setItem('finuniversity_user', JSON.stringify(currentUser));
+                clearInterval(timerInterval);
+                loginContainer.style.display = 'none';
+                mainSite.classList.add('visible');
+                if (userNameSpan) {
+                    userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                }
+
+                verifyForm.classList.remove('active');
+                loginForm.classList.add('active');
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+            });
+        }
+
+        // ===== СБРОС ПАРОЛЯ =====
+        if (resetBtn) {
+            resetBtn.addEventListener('click', async () => {
+                const pass = document.getElementById('newPassword')?.value;
+                const pass2 = document.getElementById('confirmNewPassword')?.value;
+                const errorEl = document.getElementById('resetError');
+                const successEl = document.getElementById('resetSuccess');
+
+                errorEl.style.display = 'none';
+                successEl.style.display = 'none';
+
+                if (!pass || !pass2) {
+                    errorEl.textContent = 'Заполните поля';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (pass.length < 6) {
+                    errorEl.textContent = 'Пароль должен быть не менее 6 символов';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                if (pass !== pass2) {
+                    errorEl.textContent = 'Пароли не совпадают';
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                try {
+                    await db.ref(`users/${resetUserId}/password`).set(pass);
+                    successEl.textContent = 'Пароль изменен';
+                    successEl.style.display = 'block';
+                    setTimeout(() => {
+                        resetForm.classList.remove('active');
+                        loginForm.classList.add('active');
+                    }, 2000);
+                } catch (e) {
+                    errorEl.textContent = 'Ошибка';
+                    errorEl.style.display = 'block';
+                }
+            });
+        }
+
+        // ===== ПОВТОРНАЯ ОТПРАВКА =====
+        if (resendCode) {
+            resendCode.addEventListener('click', async () => {
+                verificationCode = generateCode();
+                const purpose = isVerifyingForRegistration ? 'register' : (isVerifyingForPasswordReset ? 'reset' : 'login');
+                await sendCode(pendingEmail, verificationCode, purpose);
+                clearInterval(timerInterval);
+                startTimer();
+                document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                if (verifyBtn) verifyBtn.disabled = false;
+            });
+        }
+
+        // ===== ВЫХОД =====
+        if (logoutBtn) {
+            logoutBtn.addEventListener('click', () => {
+                localStorage.removeItem('finuniversity_user');
+                currentUser = null;
+                loginContainer.style.display = 'block';
+                mainSite.classList.remove('visible');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                forgotForm.classList.remove('active');
+                verifyForm.classList.remove('active');
+                resetForm.classList.remove('active');
+                if (timerInterval) clearInterval(timerInterval);
+            });
+        }
+
+        // ===== ПРОВЕРКА СЕССИИ =====
+        const savedUser = localStorage.getItem('finuniversity_user');
+        if (savedUser) {
+            try {
+                currentUser = JSON.parse(savedUser);
+                loginContainer.style.display = 'none';
+                mainSite.classList.add('visible');
+                if (userNameSpan) {
+                    userNameSpan.textContent = currentUser.fullName || currentUser.email.split('@')[0];
+                }
+            } catch (e) {
+                localStorage.removeItem('finuniversity_user');
+            }
+        }
+
+        // ===== АВТОМАТИЧЕСКИЙ ПЕРЕХОД МЕЖДУ ПОЛЯМИ КОДА =====
+        document.querySelectorAll('.code-input').forEach((input, index, arr) => {
+            input.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                if (e.target.value && index < arr.length - 1) arr[index + 1].focus();
+            });
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Backspace' && !e.target.value && index > 0) arr[index - 1].focus();
             });
         });
-
-        // Меню и навигация
-        menuCards.forEach(card => {
-            card.addEventListener('click', () => setView(card.dataset.view));
-        });
-
-        document.querySelectorAll('.role-btn').forEach(btn => {
-            btn.addEventListener('click', () => setRole(btn.dataset.role));
-        });
-
-        homeBtn?.addEventListener('click', goHome);
-        backBtn?.addEventListener('click', goHome);
-
-        // ========== ЗАПУСК ==========
-        if (!checkSavedSession()) {
-            loginContainer.style.display = 'block';
-            mainSite.classList.remove('visible');
-        } else {
-            setTimeout(initAllHandlers, 1000);
-        }
     </script>
 </body>
 </html>
