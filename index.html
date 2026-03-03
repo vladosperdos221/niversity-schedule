@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -944,6 +944,15 @@
             text-align: center;
         }
 
+        .connection-success {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .header { flex-direction: column; text-align: center; }
             .logo-area { flex-direction: column; }
@@ -1097,6 +1106,7 @@
             <button class="control-btn" id="streamsBtn"><i class="fas fa-layer-group"></i> Потоки</button>
             <button class="control-btn" id="createTestDataBtn" style="background: #27ae60; border-color: #27ae60; color: white;"><i class="fas fa-database"></i> Создать тестовые данные</button>
             <button class="control-btn" id="checkConnectionBtn" style="background: #f39c12; border-color: #f39c12; color: white;"><i class="fas fa-plug"></i> Проверить подключение</button>
+            <button class="control-btn" id="useLocalDataBtn" style="background: #9b59b6; border-color: #9b59b6; color: white;"><i class="fas fa-server"></i> Использовать локальные данные</button>
         </div>
 
         <div class="main-menu">
@@ -1266,6 +1276,7 @@
         // Инициализация Firebase с обработкой ошибок
         let db = null;
         let firebaseInitialized = false;
+        let useLocalData = false;
 
         try {
             firebase.initializeApp(firebaseConfig);
@@ -1275,6 +1286,27 @@
         } catch (e) {
             console.error('Ошибка инициализации Firebase:', e);
         }
+
+        // Локальные данные на случай проблем с Firebase
+        const localData = {
+            groups: [
+                { id: 'group1', name: 'БИ-21-1', fullName: 'Бизнес-информатика 21-1', form: 'ОФО', course: '1' },
+                { id: 'group2', name: 'БИ-21-2', fullName: 'Бизнес-информатика 21-2', form: 'ОФО', course: '1' },
+                { id: 'group3', name: 'БИ-22-1', fullName: 'Бизнес-информатика 22-1', form: 'ОФО', course: '2' },
+                { id: 'group4', name: 'БИ-22-2', fullName: 'Бизнес-информатика 22-2', form: 'ОФО', course: '2' },
+                { id: 'group5', name: 'БИ-23-1', fullName: 'Бизнес-информатика 23-1', form: 'ОФО', course: '3' },
+                { id: 'group6', name: 'БИ-23-2', fullName: 'Бизнес-информатика 23-2', form: 'ОФО', course: '3' }
+            ],
+            teachers: [
+                { id: 'teacher1', fullName: 'Иванов Иван Иванович', shortName: 'Иванов И.И.', department: 'Кафедра информатики' },
+                { id: 'teacher2', fullName: 'Петров Петр Петрович', shortName: 'Петров П.П.', department: 'Кафедра математики' },
+                { id: 'teacher3', fullName: 'Сидорова Анна Сергеевна', shortName: 'Сидорова А.С.', department: 'Кафедра экономики' },
+                { id: 'teacher4', fullName: 'Козлов Дмитрий Николаевич', shortName: 'Козлов Д.Н.', department: 'Кафедра информатики' }
+            ],
+            users: [
+                { id: 'admin', fullName: 'Администратор', email: 'admin@test.ru', password: '123456' }
+            ]
+        };
 
         // Инициализация EmailJS
         emailjs.init("1nIeu26r-6K_gkTuw");
@@ -1289,7 +1321,6 @@
         let isVerifyingForPasswordReset = false;
         let timerInterval = null;
         let timeLeft = 300;
-        let connectionCheckInterval = null;
 
         // Состояние приложения
         let state = {
@@ -1349,6 +1380,7 @@
         const departmentFilter = document.getElementById('departmentFilter');
         const createTestDataBtn = document.getElementById('createTestDataBtn');
         const checkConnectionBtn = document.getElementById('checkConnectionBtn');
+        const useLocalDataBtn = document.getElementById('useLocalDataBtn');
         const connectionStatus = document.getElementById('connectionStatus');
 
         // Текущая дата
@@ -1366,18 +1398,28 @@
                 return false;
             }
 
-            const connectedRef = db.ref('.info/connected');
-            connectedRef.on('value', (snap) => {
-                if (snap.val() === true) {
-                    console.log('✅ Подключено к Firebase');
-                    hideConnectionError();
-                } else {
-                    console.log('❌ Нет подключения к Firebase');
-                    showConnectionError('Нет подключения к Firebase. Проверьте правила доступа в консоли Firebase.');
-                }
-            });
+            if (useLocalData) {
+                showConnectionSuccess('Используются локальные данные');
+                return true;
+            }
 
-            return true;
+            try {
+                const connectedRef = db.ref('.info/connected');
+                connectedRef.on('value', (snap) => {
+                    if (snap.val() === true) {
+                        console.log('✅ Подключено к Firebase');
+                        showConnectionSuccess('Подключено к Firebase');
+                    } else {
+                        console.log('❌ Нет подключения к Firebase');
+                        showConnectionError('Нет подключения к Firebase. Используйте локальные данные.');
+                    }
+                });
+                return true;
+            } catch (e) {
+                console.error('Ошибка проверки подключения:', e);
+                showConnectionError('Ошибка подключения к Firebase');
+                return false;
+            }
         }
 
         function showConnectionError(message) {
@@ -1388,10 +1430,22 @@
             }
         }
 
-        function hideConnectionError() {
+        function showConnectionSuccess(message) {
             if (connectionStatus) {
-                connectionStatus.style.display = 'none';
+                connectionStatus.style.display = 'block';
+                connectionStatus.className = 'connection-success';
+                connectionStatus.innerHTML = `<i class="fas fa-check-circle"></i> ${message}`;
             }
+        }
+
+        // ===== ИСПОЛЬЗОВАНИЕ ЛОКАЛЬНЫХ ДАННЫХ =====
+        function loadLocalData() {
+            useLocalData = true;
+            state.groups = localData.groups;
+            state.teachers = localData.teachers;
+            filterGroups();
+            showConnectionSuccess('Загружены локальные данные');
+            renderView();
         }
 
         // ===== ПРОВЕРКА СОХРАНЕННОЙ СЕССИИ =====
@@ -1410,7 +1464,6 @@
                 localStorage.removeItem('finuniversity_user');
             }
         } else {
-            // Проверяем подключение даже если не вошли
             checkFirebaseConnection();
         }
 
@@ -1500,11 +1553,6 @@
         // ===== РЕГИСТРАЦИЯ =====
         if (registerBtn) {
             registerBtn.addEventListener('click', async function() {
-                if (!firebaseInitialized) {
-                    alert('Ошибка подключения к Firebase. Проверьте консоль.');
-                    return;
-                }
-
                 const name = document.getElementById('regFullName')?.value.trim();
                 const email = document.getElementById('regEmail')?.value.trim();
                 const pass = document.getElementById('regPassword')?.value;
@@ -1536,6 +1584,52 @@
                         errorEl.textContent = 'Пароли не совпадают';
                         errorEl.style.display = 'block';
                     }
+                    return;
+                }
+
+                if (useLocalData) {
+                    // Используем локальные данные
+                    const userExists = localData.users.some(u => u.email === email);
+                    if (userExists) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Email уже зарегистрирован';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    verificationCode = generateCode();
+                    pendingEmail = email;
+                    pendingUserData = { fullName: name, email, password: pass };
+                    isVerifyingForRegistration = true;
+
+                    const sent = await sendCode(email, verificationCode, 'register');
+                    if (sent) {
+                        registerForm.classList.remove('active');
+                        verifyForm.classList.add('active');
+                        const displayEl = document.getElementById('verifyEmailDisplay');
+                        if (displayEl) {
+                            displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                        }
+                        document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                        if (verifyBtn) verifyBtn.disabled = false;
+                        startTimer();
+                        if (successEl) {
+                            successEl.textContent = 'Код отправлен';
+                            successEl.style.display = 'block';
+                            setTimeout(() => successEl.style.display = 'none', 3000);
+                        }
+                    } else {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка отправки кода';
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                    return;
+                }
+
+                if (!firebaseInitialized) {
+                    alert('Ошибка подключения к Firebase. Используйте локальные данные.');
                     return;
                 }
 
@@ -1588,11 +1682,6 @@
         // ===== ВХОД =====
         if (loginBtn) {
             loginBtn.addEventListener('click', async function() {
-                if (!firebaseInitialized) {
-                    alert('Ошибка подключения к Firebase. Проверьте консоль.');
-                    return;
-                }
-
                 const email = document.getElementById('loginEmail')?.value.trim();
                 const pass = document.getElementById('loginPassword')?.value;
                 const errorEl = document.getElementById('loginError');
@@ -1604,6 +1693,48 @@
                         errorEl.textContent = 'Введите email и пароль';
                         errorEl.style.display = 'block';
                     }
+                    return;
+                }
+
+                if (useLocalData) {
+                    // Используем локальные данные
+                    const user = localData.users.find(u => u.email === email && u.password === pass);
+                    if (!user) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Неверный email или пароль';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    verificationCode = generateCode();
+                    pendingEmail = email;
+                    pendingUserData = { id: user.id, ...user };
+                    isVerifyingForRegistration = false;
+                    isVerifyingForPasswordReset = false;
+
+                    const sent = await sendCode(email, verificationCode, 'login');
+                    if (sent) {
+                        loginForm.classList.remove('active');
+                        verifyForm.classList.add('active');
+                        const displayEl = document.getElementById('verifyEmailDisplay');
+                        if (displayEl) {
+                            displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                        }
+                        document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                        if (verifyBtn) verifyBtn.disabled = false;
+                        startTimer();
+                    } else {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка отправки кода';
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                    return;
+                }
+
+                if (!firebaseInitialized) {
+                    alert('Ошибка подключения к Firebase. Используйте локальные данные.');
                     return;
                 }
 
@@ -1655,11 +1786,6 @@
         // ===== ВОССТАНОВЛЕНИЕ =====
         if (forgotBtn) {
             forgotBtn.addEventListener('click', async function() {
-                if (!firebaseInitialized) {
-                    alert('Ошибка подключения к Firebase. Проверьте консоль.');
-                    return;
-                }
-
                 const email = document.getElementById('forgotEmail')?.value.trim();
                 const errorEl = document.getElementById('forgotError');
                 const successEl = document.getElementById('forgotSuccess');
@@ -1672,6 +1798,51 @@
                         errorEl.textContent = 'Введите корректный email';
                         errorEl.style.display = 'block';
                     }
+                    return;
+                }
+
+                if (useLocalData) {
+                    const user = localData.users.find(u => u.email === email);
+                    if (!user) {
+                        if (errorEl) {
+                            errorEl.textContent = 'Пользователь не найден';
+                            errorEl.style.display = 'block';
+                        }
+                        return;
+                    }
+
+                    verificationCode = generateCode();
+                    pendingEmail = email;
+                    resetUserId = user.id;
+                    isVerifyingForPasswordReset = true;
+
+                    const sent = await sendCode(email, verificationCode, 'reset');
+                    if (sent) {
+                        forgotForm.classList.remove('active');
+                        verifyForm.classList.add('active');
+                        const displayEl = document.getElementById('verifyEmailDisplay');
+                        if (displayEl) {
+                            displayEl.innerHTML = `<i class="fas fa-envelope"></i> Код отправлен на ${email}`;
+                        }
+                        document.querySelectorAll('.code-input').forEach(i => { i.value = ''; i.disabled = false; });
+                        if (verifyBtn) verifyBtn.disabled = false;
+                        startTimer();
+                        if (successEl) {
+                            successEl.textContent = 'Код отправлен';
+                            successEl.style.display = 'block';
+                            setTimeout(() => successEl.style.display = 'none', 3000);
+                        }
+                    } else {
+                        if (errorEl) {
+                            errorEl.textContent = 'Ошибка отправки кода';
+                            errorEl.style.display = 'block';
+                        }
+                    }
+                    return;
+                }
+
+                if (!firebaseInitialized) {
+                    alert('Ошибка подключения к Firebase. Используйте локальные данные.');
                     return;
                 }
 
@@ -1759,14 +1930,25 @@
 
                 try {
                     if (isVerifyingForRegistration) {
-                        const newUser = {
-                            fullName: pendingUserData.fullName,
-                            email: pendingUserData.email,
-                            password: pendingUserData.password,
-                            registeredAt: Date.now()
-                        };
-                        const ref = await db.ref('users').push(newUser);
-                        currentUser = { id: ref.key, ...newUser };
+                        if (useLocalData) {
+                            const newUser = {
+                                id: 'user' + Date.now(),
+                                fullName: pendingUserData.fullName,
+                                email: pendingUserData.email,
+                                password: pendingUserData.password
+                            };
+                            localData.users.push(newUser);
+                            currentUser = newUser;
+                        } else {
+                            const newUser = {
+                                fullName: pendingUserData.fullName,
+                                email: pendingUserData.email,
+                                password: pendingUserData.password,
+                                registeredAt: Date.now()
+                            };
+                            const ref = await db.ref('users').push(newUser);
+                            currentUser = { id: ref.key, ...newUser };
+                        }
                     } else if (isVerifyingForPasswordReset) {
                         verifyForm.classList.remove('active');
                         resetForm.classList.add('active');
@@ -1837,7 +2019,14 @@
                 }
 
                 try {
-                    await db.ref(`users/${resetUserId}/password`).set(pass);
+                    if (useLocalData) {
+                        const user = localData.users.find(u => u.id === resetUserId);
+                        if (user) {
+                            user.password = pass;
+                        }
+                    } else {
+                        await db.ref(`users/${resetUserId}/password`).set(pass);
+                    }
                     if (successEl) {
                         successEl.textContent = 'Пароль изменен';
                         successEl.style.display = 'block';
@@ -1895,7 +2084,7 @@
             });
         });
 
-        // ===== ФУНКЦИЯ ДЛЯ ПРОВЕРКИ ПОДКЛЮЧЕНИЯ =====
+        // ===== ОБРАБОТЧИКИ КНОПОК =====
         if (checkConnectionBtn) {
             checkConnectionBtn.addEventListener('click', function() {
                 checkFirebaseConnection();
@@ -1903,10 +2092,21 @@
             });
         }
 
+        if (useLocalDataBtn) {
+            useLocalDataBtn.addEventListener('click', function() {
+                loadLocalData();
+            });
+        }
+
         // ===== ФУНКЦИЯ ДЛЯ СОЗДАНИЯ ТЕСТОВЫХ ДАННЫХ =====
         async function createTestData() {
+            if (useLocalData) {
+                alert('Вы используете локальные данные. Они уже загружены.');
+                return;
+            }
+
             if (!firebaseInitialized) {
-                alert('Ошибка подключения к Firebase. Проверьте консоль.');
+                alert('Ошибка подключения к Firebase. Используйте локальные данные.');
                 return;
             }
 
@@ -1980,29 +2180,992 @@
             }
         }
 
-        // Обработчик для кнопки создания тестовых данных
         if (createTestDataBtn) {
             createTestDataBtn.addEventListener('click', createTestData);
         }
 
-        // ===== ОСТАЛЬНЫЕ ФУНКЦИИ (renderGroupsList, renderTeachersList и т.д.) =====
-        // Они остаются такими же как в предыдущей версии
-        
-        // Для краткости я не дублирую все функции рендеринга здесь,
-        // но они должны быть точно такими же как в предыдущем ответе
-        
-        // В реальном коде здесь должны быть все функции:
-        // getFormClass, showLoader, showError, showEmpty, getCurrentMonthYear,
-        // calculateTeacherStats, filterGroups, loadMainSite, renderView,
-        // renderSchedule, renderGroupsList, renderTeachersList,
-        // renderGroupSchedule, renderTeacherSchedule, renderTeacherList,
-        // renderTeacherDetail, renderStatistics, showTeacherDetail,
-        // setView, setRole, setCourse, setBackVisibility, goHome,
-        // updateBreadcrumbs, saveWindow, deleteWindow, renderWindowsList,
-        // updateWindowFilters, saveStream, deleteStream, renderGroupsCheckboxes,
-        // renderStreamsList, updateStreamTeacherSelect, initHandlers
+        // ===== ОСНОВНЫЕ ФУНКЦИИ САЙТА =====
+        function getFormClass(form) {
+            if (!form) return 'ofo';
+            const f = form.toLowerCase();
+            if (f.includes('офо')) return 'ofo';
+            if (f.includes('зфо')) return 'zfo';
+            if (f.includes('озфо')) return 'ozfo';
+            if (f.includes('озо')) return 'ozo';
+            return 'ofo';
+        }
 
-        console.log('Сайт загружен. Проверьте подключение к Firebase.');
+        function showLoader() {
+            if (contentEl) contentEl.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
+        }
+
+        function showError(message) {
+            if (contentEl) contentEl.innerHTML = `<div class="error-message">${message}</div>`;
+        }
+
+        function showEmpty(message) {
+            if (contentEl) contentEl.innerHTML = `<div class="empty-message">${message}</div>`;
+        }
+
+        function getCurrentMonthYear() {
+            const now = new Date();
+            return {
+                month: now.getMonth() + 1,
+                year: now.getFullYear(),
+                monthName: now.toLocaleString('ru-RU', { month: 'long' })
+            };
+        }
+
+        function calculateTeacherStats() {
+            state.teacherStats = {};
+            state.teacherMonthlyStats = {};
+            if (!state.load?.length) return;
+            const current = getCurrentMonthYear();
+            
+            state.load.forEach(item => {
+                const name = item.teacherName || item.teacher;
+                if (!name) return;
+                
+                if (!state.teacherStats[name]) {
+                    state.teacherStats[name] = {
+                        teacherName: name,
+                        department: item.department || 'Кафедра',
+                        totalHours: 0,
+                        lectures: 0,
+                        seminars: 0,
+                        records: []
+                    };
+                }
+                state.teacherStats[name].totalHours += item.hours || 0;
+                state.teacherStats[name].lectures += item.lectures || 0;
+                state.teacherStats[name].seminars += item.seminars || 0;
+                state.teacherStats[name].records.push(item);
+                
+                if (!state.teacherMonthlyStats[name]) {
+                    state.teacherMonthlyStats[name] = {
+                        monthlyHours: 0,
+                        monthlyLectures: 0,
+                        monthlySeminars: 0
+                    };
+                }
+                if (item.date) {
+                    try {
+                        const d = new Date(item.date);
+                        if (d.getMonth() + 1 === current.month && d.getFullYear() === current.year) {
+                            state.teacherMonthlyStats[name].monthlyHours += item.hours || 0;
+                            state.teacherMonthlyStats[name].monthlyLectures += item.lectures || 0;
+                            state.teacherMonthlyStats[name].monthlySeminars += item.seminars || 0;
+                        }
+                    } catch (e) {}
+                }
+            });
+
+            if (state.windows?.length) {
+                state.windows.forEach(w => {
+                    if (w.teacher && w.hours && state.teacherStats[w.teacher]) {
+                        state.teacherStats[w.teacher].totalHours -= w.hours;
+                        try {
+                            const wd = new Date(w.date || w.createdAt);
+                            const current = getCurrentMonthYear();
+                            if (wd.getMonth() + 1 === current.month && wd.getFullYear() === current.year) {
+                                if (state.teacherMonthlyStats[w.teacher]) {
+                                    state.teacherMonthlyStats[w.teacher].monthlyHours -= w.hours;
+                                }
+                            }
+                        } catch (e) {}
+                    }
+                });
+            }
+        }
+
+        function filterGroups() {
+            if (state.groups) {
+                state.filteredGroups = state.groups.filter(g => g.course == state.selectedCourse);
+            }
+        }
+
+        async function loadMainSite() {
+            showLoader();
+            
+            if (useLocalData) {
+                // Используем локальные данные
+                state.groups = localData.groups;
+                state.teachers = localData.teachers;
+                state.load = [];
+                state.windows = [];
+                state.streams = [];
+                state.schedule = [];
+
+                calculateTeacherStats();
+                filterGroups();
+                
+                const depts = new Set();
+                Object.values(state.teacherStats).forEach(s => s.department && depts.add(s.department));
+                if (departmentFilter) {
+                    departmentFilter.innerHTML = '<option value="">Все кафедры</option>';
+                    [...depts].sort().forEach(d => departmentFilter.innerHTML += `<option value="${d}">${d}</option>`);
+                }
+
+                renderView();
+                initHandlers();
+                return;
+            }
+
+            if (!firebaseInitialized) {
+                showError('Ошибка подключения к Firebase. Нажмите "Использовать локальные данные"');
+                return;
+            }
+
+            try {
+                const [groups, teachers, schedule, load, windows, streams] = await Promise.all([
+                    db.ref('groups').once('value'),
+                    db.ref('teachers').once('value'),
+                    db.ref('schedule').once('value'),
+                    db.ref('load').once('value'),
+                    db.ref('windows').once('value'),
+                    db.ref('streams').once('value')
+                ]);
+
+                state.groups = groups.exists() ? Object.entries(groups.val()).map(([id,d]) => ({ id, ...d })) : [];
+                state.teachers = teachers.exists() ? Object.entries(teachers.val()).map(([id,d]) => ({ id, ...d })) : [];
+                state.schedule = schedule.exists() ? Object.entries(schedule.val()).map(([id,d]) => ({ id, ...d })) : [];
+                state.load = load.exists() ? Object.entries(load.val()).map(([id,d]) => ({ id, ...d })) : [];
+                state.windows = windows.exists() ? Object.entries(windows.val()).map(([id,d]) => ({ id, ...d })) : [];
+                state.streams = streams.exists() ? Object.entries(streams.val()).map(([id,d]) => ({ id, ...d })) : [];
+
+                calculateTeacherStats();
+                filterGroups();
+                
+                const depts = new Set();
+                Object.values(state.teacherStats).forEach(s => s.department && depts.add(s.department));
+                if (departmentFilter) {
+                    departmentFilter.innerHTML = '<option value="">Все кафедры</option>';
+                    [...depts].sort().forEach(d => departmentFilter.innerHTML += `<option value="${d}">${d}</option>`);
+                }
+
+                renderView();
+                initHandlers();
+            } catch (e) {
+                showError('Ошибка загрузки: ' + e.message);
+                console.error(e);
+            }
+        }
+
+        function renderView() {
+            if (state.currentView === 'schedule') renderSchedule();
+            else if (state.currentView === 'load') {
+                if (state.loadView === 'teachers') renderTeacherList();
+                else if (state.loadView === 'teacherDetail') renderTeacherDetail();
+            } else if (state.currentView === 'statistics') renderStatistics();
+        }
+
+        function renderSchedule() {
+            if (state.scheduleView === 'list') {
+                if (state.currentRole === 'student') renderGroupsList();
+                else renderTeachersList();
+            } else if (state.scheduleView === 'groupSchedule') renderGroupSchedule();
+            else if (state.scheduleView === 'teacherSchedule') renderTeacherSchedule();
+        }
+
+        function renderGroupsList() {
+            if (!state.filteredGroups?.length) {
+                showEmpty(`Нет групп на ${state.selectedCourse} курсе`);
+                return;
+            }
+            let html = '<div class="cards-grid">';
+            state.filteredGroups.forEach(g => {
+                html += `
+                    <div class="group-card" data-id="${g.id}" data-name="${g.name}">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-users"></i></div>
+                            <div>
+                                <div class="card-title">${g.name}</div>
+                                <div class="card-subtitle">${g.fullName || ''}</div>
+                            </div>
+                        </div>
+                        <div class="card-badges">
+                            <span class="form-badge ${getFormClass(g.form)}">${g.form || 'ОФО'}</span>
+                        </div>
+                        <div class="card-footer">→ Просмотреть расписание</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            contentEl.innerHTML = html;
+            document.querySelectorAll('.group-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    state.selectedGroupId = this.dataset.id;
+                    state.selectedGroupName = this.dataset.name;
+                    state.scheduleView = 'groupSchedule';
+                    setBackVisibility(true);
+                    updateBreadcrumbs();
+                    renderView();
+                });
+            });
+        }
+
+        function renderTeachersList() {
+            if (!state.teachers?.length) {
+                showEmpty('Нет преподавателей');
+                return;
+            }
+            const sorted = [...state.teachers].sort((a,b) => (a.fullName||'').localeCompare(b.fullName||''));
+            let html = '<div class="cards-grid">';
+            sorted.forEach(t => {
+                html += `
+                    <div class="teacher-card" data-id="${t.id}" data-name="${t.fullName}">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                            <div>
+                                <div class="card-title">${t.fullName}</div>
+                                <div class="card-subtitle">${t.shortName || ''} | ${t.department || ''}</div>
+                            </div>
+                        </div>
+                        <div class="card-footer">→ Просмотреть расписание</div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            contentEl.innerHTML = html;
+            document.querySelectorAll('.teacher-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    state.selectedTeacherId = this.dataset.id;
+                    state.selectedTeacherName = this.dataset.name;
+                    state.scheduleView = 'teacherSchedule';
+                    setBackVisibility(true);
+                    updateBreadcrumbs();
+                    renderView();
+                });
+            });
+        }
+
+        function renderGroupSchedule() {
+            const lessons = state.schedule.filter(l => l.groupId === state.selectedGroupId);
+            if (!lessons.length) {
+                showEmpty('У группы нет занятий');
+                return;
+            }
+            const days = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+            const grouped = {};
+            lessons.forEach(l => {
+                const d = l.dayOfWeek || 'Другой';
+                if (!grouped[d]) grouped[d] = [];
+                grouped[d].push(l);
+            });
+            let html = `<h2 style="margin-bottom:20px;color:#001a41"><i class="fas fa-users" style="color:#0038a8"></i> Расписание группы: <strong>${state.selectedGroupName}</strong></h2>`;
+            for (const day of days) {
+                if (grouped[day]) {
+                    grouped[day].sort((a,b) => (a.pairNumber||0) - (b.pairNumber||0));
+                    html += `<div class="day-badge"><i class="far fa-calendar-alt"></i> ${day}</div>`;
+                    html += `<table class="data-table"><thead><tr><th>Пара</th><th>Время</th><th>Дисциплина</th><th>Преподаватель</th><th>Ауд.</th></tr></thead><tbody>`;
+                    for (const l of grouped[day]) {
+                        const t = state.teachers.find(x => x.id === l.teacherId);
+                        const tn = t ? (t.shortName || t.fullName) : l.teacherId;
+                        html += `<tr><td>${l.pairNumber||''}</td><td>${l.time||'—'}</td><td>${l.subject||'—'}</td><td>${tn}</td><td><span class="badge">${l.room||'—'}</span></td></tr>`;
+                    }
+                    html += '</tbody></table>';
+                }
+            }
+            contentEl.innerHTML = html;
+        }
+
+        function renderTeacherSchedule() {
+            const lessons = state.schedule.filter(l => l.teacherId === state.selectedTeacherId);
+            if (!lessons.length) {
+                showEmpty('У преподавателя нет занятий');
+                return;
+            }
+            const days = ['Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+            const grouped = {};
+            lessons.forEach(l => {
+                const d = l.dayOfWeek || 'Другой';
+                if (!grouped[d]) grouped[d] = [];
+                grouped[d].push(l);
+            });
+            let html = `<h2 style="margin-bottom:20px;color:#001a41"><i class="fas fa-chalkboard-teacher" style="color:#0038a8"></i> Расписание преподавателя: <strong>${state.selectedTeacherName}</strong></h2>`;
+            for (const day of days) {
+                if (grouped[day]) {
+                    grouped[day].sort((a,b) => (a.pairNumber||0) - (b.pairNumber||0));
+                    html += `<div class="day-badge"><i class="far fa-calendar-alt"></i> ${day}</div>`;
+                    html += `<table class="data-table"><thead><tr><th>Пара</th><th>Время</th><th>Дисциплина</th><th>Группа</th><th>Ауд.</th></tr></thead><tbody>`;
+                    for (const l of grouped[day]) {
+                        const g = state.groups.find(x => x.id === l.groupId);
+                        const gn = g ? g.name : l.groupId;
+                        const f = g ? g.form : '';
+                        const fc = getFormClass(f);
+                        html += `<tr><td>${l.pairNumber||''}</td><td>${l.time||'—'}</td><td>${l.subject||'—'}</td><td>${gn} <span class="form-badge ${fc}">${f||'ОФО'}</span></td><td><span class="badge">${l.room||'—'}</span></td></tr>`;
+                    }
+                    html += '</tbody></table>';
+                }
+            }
+            contentEl.innerHTML = html;
+        }
+
+        function renderTeacherList() {
+            calculateTeacherStats();
+            const stats = Object.values(state.teacherStats);
+            if (!stats.length) {
+                showEmpty('Нет данных о нагрузке');
+                return;
+            }
+            let filtered = stats;
+            if (state.departmentFilter) filtered = filtered.filter(t => t.department === state.departmentFilter);
+            filtered.sort((a,b) => (a.teacherName||'').localeCompare(b.teacherName||''));
+            const monthInfo = getCurrentMonthYear();
+            let html = `<div style="margin-bottom:20px;color:#001a41;text-align:center"><h3>Текущий месяц: ${monthInfo.monthName} ${monthInfo.year}</h3></div>`;
+            html += '<div class="teacher-cards">';
+            filtered.forEach(t => {
+                const short = t.teacherName.includes(' ') ? t.teacherName.split(' ').slice(0,2).join(' ') : t.teacherName;
+                const m = state.teacherMonthlyStats[t.teacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0 };
+                const wCount = state.windows?.filter(w => w.teacher === t.teacherName).length || 0;
+                html += `
+                    <div class="teacher-load-card" data-teacher="${t.teacherName}">
+                        <div class="card-header">
+                            <div class="card-icon"><i class="fas fa-user-tie"></i></div>
+                            <div>
+                                <div class="card-title">${short} ${wCount ? `<span class="window-badge">${wCount} окна</span>` : ''}</div>
+                                <div class="card-subtitle">${t.department}</div>
+                            </div>
+                        </div>
+                        <div class="teacher-load-stats">
+                            <div class="stat-item"><div class="stat-label">За месяц</div><div class="stat-value">${m.monthlyHours} ч</div></div>
+                            <div class="stat-item"><div class="stat-label">Лекции</div><div class="stat-value">${m.monthlyLectures}</div></div>
+                            <div class="stat-item"><div class="stat-label">Семинары</div><div class="stat-value">${m.monthlySeminars}</div></div>
+                        </div>
+                        <div class="teacher-load-hours">
+                            <span>Всего часов:</span>
+                            <span>${t.totalHours} ч</span>
+                        </div>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            contentEl.innerHTML = html;
+            document.querySelectorAll('.teacher-load-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    showTeacherDetail(this.dataset.teacher);
+                });
+            });
+        }
+
+        function renderTeacherDetail() {
+            calculateTeacherStats();
+            const t = state.teacherStats[state.selectedTeacherName];
+            if (!t) {
+                showEmpty('Информация не найдена');
+                return;
+            }
+            const m = state.teacherMonthlyStats[state.selectedTeacherName] || { monthlyHours:0, monthlyLectures:0, monthlySeminars:0 };
+            const monthInfo = getCurrentMonthYear();
+            const discMap = {};
+            t.records.forEach(r => {
+                const d = r.discipline || 'Без названия';
+                if (!discMap[d]) {
+                    discMap[d] = { name:d, totalHours:0, monthlyHours:0, groups:new Set() };
+                }
+                discMap[d].totalHours += r.hours || 0;
+                if (r.date) {
+                    try {
+                        const rd = new Date(r.date);
+                        if (rd.getMonth()+1 === monthInfo.month && rd.getFullYear() === monthInfo.year) {
+                            discMap[d].monthlyHours += r.hours || 0;
+                        }
+                    } catch (e) {}
+                }
+                if (r.course) discMap[d].groups.add(r.course);
+            });
+            const disciplines = Object.values(discMap).sort((a,b) => b.totalHours - a.totalHours);
+            let html = `
+                <div class="teacher-detail-card">
+                    <div class="teacher-detail-header">
+                        <div class="teacher-detail-avatar"><i class="fas fa-user-tie"></i></div>
+                        <div class="teacher-detail-info">
+                            <h2>${t.teacherName}</h2>
+                            <p>${t.department}</p>
+                        </div>
+                    </div>
+                    <div class="monthly-summary">
+                        <div class="monthly-item"><div class="monthly-label">За ${monthInfo.monthName}</div><div class="monthly-value">${m.monthlyHours} ч</div></div>
+                        <div class="monthly-item"><div class="monthly-label">Лекции</div><div class="monthly-value">${m.monthlyLectures}</div></div>
+                        <div class="monthly-item"><div class="monthly-label">Семинары</div><div class="monthly-value">${m.monthlySeminars}</div></div>
+                        <div class="monthly-item"><div class="monthly-label">Всего</div><div class="monthly-value">${t.totalHours} ч</div></div>
+                    </div>
+                    <h3 style="margin:20px 0 12px; color:#001a41;">Дисциплины</h3>
+                    <div class="discipline-list">
+            `;
+            disciplines.forEach(d => {
+                html += `
+                    <div class="discipline-item">
+                        <div class="discipline-info">
+                            <h4>${d.name}</h4>
+                            <p>Группы: ${[...d.groups].join(', ') || '—'}</p>
+                            <p style="font-size:0.8rem; color:#0038a8;">За месяц: ${d.monthlyHours} ч</p>
+                        </div>
+                        <div class="discipline-hours">${d.totalHours} ч</div>
+                    </div>
+                `;
+            });
+            html += '</div></div>';
+            contentEl.innerHTML = html;
+        }
+
+        function renderStatistics() {
+            showLoader();
+            setTimeout(() => {
+                calculateTeacherStats();
+                const totalHours = state.load.reduce((s,i) => s + (i.hours||0), 0);
+                const totalLectures = state.load.reduce((s,i) => s + (i.lectures||0), 0);
+                const totalSeminars = state.load.reduce((s,i) => s + (i.seminars||0), 0);
+                const monthInfo = getCurrentMonthYear();
+                let monthlyHours = 0, monthlyLectures = 0, monthlySeminars = 0;
+                state.load.forEach(i => {
+                    if (i.date) {
+                        try {
+                            const d = new Date(i.date);
+                            if (d.getMonth()+1 === monthInfo.month && d.getFullYear() === monthInfo.year) {
+                                monthlyHours += i.hours||0;
+                                monthlyLectures += i.lectures||0;
+                                monthlySeminars += i.seminars||0;
+                            }
+                        } catch (e) {}
+                    }
+                });
+                const totalWindowHours = state.windows?.reduce((s,w) => s + (w.hours||0), 0) || 0;
+                const topTeachers = Object.values(state.teacherStats).sort((a,b) => b.totalHours - a.totalHours).slice(0,10);
+                const deptStats = {};
+                Object.values(state.teacherStats).forEach(t => {
+                    if (t.department) deptStats[t.department] = (deptStats[t.department]||0) + t.totalHours;
+                });
+                let html = `
+                    <div class="table-container">
+                        <h2 style="margin-bottom:15px;color:#001a41;"><i class="fas fa-chart-line" style="color:#0038a8;"></i> Аналитика учебной нагрузки</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Группы</h4><span class="stat-value">${state.groups.length}</span></div></div>
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard-teacher"></i></div><div class="stat-info"><h4>Преподаватели</h4><span class="stat-value">${Object.keys(state.teacherStats).length}</span></div></div>
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-file-alt"></i></div><div class="stat-info"><h4>Записей</h4><span class="stat-value">${state.load.length}</span></div></div>
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-info"><h4>Всего часов</h4><span class="stat-value">${totalHours}</span></div></div>
+                        </div>
+                        <div style="margin:20px 0; padding:20px; background:#f8faff; border-radius:16px;">
+                            <h3 style="margin-bottom:15px;color:#001a41;">Статистика за ${monthInfo.monthName} ${monthInfo.year}</h3>
+                            <div class="stats-grid">
+                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-clock"></i></div><div class="stat-info"><h4>Часов за месяц</h4><span class="stat-value">${monthlyHours}</span></div></div>
+                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard"></i></div><div class="stat-info"><h4>Лекции</h4><span class="stat-value">${monthlyLectures}</span></div></div>
+                                <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Семинары</h4><span class="stat-value">${monthlySeminars}</span></div></div>
+                            </div>
+                            <p style="color:#5a6f8c; margin-top:10px;">Учтено окон: ${totalWindowHours} ч</p>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-chalkboard"></i></div><div class="stat-info"><h4>Лекции (всего)</h4><span class="stat-value">${totalLectures}</span></div></div>
+                            <div class="stat-card"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-info"><h4>Семинары (всего)</h4><span class="stat-value">${totalSeminars}</span></div></div>
+                        </div>
+                        <div class="charts-grid">
+                            <div class="chart-container"><h3>Топ-10 преподавателей</h3><div class="chart-wrapper"><canvas id="teacherChart"></canvas></div></div>
+                            <div class="chart-container"><h3>Распределение по кафедрам</h3><div class="chart-wrapper"><canvas id="departmentChart"></canvas></div></div>
+                        </div>
+                        <h3 style="margin:25px 0 15px;color:#001a41;">Детальная статистика</h3>
+                        <div style="background:#f8faff; border-radius:16px; padding:18px;">
+                            ${topTeachers.map((t,i) => `
+                                <div style="display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #e8edf5;">
+                                    <div><span style="font-weight:700; color:#0038a8;">${i+1}.</span> <span style="font-weight:600;">${t.teacherName}</span></div>
+                                    <div><i class="fas fa-chalkboard" style="color:#0038a8;"></i> ${t.lectures} <i class="fas fa-users" style="color:#0038a8; margin-left:10px;"></i> ${t.seminars} <span style="font-weight:700; color:#0038a8; margin-left:10px;">${t.totalHours} ч</span></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                contentEl.innerHTML = html;
+                setTimeout(() => {
+                    const ctx1 = document.getElementById('teacherChart')?.getContext('2d');
+                    if (ctx1) {
+                        new Chart(ctx1, {
+                            type: 'bar',
+                            data: {
+                                labels: topTeachers.map(t => t.teacherName.split(' ').slice(0,2).join(' ')),
+                                datasets: [{ label:'Часов', data: topTeachers.map(t => t.totalHours), backgroundColor:'#0038a8' }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display:false } } }
+                        });
+                    }
+                    const ctx2 = document.getElementById('departmentChart')?.getContext('2d');
+                    if (ctx2) {
+                        const sorted = Object.entries(deptStats).sort((a,b) => b[1]-a[1]).slice(0,8);
+                        new Chart(ctx2, {
+                            type: 'doughnut',
+                            data: {
+                                labels: sorted.map(i => i[0]),
+                                datasets: [{ data: sorted.map(i => i[1]), backgroundColor: ['#0038a8','#e41e26','#f39c12','#27ae60','#9b59b6','#3498db','#e67e22','#1abc9c'] }]
+                            },
+                            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position:'right' } } }
+                        });
+                    }
+                }, 100);
+            }, 500);
+        }
+
+        function showTeacherDetail(name) {
+            state.loadView = 'teacherDetail';
+            state.selectedTeacherName = name;
+            setBackVisibility(true);
+            updateBreadcrumbs();
+            renderView();
+        }
+
+        // ===== НАВИГАЦИЯ =====
+        function setView(view) {
+            state.currentView = view;
+            menuCards.forEach(c => {
+                if (c.dataset.view === view) c.classList.add('active');
+                else c.classList.remove('active');
+            });
+
+            roleTabs.style.display = view === 'schedule' ? 'flex' : 'none';
+            
+            if (view === 'schedule') {
+                if (courseButtons) courseButtons.style.display = state.currentRole === 'student' ? 'flex' : 'none';
+                if (loadFilters) loadFilters.style.display = 'none';
+                state.scheduleView = 'list';
+                state.selectedGroupId = null;
+                state.selectedGroupName = '';
+                state.selectedTeacherId = null;
+                state.selectedTeacherName = '';
+                setBackVisibility(false);
+                filterGroups();
+                renderView();
+            } else if (view === 'load') {
+                if (courseButtons) courseButtons.style.display = 'none';
+                if (loadFilters) loadFilters.style.display = 'flex';
+                state.loadView = 'teachers';
+                state.selectedTeacherId = null;
+                state.selectedTeacherName = null;
+                setBackVisibility(false);
+                renderView();
+            } else {
+                if (courseButtons) courseButtons.style.display = 'none';
+                if (loadFilters) loadFilters.style.display = 'none';
+                setBackVisibility(true);
+                renderView();
+            }
+            updateBreadcrumbs();
+        }
+
+        function setRole(role) {
+            state.currentRole = role;
+            state.scheduleView = 'list';
+            state.selectedGroupId = null;
+            state.selectedGroupName = '';
+            state.selectedTeacherId = null;
+            state.selectedTeacherName = '';
+            document.querySelectorAll('.role-btn').forEach(btn => {
+                if (btn.dataset.role === role) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            if (courseButtons) courseButtons.style.display = role === 'student' ? 'flex' : 'none';
+            setBackVisibility(false);
+            filterGroups();
+            renderView();
+        }
+
+        function setCourse(course) {
+            state.selectedCourse = course;
+            courseBtns.forEach(btn => {
+                if (btn.dataset.course === course) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+            filterGroups();
+            renderView();
+        }
+
+        function setBackVisibility(v) {
+            if (backBtn) backBtn.style.visibility = v ? 'visible' : 'hidden';
+        }
+
+        function goHome() {
+            if (state.currentView === 'schedule') {
+                state.scheduleView = 'list';
+                state.selectedGroupId = null;
+                state.selectedGroupName = '';
+                state.selectedTeacherId = null;
+                state.selectedTeacherName = '';
+                setBackVisibility(false);
+                filterGroups();
+                renderView();
+            } else if (state.currentView === 'load') {
+                state.loadView = 'teachers';
+                state.selectedTeacherId = null;
+                state.selectedTeacherName = null;
+                setBackVisibility(false);
+                renderView();
+            } else {
+                setView('schedule');
+            }
+            updateBreadcrumbs();
+        }
+
+        function updateBreadcrumbs() {
+            if (!breadcrumbsEl) return;
+            let html = '<button id="homeBtn"><i class="fas fa-home"></i> Главная</button>';
+            if (state.currentView === 'schedule') {
+                if (state.scheduleView === 'groupSchedule' && state.selectedGroupName) {
+                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedGroupName}</span>`;
+                } else if (state.scheduleView === 'teacherSchedule' && state.selectedTeacherName) {
+                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedTeacherName}</span>`;
+                }
+            } else if (state.currentView === 'load') {
+                if (state.loadView === 'teacherDetail' && state.selectedTeacherName) {
+                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">${state.selectedTeacherName}</span>`;
+                } else {
+                    html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">Учебная нагрузка</span>`;
+                }
+            } else if (state.currentView === 'statistics') {
+                html += `<span><i class="fas fa-chevron-right" style="color:#8a9bb5;"></i></span><span style="color:#001a41;">Аналитика</span>`;
+            }
+            breadcrumbsEl.innerHTML = html;
+            document.getElementById('homeBtn')?.addEventListener('click', goHome);
+        }
+
+        menuCards.forEach(c => c.addEventListener('click', () => setView(c.dataset.view)));
+        document.querySelectorAll('.role-btn').forEach(btn => btn.addEventListener('click', () => setRole(btn.dataset.role)));
+        courseBtns.forEach(btn => btn.addEventListener('click', () => setCourse(btn.dataset.course)));
+        if (homeBtn) homeBtn.addEventListener('click', goHome);
+        if (backBtn) backBtn.addEventListener('click', goHome);
+        if (departmentFilter) departmentFilter.addEventListener('change', (e) => {
+            state.departmentFilter = e.target.value;
+            renderView();
+        });
+
+        // ===== ФУНКЦИИ ДЛЯ ОКОН =====
+        async function saveWindow(data) {
+            if (useLocalData) {
+                const wd = { id: 'win' + Date.now(), ...data, date: new Date().toISOString(), createdAt: Date.now(), createdBy: currentUser?.email };
+                state.windows.push(wd);
+                calculateTeacherStats();
+                return wd.id;
+            }
+
+            const wd = { ...data, date: new Date().toISOString(), createdAt: Date.now(), createdBy: currentUser?.email };
+            const ref = await db.ref('windows').push(wd);
+            state.windows.push({ id: ref.key, ...wd });
+            calculateTeacherStats();
+            return ref.key;
+        }
+
+        async function deleteWindow(id) {
+            if (useLocalData) {
+                state.windows = state.windows.filter(w => w.id !== id);
+                calculateTeacherStats();
+                return true;
+            }
+
+            await db.ref(`windows/${id}`).remove();
+            state.windows = state.windows.filter(w => w.id !== id);
+            calculateTeacherStats();
+        }
+
+        async function renderWindowsList() {
+            const list = document.getElementById('windowsList');
+            if (!list) return;
+            const tFilter = document.getElementById('windowTeacherFilter').value;
+            const dFilter = document.getElementById('windowDayFilter').value;
+            let filtered = state.windows;
+            if (tFilter) filtered = filtered.filter(w => w.teacher === tFilter);
+            if (dFilter) filtered = filtered.filter(w => w.day === dFilter);
+            if (!filtered.length) {
+                list.innerHTML = '<div class="empty-message">Нет окон преподавателей</div>';
+                return;
+            }
+            const grouped = {};
+            filtered.forEach(w => {
+                if (!grouped[w.teacher]) grouped[w.teacher] = [];
+                grouped[w.teacher].push(w);
+            });
+            let html = '';
+            const dayOrder = {'Понедельник':1,'Вторник':2,'Среда':3,'Четверг':4,'Пятница':5,'Суббота':6};
+            for (const [teacher, wins] of Object.entries(grouped)) {
+                wins.sort((a,b) => (dayOrder[a.day]||7) - (dayOrder[b.day]||7) || (a.pair||0) - (b.pair||0));
+                html += `
+                    <div style="background:#f8faff; border-radius:16px; padding:15px; margin-bottom:15px;">
+                        <div style="display:flex; align-items:center; gap:10px; margin-bottom:10px;">
+                            <div style="width:40px; height:40px; background:#f0f5ff; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#0038a8;">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div style="font-weight:600; color:#001a41;">${teacher}</div>
+                        </div>
+                `;
+                wins.forEach(w => {
+                    const dateStr = w.date ? new Date(w.date).toLocaleDateString('ru-RU') : '';
+                    html += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; padding:8px; background:white; border-radius:12px; margin-bottom:5px;">
+                            <div>
+                                <span style="font-weight:600; color:#0038a8;">${w.day}</span>
+                                <span style="margin-left:10px; color:#1f344d;">${w.pair} пара</span>
+                                <span style="margin-left:10px; color:#e41e26; font-weight:500;">-${w.hours||2} ч</span>
+                                ${w.reason ? `<span style="margin-left:10px; color:#5a6f8c;"><i class="fas fa-comment"></i> ${w.reason}</span>` : ''}
+                                ${dateStr ? `<span style="margin-left:10px; color:#8a9bb5; font-size:0.8rem;"><i class="far fa-calendar-alt"></i> ${dateStr}</span>` : ''}
+                            </div>
+                            <button class="delete-window-btn" data-id="${w.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            list.innerHTML = html;
+            document.querySelectorAll('.delete-window-btn').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.stopPropagation();
+                    if (confirm('Удалить окно? Это вернет часы в нагрузку преподавателя.')) {
+                        await deleteWindow(this.dataset.id);
+                        await renderWindowsList();
+                        updateWindowFilters();
+                        if (state.currentView === 'load') renderView();
+                    }
+                });
+            });
+        }
+
+        function updateWindowFilters() {
+            const f = document.getElementById('windowTeacherFilter');
+            if (!f) return;
+            const teachers = [...new Set(state.windows.map(w => w.teacher))];
+            f.innerHTML = '<option value="">Все преподаватели</option>';
+            teachers.sort().forEach(t => f.innerHTML += `<option value="${t}">${t}</option>`);
+        }
+
+        // ===== ФУНКЦИИ ДЛЯ ПОТОКОВ =====
+        async function saveStream(data) {
+            if (useLocalData) {
+                const sd = { id: 'stream' + Date.now(), ...data, createdAt: Date.now(), createdBy: currentUser?.email };
+                state.streams.push(sd);
+                return sd.id;
+            }
+
+            const ref = await db.ref('streams').push({ ...data, createdAt: Date.now(), createdBy: currentUser?.email });
+            state.streams.push({ id: ref.key, ...data });
+        }
+
+        async function deleteStream(id) {
+            if (useLocalData) {
+                state.streams = state.streams.filter(s => s.id !== id);
+                return true;
+            }
+
+            await db.ref(`streams/${id}`).remove();
+            state.streams = state.streams.filter(s => s.id !== id);
+        }
+
+        function renderGroupsCheckboxes() {
+            const list = document.getElementById('groupsList');
+            if (!list) return;
+            if (!state.groups?.length) {
+                list.innerHTML = '<div style="color:#5a6f8c; text-align:center;">Нет групп</div>';
+                return;
+            }
+            const byCourse = {};
+            state.groups.forEach(g => {
+                const c = g.course || '1';
+                if (!byCourse[c]) byCourse[c] = [];
+                byCourse[c].push(g);
+            });
+            let html = '';
+            Object.keys(byCourse).sort().forEach(c => {
+                html += `<div style="font-weight:600; color:#0038a8; margin:10px 0 5px;">${c} курс</div>`;
+                byCourse[c].forEach(g => {
+                    const formClass = getFormClass(g.form);
+                    html += `
+                        <label style="display:flex; align-items:center; gap:8px; padding:5px; border-bottom:1px solid #e8edf5;">
+                            <input type="checkbox" class="group-checkbox" value="${g.id}" data-name="${g.name}" style="accent-color:#0038a8;">
+                            <span style="color:#001a41;">${g.name}</span>
+                            <span class="form-badge ${formClass}" style="margin-left:auto;">${g.form||'ОФО'}</span>
+                        </label>
+                    `;
+                });
+            });
+            list.innerHTML = html;
+        }
+
+        async function renderStreamsList() {
+            const list = document.getElementById('streamsList');
+            if (!list) return;
+            if (!state.streams.length) {
+                list.innerHTML = '<div class="empty-message">Нет созданных потоков</div>';
+                return;
+            }
+            let html = '';
+            state.streams.sort((a,b) => (a.name||'').localeCompare(b.name||'')).forEach(s => {
+                const groupNames = (s.groups||[]).map(id => {
+                    const g = state.groups.find(g => g.id === id);
+                    return g ? g.name : id;
+                }).join(', ');
+                html += `
+                    <div style="background:#f8faff; border-radius:16px; padding:15px; margin-bottom:10px;">
+                        <div style="display:flex; justify-content:space-between;">
+                            <div style="flex:1;">
+                                <div style="font-weight:600; font-size:1.1rem; color:#001a41;">${s.name||'Поток'}</div>
+                                <div style="color:#0038a8; margin:5px 0;">${s.subject} | ${s.teacher}</div>
+                                <div style="color:#5a6f8c;">${s.day}, ${s.pair} пара | ${s.room||'—'}</div>
+                                <div style="color:#5a6f8c; margin-top:5px;">Группы: ${groupNames}</div>
+                            </div>
+                            <button class="delete-stream-btn" data-id="${s.id}" style="background:none; border:none; color:#e41e26; cursor:pointer;">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+            document.querySelectorAll('.delete-stream-btn').forEach(btn => {
+                btn.addEventListener('click', async function(e) {
+                    e.stopPropagation();
+                    if (confirm('Удалить поток?')) {
+                        await deleteStream(this.dataset.id);
+                        await renderStreamsList();
+                    }
+                });
+            });
+        }
+
+        function updateStreamTeacherSelect() {
+            const sel = document.getElementById('streamTeacherSelect');
+            if (!sel) return;
+            sel.innerHTML = '<option value="">Выберите преподавателя</option>';
+            const teachers = Object.values(state.teacherStats).map(t => t.teacherName).sort();
+            teachers.forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
+        }
+
+        // ===== ИНИЦИАЛИЗАЦИЯ ОБРАБОТЧИКОВ =====
+        function initHandlers() {
+            const teacherWindowsBtn = document.getElementById('teacherWindowsBtn');
+            if (teacherWindowsBtn) {
+                teacherWindowsBtn.addEventListener('click', async function() {
+                    const m = document.getElementById('teacherWindowsModal');
+                    if (m) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                        m.classList.add('active');
+                    }
+                });
+            }
+
+            const addWindowBtn = document.getElementById('addWindowBtn');
+            if (addWindowBtn) {
+                addWindowBtn.addEventListener('click', function() {
+                    const sel = document.getElementById('newWindowTeacherSelect');
+                    if (sel) {
+                        sel.innerHTML = '<option value="">Выберите преподавателя</option>';
+                        Object.values(state.teacherStats).map(t => t.teacherName).sort().forEach(t => sel.innerHTML += `<option value="${t}">${t}</option>`);
+                    }
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
+
+            const addWindowFromListBtn = document.getElementById('addWindowFromListBtn');
+            if (addWindowFromListBtn) {
+                addWindowFromListBtn.addEventListener('click', function() {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                    document.getElementById('addWindowModal').classList.add('active');
+                });
+            }
+
+            const saveWindowBtn = document.getElementById('saveWindowBtn');
+            if (saveWindowBtn) {
+                saveWindowBtn.addEventListener('click', async function() {
+                    const teacher = document.getElementById('newWindowTeacherSelect').value;
+                    const day = document.getElementById('newWindowDaySelect').value;
+                    const pair = document.getElementById('newWindowPairSelect').value;
+                    const hours = parseInt(document.getElementById('windowHoursInput').value) || 2;
+                    const reason = document.getElementById('newWindowReasonInput').value;
+                    if (!teacher || !day || !pair) {
+                        alert('Заполните обязательные поля');
+                        return;
+                    }
+                    await saveWindow({ teacher, day, pair, hours, reason });
+                    alert(`Окно добавлено. ${hours} ч вычтено из нагрузки преподавателя.`);
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                    document.getElementById('windowHoursInput').value = '2';
+                    if (document.getElementById('teacherWindowsModal').classList.contains('active')) {
+                        await renderWindowsList();
+                        updateWindowFilters();
+                    }
+                    if (state.currentView === 'load') renderView();
+                });
+            }
+
+            const cancelAddWindowBtn = document.getElementById('cancelAddWindowBtn');
+            if (cancelAddWindowBtn) {
+                cancelAddWindowBtn.addEventListener('click', function() {
+                    document.getElementById('addWindowModal').classList.remove('active');
+                    document.getElementById('newWindowReasonInput').value = '';
+                    document.getElementById('windowHoursInput').value = '2';
+                });
+            }
+
+            const teacherWindowsCloseBtn = document.getElementById('teacherWindowsCloseBtn');
+            if (teacherWindowsCloseBtn) {
+                teacherWindowsCloseBtn.addEventListener('click', function() {
+                    document.getElementById('teacherWindowsModal').classList.remove('active');
+                });
+            }
+
+            const windowTeacherFilter = document.getElementById('windowTeacherFilter');
+            if (windowTeacherFilter) windowTeacherFilter.addEventListener('change', renderWindowsList);
+            const windowDayFilter = document.getElementById('windowDayFilter');
+            if (windowDayFilter) windowDayFilter.addEventListener('change', renderWindowsList);
+
+            const streamsBtn = document.getElementById('streamsBtn');
+            if (streamsBtn) {
+                streamsBtn.addEventListener('click', async function() {
+                    const m = document.getElementById('streamsModal');
+                    if (m) {
+                        renderGroupsCheckboxes();
+                        updateStreamTeacherSelect();
+                        await renderStreamsList();
+                        m.classList.add('active');
+                    }
+                });
+            }
+
+            const createStreamBtn = document.getElementById('createStreamBtn');
+            if (createStreamBtn) {
+                createStreamBtn.addEventListener('click', async function() {
+                    const name = document.getElementById('streamNameInput').value;
+                    const subj = document.getElementById('streamSubjectInput').value;
+                    const teacher = document.getElementById('streamTeacherSelect').value;
+                    const day = document.getElementById('streamDaySelect').value;
+                    const pair = document.getElementById('streamPairSelect').value;
+                    const room = document.getElementById('streamRoomInput').value;
+                    const groups = [...document.querySelectorAll('.group-checkbox:checked')].map(cb => cb.value);
+                    if (!name || !subj || !teacher || !groups.length) {
+                        alert('Заполните название, дисциплину, преподавателя и выберите группы');
+                        return;
+                    }
+                    await saveStream({ name, subject:subj, teacher, day, pair, room, groups });
+                    alert('Поток создан');
+                    document.getElementById('streamNameInput').value = '';
+                    document.getElementById('streamSubjectInput').value = '';
+                    document.getElementById('streamRoomInput').value = '';
+                    document.querySelectorAll('.group-checkbox:checked').forEach(cb => cb.checked = false);
+                    await renderStreamsList();
+                });
+            }
+
+            const streamsCloseBtn = document.getElementById('streamsCloseBtn');
+            if (streamsCloseBtn) {
+                streamsCloseBtn.addEventListener('click', function() {
+                    document.getElementById('streamsModal').classList.remove('active');
+                });
+            }
+
+            window.addEventListener('click', function(e) {
+                ['teacherWindowsModal','addWindowModal','streamsModal'].forEach(id => {
+                    const m = document.getElementById(id);
+                    if (e.target === m) m.classList.remove('active');
+                });
+            });
+        }
+
+        console.log('Сайт загружен. Используйте локальные данные если Firebase недоступен.');
     </script>
 </body>
 </html>
